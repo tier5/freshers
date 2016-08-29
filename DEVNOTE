@@ -1,0 +1,5 @@
+V0.0:
+    1. Created Model and Migrations for Country, Category, Article, Tags entities and ArticleTag relations.
+    2. Created Controller for Application, Ueer, Category, Article and Search
+    3. Modiefied Application index route to app.index and created base layout and app index view.
+--deepjyotimukherjee.suman@gmail.com
