@@ -4,6 +4,10 @@
     Laravelsite | Blogger for Laravel
 @endsection
 
+@section('style')
+    <link href="css/blog-home.css" rel="stylesheet" />
+@endsection
+
 @section('content')
     <div class="row">
         <p>

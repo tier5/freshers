@@ -8,7 +8,8 @@ use App\Category;
 use App\Http\Requests;
 use App\Tag;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str; 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
@@ -31,13 +32,12 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        $tags = Tag::all();
-
-        return view('article.create', [
+            $categories = Category::all();
+            $tags = Tag::all();
+            return view('article.create', [
                 'categories' => $categories,
                 'tags' => $tags
-        ]);
+            ]);
     }
 
     /**
@@ -122,27 +122,27 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $slug)
     {
-        $tags = $this->listTags(explode(', ', $request->tags));
+            $tags = $this->listTags(explode(', ', $request->tags));
 
-        $this->validate($request, [
+            $this->validate($request, [
                 'title' => 'required',
                 'category' => 'required',
                 'body' => 'required'
-        ]);
+            ]);
 
-        $article = Article::where('slug', $slug)->get()
+            $article = Article::where('slug', $slug)->get()
                 ->first();
 
-        $article->title = $request->title;
-        $article->slug = str_slug($request->title);
-        $article->category_id = $request->category;
-        $article->body = $request->body;
-        $article->update();
-        $article->tags()->sync($tags);
+            $article->title = $request->title;
+            $article->slug = str_slug($request->title);
+            $article->category_id = $request->category;
+            $article->body = $request->body;
+            $article->update();
+            $article->tags()->sync($tags);
 
-        $request->session()->flash('success', 'Your post is updated successfully!');
+            $request->session()->flash('success', 'Your post is updated successfully!');
 
-        return redirect()->route('article.show', [$article->slug]);
+            return redirect()->route('article.show', [$article->slug]);
     }
 
     /**
@@ -196,5 +196,15 @@ class ArticleController extends Controller
             $tags[++$key] = $tag->id;
         }
         return $tags;
+    }
+
+    public function userarticle(Request $request) {
+        $article = Article::where('user_id','=',$request->user_id)->get();
+        if (is_null($article)) {
+            abort(404);
+        }
+
+        return view('article.showuserarticle', ['articles' => $article]);
+
     }
 }

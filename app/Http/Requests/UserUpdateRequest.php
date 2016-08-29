@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class UserLoginRequest extends Request
+class UserUpdateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,11 @@ class UserLoginRequest extends Request
     public function rules()
     {
         return [
-            'email'=>'required|Email',
-            'password'=>'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
-
+            'first_name'=>'required|min:2|alpha',
+            'last_name'=>'required|min:2|alpha',
+            'contact_number'=>'required|min:10|numeric',
+            'country_id'=>'required',
+            'profile_picture' => 'image'
         ];
     }
 }

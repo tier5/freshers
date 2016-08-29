@@ -1,7 +1,7 @@
 @extends('layouts.article')
 
 @section('title')
-    Read Full Article
+    Read Article
 @endsection
 
 @section('article-content')
@@ -13,7 +13,7 @@
             </div>
         </div>
     @endif
-     @if (Session::has('warning'))
+    @if (Session::has('warning'))
         <div class="row">
             <div class="alert alert-warning">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -22,29 +22,30 @@
         </div>
     @endif
     <!-- Blog Post Content Column -->
+ @foreach($articles as $article)
     <div class="col-lg-8">
         <!-- Blog Post -->
         <!-- Title -->
         <h1>{{ $article->title }}</h1>
         <!-- Author -->
-            @if(Session::get('id')==$article->user_id)<div class="pull-right">
-                <a href="{{ route('article.edit', [$article->slug]) }}" style="float: left">
-                    <button type="button" class="btn btn-xs" style="float: left">
-                        <i class="fa fa-pencil fa-2x"></i>
-                    </button>
-                </a>
-                <form action="{{ route('article.destroy', [$article->slug]) }}" method="POST" style="float: left">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <button type="submit" class="btn btn-xs" style="color: #337AB7"><i class="fa fa-times fa-2x"></i></button>
-                </form>
-            </div>
-            @endif
-            <p class="lead">
-                by <a href="{{  URL::to('userarticle/'.$article->user_id) }}">{{ $article->user->first_name }} {{ $article->user->last_name }}</a>&nbsp;
-            </p>
+        @if(Session::get('id')==$article->user_id)<div class="pull-right">
+            <a href="{{ route('article.edit', [$article->slug]) }}" style="float: left">
+                <button type="button" class="btn btn-xs" style="float: left">
+                    <i class="fa fa-pencil fa-2x"></i>
+                </button>
+            </a>
+            <form action="{{ route('article.destroy', [$article->slug]) }}" method="POST" style="float: left">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <button type="submit" class="btn btn-xs" style="color: #337AB7"><i class="fa fa-times fa-2x"></i></button>
+            </form>
+        </div>
+        @endif
+        <p class="lead">
+            by <a href="{{  URL::to('userarticle/'.$article->user_id) }}">{{ $article->user->first_name }} {{ $article->user->last_name }}</a>&nbsp;
+        </p>
         <!-- Date/Time -->
-        <p class="normal"><a href="{{  URL::to('userarticle/'.$article->user_id) }}"><span class="glyphicon glyphicon-user"></span> {{ $article->user->first_name }} {{ $article->user->last_name }}</a> <span class="glyphicon glyphicon-time"></span> {{ $article->created_at }}</p>
+        <p class="normal"><a href=""><span class="glyphicon glyphicon-user"></span> {{ $article->user->first_name }} {{ $article->user->last_name }}</a> <span class="glyphicon glyphicon-time"></span> {{ $article->created_at }}</p>
         <p>
         <p class="lead">{!! $article->body !!}</p>
         <br />
@@ -110,4 +111,5 @@
             </div>
         </div>
     </div>
+@endforeach
 @endsection

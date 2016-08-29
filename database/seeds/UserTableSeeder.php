@@ -20,6 +20,7 @@ class UserTableSeeder extends Seeder
         $user->date_of_birth = '1993-10-15';
         $user->country_id = 76;
         $user->contact_number = 9674768037;
+        $user->profile_pic = 'default.jpg';
         $user->save();
     }
 }

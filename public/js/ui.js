@@ -1,0 +1,1 @@
+$('#dateofbirth').datepicker({ dateFormat: 'dd/mm/yyyy'})

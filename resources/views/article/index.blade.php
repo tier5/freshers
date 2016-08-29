@@ -10,9 +10,11 @@
         <h1 class="page-header">
             Latest Post
             {{-- <small>Secondary Text</small> --}}
+            @if(Auth::check())
             <a href="{{ route('article.create') }}">
                 <button class="btn btn-md btn-success pull-right">Post new</button>
             </a>
+                @endif
         </h1>
         <!-- Blog Posts Listing -->
         @if(count($articles) > 0)
@@ -22,7 +24,7 @@
                         <h2><a href="{{ route('article.show', [$article->slug]) }}">{{ $article->title }}</a>&nbsp;<small>(<a href="#">{{ $article->category->name }}</a>)</small></h2>
                     </div>
                     <div class="panel-body">
-                        <p><a href="#"><span class="glyphicon glyphicon-user"></span> {{ $article->user->first_name }} {{ $article->user->last_name }}</a> <span class="glyphicon glyphicon-time"></span> {{ $article->created_at }}</p>
+                        <p><a href="{{  URL::to('userarticle/'.$article->user_id) }}"><span class="glyphicon glyphicon-user"></span> {{ $article->user->first_name }} {{ $article->user->last_name }}</a> <span class="glyphicon glyphicon-time"></span> {{ $article->created_at }}</p>
                         <p>{!! str_limit($article->body, 300) !!}</p>
                     </div>
                     <div class="panel-footer">

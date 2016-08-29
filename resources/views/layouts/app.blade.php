@@ -18,7 +18,9 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
         {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
-        <link href="css/blog-home.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
         <style>
             body {
                 font-family: 'Lato';
@@ -83,7 +85,8 @@
                                         {{ Auth::user()->first_name }} <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="{{ route('profile') }}"><i class="fa fa-img"></i><img src="uploads/profile_pic/{{$user->profile_picture}}" class="img-circle" alt="Cinque Terre" width="42" height="42"> Profile</a></li>
+                                        <li><a href="{{ route('profile') }}"><i class="fa fa-img"></i><img src="{{URL::to('uploads/profile_pic/'.Auth::user()->profile_picture)}}" class="img-circle" alt="Cinque Terre" width="42" height="42"> Profile</a></li>
+                                        <li><a href="{{route('editprofile')}}"><i class="fa fa-btn fa-update"></i>Update Profile</a> </li>
                                         <li><a href="{{ route('logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                                     </ul>
                                 </li>
@@ -115,7 +118,7 @@
 
         <!-- JavaScripts -->
         <!-- jQuery -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
+        <!--script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></--script>
         <!-- Bootstrap Core JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
         <!-- Custom Scripts -->

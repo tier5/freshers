@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class UserLoginRequest extends Request
+class ForgotPasswordRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,8 @@ class UserLoginRequest extends Request
     public function rules()
     {
         return [
-            'email'=>'required|Email',
             'password'=>'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
-
+            'confirm_password'=>'required|same:password'
         ];
     }
 }

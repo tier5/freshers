@@ -14,7 +14,8 @@
                 </p>
             </div>
         @endif
-    <form action="{{route('postlogin')}}" method="POST" class="form-horizontal" role="form" enctype="multipart/form-data">
+            <div class="form">
+        <form action="{{route('postlogin')}}" method="POST" class="form-horizontal" role="form"">
         <legend>Login Form</legend>
         <div class="form-group">
             <label for="user_email" class="control-label col-md-3 col-sm-3 col-xs-12">Email</label>
@@ -44,12 +45,17 @@
             </p>
             </div>
         @endif
-            <div class="form-group">
+    </div>
+             <div class="co-md-offset-4 col-md-7 col-sm-offset-4 col-sm-7 col-xs-12">
+                Forgot your password<a href="{{ route('resetpassword') }}" class="btn btn-link" role="button">Click here</a>
+             </div>
+    <div class="form-group">
                 <div class="co-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
                     <button type="reset" class="btn btn-warning btn-md pull-left">Reset</button>
                     <button type="submit" class="btn btn-success btn-md pull-right">Login</button>
                 </div>
             </div>
     </form>
+        </div>
 </div>
 @endsection

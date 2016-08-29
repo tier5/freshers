@@ -11,13 +11,16 @@
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
     Route::get('/', [
         'uses' => 'AppController@getIndex',
         'as' => 'app.index'
     ]);
 
-    Route::resource('article', 'ArticleController');
+    Route::resource('article', 'ArticleController', [
+        'names'=> [
+            'index' => 'article.index'
+        ]
+    ]);
 
     Route::group(['prefix' => 'search'], function () {
         Route::get('/', [
@@ -37,22 +40,22 @@ Route::group(['middleware' => ['web']], function () {
             'as' => 'search.data'
         ]);
     });
+    Route::get('/userarticle/{user_id?}', [
+        'uses' => 'ArticleController@userarticle',
+    ]);
 
     Route::get('register',[
         'uses'=>'UserController@create',
         'as'=>'register'
     ]);
-
     Route::post('register',[
         'uses'=>'UserController@store',
         'as'=>'postregister'
     ]);
-
     Route::get('login', [
         'uses' => 'UserController@getLogin',
         'as' => 'login'
     ]);
-
     Route::post('login', [
         'uses' => 'UserController@postLogin',
         'as' => 'postlogin'
@@ -67,5 +70,40 @@ Route::group(['middleware' => ['web']], function () {
             'uses' => 'UserController@profile',
             'as' => 'profile'
         ]);
+        Route::get('logout', [
+            'uses' => 'UserController@logout',
+            'as' => 'logout'
+        ]);
+        Route::get('profile', [
+            'uses' => 'UserController@profile',
+            'as' => 'profile'
+        ]);
+        Route::get('editprofile', [
+            'uses' => 'UserController@editprofile',
+            'as' => 'editprofile'
+        ]);
+        Route::patch('editprofile', [
+            'uses' => 'UserController@updateprofile',
+            'as' => 'updateprofile'
+        ]);
     });
-});
+
+    Route::get('resetpassword', [
+        'uses' => 'PasswordController@resetpassword',
+        'as' => 'resetpassword'
+    ]);
+    Route::post('resetpassword', [
+        'uses' => 'PasswordController@postresetpassword',
+        'as' => 'resetpassword'
+    ]);
+    Route::get('password/reset/{token}',[
+        'uses'=>'PasswordController@getreset',
+        'as'=>'getreset'
+    ]);
+    Route::post('password/reset',[
+        'uses'=>'PasswordController@postreset',
+        'as'=>'postreset'
+    ]);
+
+
+
