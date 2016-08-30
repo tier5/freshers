@@ -37,22 +37,22 @@ Route::group(['middleware' => ['web']], function () {
             'as' => 'search.data'
         ]);
     });
-    
+
     Route::get('register',[
         'uses'=>'UserController@create',
         'as'=>'register'
     ]);
-    
+
     Route::post('register',[
         'uses'=>'UserController@store',
         'as'=>'postregister'
     ]);
-    
+
     Route::get('login', [
         'uses' => 'UserController@getLogin',
         'as' => 'login'
     ]);
-    
+
     Route::post('login', [
         'uses' => 'UserController@postLogin',
         'as' => 'postlogin'
