@@ -1,10 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Laravelsite | Blogger for Laravel
-@endsection
-
-@section('style')
+    Blogger for Laravel
 @endsection
 
 @section('content')

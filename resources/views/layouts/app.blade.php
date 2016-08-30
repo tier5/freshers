@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>@yield('title')</title>
+        <title>Laravelsite | @yield('title')</title>
 
         <!-- Styles -->
         <!-- Fonts -->
@@ -30,6 +30,7 @@
             }
         </style>
         @yield('style')
+        @yield('extended-style')
         <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -54,12 +55,15 @@
 
                         <!-- Branding Image -->
                         <a class="navbar-brand" href="{{ route('app.index') }}">
-                            Blogger
+                            Home
                         </a>
                     </div>
 
                     <div class="collapse navbar-collapse" id="app-navbar-collapse">
                         <!-- Left Side Of Navbar -->
+                        <ul class="nav navbar-nav">
+                            <li><a href="{{ url('/article') }}">Blogs</a></li>
+                        </ul>
                         <ul class="nav navbar-nav">
                             <li><a href="#{{-- url('/home') --}}">About</a></li>
                         </ul>
@@ -71,16 +75,16 @@
                         <ul class="nav navbar-nav navbar-right">
                             <!-- Authentication Links -->
                             @if (Auth::guest())
-                                <li><a href="#{{-- url('/login') --}}">Login</a></li>
-                                <li><a href="#{{-- route('register') --}}">Register</a></li>
+                                <li><a href="{{ route('login') }}">Login</a></li>
+                                <li><a href="{{ route('register') }}">Register</a></li>
                             @else
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                        {{ Auth::user()->name }} <span class="caret"></span>
+                                        {{ Auth::user()->first_name }} <span class="caret"></span>
                                     </a>
-
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                        <li><a href="{{ route('profile') }}"><i class="fa fa-img"></i><img src="uploads/profile_pic/{{$user->profile_picture}}" class="img-circle" alt="Cinque Terre" width="42" height="42"> Profile</a></li>
+                                        <li><a href="{{ route('logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                                     </ul>
                                 </li>
                             @endif
@@ -100,7 +104,7 @@
             <footer>
                 <div class="row text-center">
                     <div class="col-lg-12">
-                        <p>Copyright &copy; Your Website 2014</p>
+                        <p>Copyright &copy; Laravelsite {{ date('Y') }}</p>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
@@ -117,5 +121,6 @@
         <!-- Custom Scripts -->
         {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
         @yield('script')
+        @yield('extended-script')
     </body>
 </html>

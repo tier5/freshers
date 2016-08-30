@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->integer('country_id')
                     ->unsigned();
             $table->string('contact_number');
-            $table->string('profile_picture');
+            $table->string('profile_picture')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
