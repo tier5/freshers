@@ -30,7 +30,7 @@ class UserRequest extends Request
             'password'=>'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
             'confirm_password'=>'required|same:password',
             'contact_no'=>'required|min:10|numeric',
-            'date_of_birth'=>'required|date',
+            'date_of_birth'=>'required',
             'country'=>'required' ,
             'profile_picture'=>'image'
         ];

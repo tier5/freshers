@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Country;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\User;
+use \App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Session;
+use App\password_resets;
 
 class UserController extends Controller
 {
@@ -31,7 +34,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.register');
+        $countries=Country::all();
+        return view('user.register',compact('countries'));
     }
 
     /**
@@ -49,7 +53,7 @@ class UserController extends Controller
         $user->password=$request->password;
         $user->contact_number=$request->contact_no;
         $user->date_of_birth=$request->date_of_birth;
-        $user->country=$request->country;
+        $user->country_id=$request->country;
         if($request->hasFile('profile_picture')) {
             $destinationPath = 'uploads/profile_pic';
             $imgName = $request->profile_picture->getClientOriginalName();
@@ -79,9 +83,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function editprofile()
     {
-        //
+        $user = User::find(Session('id'));
+        $countries = Country::all();
+        if($user->count()) {
+            return view('user.editProfile', compact('user','countries'));
+        } else {
+            return App::abort(404);
+        }
     }
 
     /**
@@ -91,9 +101,24 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateprofile(Requests\UserUpdateRequest $request)
     {
-        //
+       $user=User::find(Session('id'));
+        $temp=$user->profile_picture;
+        $user->first_name=$request->first_name;
+        $user->last_name=$request->last_name;
+        $user->country_id=$request->country_id;
+        $user->contact_number=$request->contact_number;
+        if($request->hasFile('profile_picture')) {
+            $destinationPath = 'uploads/profile_pic';
+            $imgName = $request->profile_picture->getClientOriginalName();
+            $request->profile_picture->move($destinationPath, $imgName);
+            $user->profile_picture=$imgName;
+        }
+        else
+            $user->profile_picture=$temp;
+        $user->save();
+       return redirect()->route('profile')->with('success','You are Successfully Update your Profile');
     }
 
     /**
@@ -110,7 +135,7 @@ class UserController extends Controller
     {
         if(Auth::check())
         {
-            return redirect(route('profile'));
+            return redirect(route('article.index'));
         }
         return view('user.login');
     }
@@ -122,7 +147,7 @@ class UserController extends Controller
             $user=User::where('email','=',$request->email)->first();
             Session::flash('success','You are Successfully Logged in');
             Session::put('id',$user->id);
-            return redirect()->route('profile');
+            return redirect()->route('article.index');
         }
         else
             return redirect()->back()->with('Err','Enter a valid email or password');

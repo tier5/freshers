@@ -25,7 +25,7 @@ class UserLoginRequest extends Request
     {
         return [
             'email'=>'required|Email',
-            'password'=>'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'
+            'password'=>'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
 
         ];
     }

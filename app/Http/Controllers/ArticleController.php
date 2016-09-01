@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\View;
 use App\Article;
 use App\ArticleTag;
 use App\Category;
 use App\Http\Requests;
 use App\Tag;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str; 
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Session;
 class ArticleController extends Controller
 {
     /**
@@ -19,6 +21,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
+
         $articles = Article::latest()->get();
         
         return view('article.index', ['articles' => $articles]);
@@ -31,13 +34,12 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        $tags = Tag::all();
-
-        return view('article.create', [
+            $categories = Category::all();
+            $tags = Tag::all();
+            return view('article.create', [
                 'categories' => $categories,
                 'tags' => $tags
-        ]);
+            ]);
     }
 
     /**
@@ -49,7 +51,7 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         $tags = $this->listTags(explode(', ', $request->tags));
-
+        $user_id=Session::get('id');
        $this->validate($request, [
                 'title' => 'required|unique:articles',
                 'category' => 'required',
@@ -61,7 +63,7 @@ class ArticleController extends Controller
         $article->slug = str_slug($request->title);
         $article->body = $request->body;
         $article->category_id = $request->category;
-        $article->user_id = 1;
+        $article->user_id = $user_id;
         $article->save();
         $article->tags()->attach($tags);
 
@@ -78,6 +80,7 @@ class ArticleController extends Controller
      */
     public function show($slug)
     {
+
         $article = Article::where('slug', $slug)->get()
                 ->first();
 
@@ -85,7 +88,26 @@ class ArticleController extends Controller
             abort(404);
         }
 
-        return view('article.show', ['article' => $article]);
+        $view = View::where('article_id',$article->id)->first(); //fetchimg the view field for this article
+
+        if($view == null)
+        {
+            $new_view = new View();
+            $new_view->user_id      = Session::get('id');
+            $new_view->article_id   = $article->id;
+            $new_view->save();
+        }
+        else
+        {
+            $view->user_id      = Session::get('id');
+            $view->article_id   = $article->id;
+            $view->save();
+        }
+
+        $article->views = $article->views+1;
+        $article->save();
+
+            return view('article.show', ['article' => $article]);
     }
 
     /**
@@ -122,27 +144,27 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $slug)
     {
-        $tags = $this->listTags(explode(', ', $request->tags));
+            $tags = $this->listTags(explode(', ', $request->tags));
 
-        $this->validate($request, [
+            $this->validate($request, [
                 'title' => 'required',
                 'category' => 'required',
                 'body' => 'required'
-        ]);
+            ]);
 
-        $article = Article::where('slug', $slug)->get()
+            $article = Article::where('slug', $slug)->get()
                 ->first();
 
-        $article->title = $request->title;
-        $article->slug = str_slug($request->title);
-        $article->category_id = $request->category;
-        $article->body = $request->body;
-        $article->update();
-        $article->tags()->sync($tags);
+            $article->title = $request->title;
+            $article->slug = str_slug($request->title);
+            $article->category_id = $request->category;
+            $article->body = $request->body;
+            $article->update();
+            $article->tags()->sync($tags);
 
-        $request->session()->flash('success', 'Your post is updated successfully!');
+            $request->session()->flash('success', 'Your post is updated successfully!');
 
-        return redirect()->route('article.show', [$article->slug]);
+            return redirect()->route('article.show', [$article->slug]);
     }
 
     /**
@@ -196,5 +218,15 @@ class ArticleController extends Controller
             $tags[++$key] = $tag->id;
         }
         return $tags;
+    }
+
+    public function userarticle(Request $request) {
+        $article = Article::where('user_id','=',$request->user_id)->get();
+        if (is_null($article)) {
+            abort(404);
+        }
+
+        return view('article.showuserarticle', ['articles' => $article]);
+
     }
 }

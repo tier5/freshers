@@ -3,10 +3,18 @@ V0.0:
     2. Created Controller for Application, Ueer, Category, Article and Search
     3. Modiefied Application index route to app.index and created base layout and app index view.
 --deepjyotimukherjee.suman@gmail.com
-V0.1:
-    null
+V0.1
+    1.Created user model,migration
+    2.Created Controller for user
+    3.implement Register and login for this app
+--ujjalkumar1993@yahoo.com
 V0.2:
     1. Created Article/Blog Module
     2. Implemented Searchbar and Search Functionality
     3. Added Popular Tags and Popular Category Sidebars
 --deepjyotimukherjee.suman@gmail.com
+V0.3
+    1. Modified some functionality of user
+    2. Create Article functionality for user
+--ujjalkumar1993@yahoo.com
+
