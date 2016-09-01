@@ -108,7 +108,6 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
         ]);
 
     });
-
     Route::get('resetpassword', [
         'uses' => 'PasswordController@resetpassword',
         'as' => 'resetpassword'
@@ -141,7 +140,13 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
         'uses'=>'PageController@postcontact',
         'as'=>'postcontact'
     ]);
-
+    Route::group(['prefix' => 'admin'], function() {
+        Route::get('/', [
+            'uses' => 'AdminController@getIndex',
+            'as' => 'admin.index'
+        ]);
+        Route::resource('category', 'CategoryController');
+    });
 });
 
 $router->group(array('domain' => '{subdomain}.laravelsite.dev'), function()

@@ -157,7 +157,11 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\ViewComposerServiceProvider::class,
 
-        Unisharp\Ckeditor\ServiceProvider::class,   
+        /*
+         * Third Party Service Providers...
+         */
+        Unisharp\Ckeditor\ServiceProvider::class,
+        Vinkla\Hashids\HashidsServiceProvider::class   
 
     ],
 
@@ -204,7 +208,12 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Carbon' => Carbon\Carbon::class
+        'Carbon' => Carbon\Carbon::class,
+
+        /*
+         * Third Party Aliases...
+         */
+        'Hashids' => Vinkla\Hashids\Facades\Hashids::class
 
     ],
 

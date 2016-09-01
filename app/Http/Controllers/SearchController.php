@@ -6,28 +6,12 @@ use App\Article;
 use App\Category;
 use App\Http\Requests;
 use App\Tag;
-use Hashids\Hashids;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Vinkla\Hashids\Facades\Hashids;
 
 class SearchController extends Controller
 {
-    /**
-     * Hashids for encprypted IDs passing through URL.
-     * 
-     * @var Hashids\Hashids
-     */
-    private $hashids;
-
-    /**
-     * Create a new search controller instance.
-     *
-     * @return void
-     */
-    function __construct() {
-        $this->hashids = new Hashids();
-    }
-
     /**
      * Search keywords to matches exact Tags, Articles or Categories
      * 
@@ -43,9 +27,9 @@ class SearchController extends Controller
         if ($article) {
             return redirect()->route('article.show', [$article->slug]);
         } else if ($tag) {
-            return redirect()->route('search.tag', [$this->hashids->encode($tag->id)]);
+            return redirect()->route('search.tag', [Hashids::encode($tag->id)]);
         } elseif ($category) {
-            return redirect()->route('search.category', [$this->hashids->encode($category->id)]);
+            return redirect()->route('search.category', [Hashids::encode($category->id)]);
         } else {
             $request->session()->flash('warning', 'You should enter some keywords to search!');
 
@@ -61,7 +45,7 @@ class SearchController extends Controller
      */
     public function searchTag(Request $request)
     {
-        $tag = Tag::find($this->hashids->decode($request->id)[0]);
+        $tag = Tag::find(Hashids::decode($request->id)[0]);
 
         return view('search.tag', ['articles' => $tag->articles]);
     }
@@ -74,7 +58,7 @@ class SearchController extends Controller
      */
     public function searchCategory(Request $request)
     {
-        $category = Category::find($this->hashids->decode($request->id)[0]);
+        $category = Category::find(Hashids::decode($request->id)[0]);
 
         return view('search.category', ['category' => $category]);
     }
