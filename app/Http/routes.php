@@ -146,6 +146,18 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             'as' => 'admin.index'
         ]);
         Route::resource('category', 'CategoryController');
+        Route::get('user/edit/{id}', [
+            'uses' => 'AdminController@getedituser',
+            'as' => 'adminuseredit'
+        ]);
+        Route::get('user/edit/{id}', [
+            'uses' => 'AdminController@postedituser',
+            'as' => 'adminuseredit'
+        ]);
+        Route::get('user/delete/{id}', [
+            'uses' => 'AdminController@deleteuser',
+            'as' => 'adminuserdelete'
+            ]);
     });
 });
 

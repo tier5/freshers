@@ -161,7 +161,6 @@
     $('input[name=date_of_birth]').datepicker({ dateFormat: 'yy/mm/dd',changeMonth: true,changeYear: true,yearRange: '1950:Date'});
 
 </script>
-
 @endsection
 
 @section('script')
