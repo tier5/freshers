@@ -45,7 +45,7 @@ return [
     'ip'                   => '*The :attribute must be a valid IP address.',
     'json'                 => '*The :attribute must be a valid JSON string.',
     'max'                  => [
-        'numeric' => 'T*he :attribute may not be greater than :max.',
+        'numeric' => '*The :attribute may not be greater than :max.',
         'file'    => '*The :attribute may not be greater than :max kilobytes.',
         'string'  => '*The :attribute may not be greater than :max characters.',
         'array'   => '*The :attribute may not have more than :max items.',
@@ -54,7 +54,7 @@ return [
     'min'                  => [
         'numeric' => '*The :attribute must be at least :min.',
         'file'    => '*The :attribute must be at least :min kilobytes.',
-        'string'  => '*he :attribute must be at least :min characters.',
+        'string'  => '*The :attribute must be at least :min characters.',
         'array'   => '*The :attribute must have at least :min items.',
     ],
     'not_in'               => '*The selected :attribute is invalid.',
@@ -92,10 +92,10 @@ return [
     */
 
     'custom' => [
-        'password' => [
+       'password'=> [
             'regex'=> '**Password Must Have One Uppercase One Lowercase and one numeric',
             'alpha_spaces'=> '*The :attribute may only contain letters and spaces.',
-        ],
+        ]
     ],
 
     /*
