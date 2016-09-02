@@ -86,6 +86,10 @@
             'uses' => 'UserController@updateprofile',
             'as' => 'updateprofile'
         ]);
+        Route::patch('resetprofilepassword', [
+            'uses' => 'UserController@resetprofilepassword',
+            'as' => 'resetprofilepassword'
+        ]);
     });
 
     Route::get('resetpassword', [

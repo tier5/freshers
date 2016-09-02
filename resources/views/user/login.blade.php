@@ -5,15 +5,15 @@
 @endsection
 
 @section('content')
+    @if(Session::has('success'))
+        <div class="co-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
+            <p class="alert alert-warning">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{Session::get('success')}}
+            </p>
+        </div>
+    @endif
     <div class="container">
-        @if(Session::has('success'))
-            <div class="co-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
-                <p class="alert alert-warning">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    {{Session::get('success')}}
-                </p>
-            </div>
-        @endif
             <div class="form">
         <form action="{{route('postlogin')}}" method="POST" class="form-horizontal" role="form"">
         <legend>Login Form</legend>

@@ -5,6 +5,14 @@
 @endsection
 
 @section('content')
+    @if(Session::has('success'))
+        <div class="co-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
+            <p class="alert alert-warning">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{Session::get('success')}}
+            </p>
+        </div>
+    @endif
     <div class="container">
     <form action="{{route('postregister')}}" method="POST" id="form" class="form-horizontal" role="form" enctype="multipart/form-data">
             <legend>Registration Form</legend>

@@ -9,11 +9,13 @@ use App\Http\Requests;
 use \App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Session;
 use App\password_resets;
+use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
 
 class UserController extends Controller
 {
@@ -169,5 +171,27 @@ class UserController extends Controller
             return view('user.profile')->with('user',$user);
         }
         return App::abort(404);
+    }
+
+    public function resetprofilepassword(Requests\ResetPasswordRequest $request)
+    {
+        $user=User::find(Session('id'));
+        $oldpassword=$request->old_password;
+        if (Hash::check($oldpassword,$user->password))
+        {
+            $newpassword=$request->new_password;
+            if ($oldpassword == $newpassword)
+            {
+                return redirect()->back()->with('success','Old password and new password can not be same');
+            }
+            else
+            {
+                $user->password=$newpassword;
+                $user->save();
+                Auth::logout();
+                return redirect()->route('login')->with('success',"You are Successfully change your password\n Enter New Password For login");
+            }
+        }
+        return redirect()->back()->with('success',"Enter Your Old password Correctly");
     }
 }

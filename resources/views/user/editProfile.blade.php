@@ -5,6 +5,14 @@
 @endsection
 
 @section('content')
+    @if(Session::has('success'))
+        <div class="co-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
+            <p class="alert alert-warning">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{Session::get('success')}}
+            </p>
+        </div>
+    @endif
     <div class="container">
         <form action="{{  route('updateprofile') }}" method="POST" class="form-horizontal" role="form" enctype="multipart/form-data">
             <input type="hidden" name="_method" value="PATCH">
@@ -70,5 +78,46 @@
             </div>
 
         </form>
+    </div>
+    <hr />
+    <div class="container">
+        <form action="{{  route('resetprofilepassword') }}" method="POST" class="form-horizontal" role="form" enctype="multipart/form-data">
+            <input type="hidden" name="_method" value="PATCH">
+            <legend>Reset Password</legend>
+            <div class="form-group">
+                <label for="oldpassword" class="control-label col-md-3 col-sm-3 col-xs-12">Enter Your Old Password</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="row">
+                        <input type="password" class="form-control col-md-6 col-sm-6 col-xs-12" id="oldpassword" name="old_password" placeholder="Old Password (one upper+one lower+one number)" />
+                        @if ($errors->any()) <div style="color:red">{{$errors->first('old_password')}}</div>@endif
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="newpassword" class="control-label col-md-3 col-sm-3 col-xs-12">New Password</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="row">
+                        <input type="password" class="form-control col-md-6 col-sm-6 col-xs-12" id="newpassword" name="new_password" placeholder="New Password (one upper+one lower+one number)" />
+                        @if ($errors->any()) <div style="color:red">{{$errors->first('new_password')}}</div>@endif
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="user_confirmnewpassword" class="control-label col-md-3 col-sm-3 col-xs-12">Re-enter New Password</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="row">
+                        <input type="password" class="form-control col-md-6 col-sm-6 col-xs-12" id="user_Confirmenewpassword" name="confirm_new_password" placeholder="Re-enter new Password" />
+                        @if ($errors->any()) <div style="color:red">{{$errors->first('confirm_new_password')}}</div>@endif
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token()}}"/>
+            <div class="form-group">
+                <div class="co-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
+                    <button type="reset" class="btn btn-warning btn-md pull-left">Reset</button>
+                    <button type="submit" class="btn btn-success btn-md pull-right">Submit</button>
+                </div>
+            </div>
+    </form>
     </div>
 @endsection
