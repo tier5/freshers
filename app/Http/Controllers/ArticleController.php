@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
 class ArticleController extends Controller
@@ -49,7 +50,7 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         $tags = $this->listTags(explode(', ', $request->tags));
-
+        $userid=Session::get('id');
        $this->validate($request, [
                 'title' => 'required|unique:articles',
                 'category' => 'required',
@@ -61,7 +62,7 @@ class ArticleController extends Controller
         $article->slug = str_slug($request->title);
         $article->body = $request->body;
         $article->category_id = $request->category;
-        $article->user_id = 1;
+        $article->user_id = $userid;
         $article->save();
         $article->tags()->attach($tags);
 

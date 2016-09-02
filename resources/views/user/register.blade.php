@@ -55,7 +55,7 @@
             <label for="dateofbirth" class="control-label col-md-3 col-sm-3 col-xs-12">Date of Birth</label>
             <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="row">
-                    <input type="text" class="form-control col-md-6 col-sm-6 col-xs-12" name="date_of_birth" id="dateofbirth" placeholder="dd/mm/yyyy" />
+                    <input type="text" class="form-control col-md-6 col-sm-6 col-xs-12" name="date_of_birth" id="dateofbirth" placeholder="yyyy/mm/dd" />
                     @if ($errors->any()) <div style="color:red">{{$errors->first('date_of_birth')}}</div>@endif
                 </div>
             </div>
@@ -110,7 +110,7 @@
 
     <script type="text/javascript">
         $("document").ready(function() {
-            $('#dateofbirth').datepicker({ dateFormat: 'dd/mm/yy',changeMonth: true,changeYear: true})
+            $('#dateofbirth').datepicker({ dateFormat: 'yy/mm/dd',changeMonth: true,changeYear: true,yearRange: '1950:Date'})
         });
         </script>
 @endsection
