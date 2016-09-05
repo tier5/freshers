@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Session;
 use App\password_resets;
+
 use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
 
 class UserController extends Controller

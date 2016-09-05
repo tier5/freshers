@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCountriesTable extends Migration
+class CreateTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,9 @@ class CreateCountriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('countries', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('tags', function (Blueprint $table) {
+            $table->increments('id')->unsigned()->index();
             $table->string('name');
-            $table->string('code');
-            $table->integer('isd_prefix');
-            $table->string('tld_suffix');
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ class CreateCountriesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('countries');
+        Schema::drop('tags');
     }
 }
