@@ -67,10 +67,10 @@
                             <li><a href="{{ url('/article') }}">Blogs</a></li>
                         </ul>
                         <ul class="nav navbar-nav">
-                            <li><a href="#{{-- url('/home') --}}">About</a></li>
+                            <li><a href="{{route('about')}}">About</a></li>
                         </ul>
                         <ul class="nav navbar-nav">
-                            <li><a href="#{{-- url('/home') --}}">Contact</a></li>
+                            <li><a href="{{route('getcontact')}}">Contact</a></li>
                         </ul>
 
                         <!-- Right Side Of Navbar -->

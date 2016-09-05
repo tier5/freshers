@@ -110,4 +110,19 @@
     ]);
 
 
+    Route::get('about',[
+        'uses'=>'PageController@about',
+        'as'=>'about'
+    ]);
+
+    Route::get('contact',[
+        'uses'=>'PageController@getcontact',
+        'as'=>'getcontact'
+    ]);
+
+    Route::post('contact', [
+        'uses'=>'PageController@postcontact',
+        'as'=>'postcontact'
+    ]);
+
 
