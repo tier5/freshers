@@ -48,6 +48,7 @@
         'uses'=>'UserController@create',
         'as'=>'register'
     ]);
+
     Route::post('register',[
         'uses'=>'UserController@store',
         'as'=>'postregister'
@@ -124,5 +125,4 @@
         'uses'=>'PageController@postcontact',
         'as'=>'postcontact'
     ]);
-
 

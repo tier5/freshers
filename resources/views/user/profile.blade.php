@@ -26,15 +26,34 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-4">Date of Birth:</div>
-                        <div class="col-xs-12 col-sm-6">{{date('d F Y',strtotime($user->date_of_birth))}}</div>
+                        <div class="col-xs-12 col-sm-6">
+                            @if($user->date_of_birth != null)
+                                {{date('d F Y',strtotime($user->date_of_birth))}}
+                            @else
+                                Not Selected
+                            @endif
+                        </div>
                     </div>
                     <div class="row">
                          <div class="col-xs-12 col-sm-4">Country:</div>
-                        <div class="col-xs-12 col-sm-6">{{App\Country::where('id','=',$user->country_id)->select('name')->first()->name}}</div>
+                        <div class="col-xs-12 col-sm-6">
+                            @if(count(App\Country::where('id','=',$user->country_id)->first())>0)
+                                {{App\Country::where('id','=',$user->country_id)->first()->name}}
+                                @else
+                                Not Selected
+                                @endif
+                            </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-4">Contact No: </div>
-                        <div class="col-xs-12 col-sm-6">{{App\Country::where('id','=',$user->country_id)->select("isd_prefix")->first()->isd_prefix.$user->contact_number}}</div>
+                        <div class="col-xs-12 col-sm-6">
+                            @if(count(App\Country::where('id','=',$user->country_id)->first())>0)
+                                {{App\Country::where('id','=',$user->country_id)->first()->isd_prefix.$user->contact_number}}
+                            @else
+                                -------------
+                             @endif
+
+                        </div>
                     </div>
                 </div>
 </div>
