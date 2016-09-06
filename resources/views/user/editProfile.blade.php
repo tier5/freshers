@@ -36,15 +36,31 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="dateofbirth" class="control-label col-md-3 col-sm-3 col-xs-12">Date of Birth</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="row">
+                        <input type="text" class="form-control col-md-6 col-sm-6 col-xs-12" value="{{$user->date_of_birth}}"  name="date_of_birth" id="dateofbirth" placeholder="yyyy/mm/dd" />
+                        @if ($errors->any()) <div style="color:red">{{$errors->first('date_of_birth')}}</div>@endif
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="country" class="control-label col-md-3 col-sm-3 col-xs-12">Country</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <div class="row">
                         <!-- country codes (ISO 3166) and Dial codes. -->
                         <select name="country_id" id="country" class="form-control col-md-6 col-sm-6 col-xs-12">
-                            <option value="{{$user->country_id}}">{{\App\Country::where('id','=',$user->country_id)->first()->name}}</option>
+                            <option value="{{$user->country_id}}">
+                                @if(count(App\Country::where('id','=',$user->country_id)->first())>0)
+                                    {{App\Country::where('id','=',$user->country_id)->first()->name}}
+                                @else
+                                    Not Selected
+                                @endif
+                            </option>
+
                             @foreach($countries as $country)
 
-                                <option value="{{$user->country_id}}">{{$country->name}}</option>
+                                <option value="{{$country->id}}">{{$country->name}}</option>
                             @endforeach
 
                         </select>
@@ -124,5 +140,8 @@
     </form>
     </div>
 
+    <script>
+        $('input[name=date_of_birth]').datepicker({ dateFormat: 'yy/mm/dd',changeMonth: true,changeYear: true,yearRange: '1950:Date'});
+    </script>
 
 @endsection

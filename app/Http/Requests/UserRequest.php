@@ -24,14 +24,15 @@ class UserRequest extends Request
     public function rules()
     {
         return [
-            'first_name'=>'required|min:2|alpha',
-            'last_name'=>'required|min:2|alpha',
+            'first_name'=>'required|min:2',
+            'last_name'=>'required|min:2',
             'email'=>'required|Email|unique:users,email',
             'password'=>'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
             'confirm_password'=>'required|same:password',
-            'contact_no'=>'required|min:10|numeric',
-            'date_of_birth'=>'required',
-            'country'=>'required' ,
+
+            'contact_no'=>'min:10|numeric',
+            'date_of_birth'=>'date',
+
             'profile_picture'=>'image'
         ];
     }

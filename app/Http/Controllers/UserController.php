@@ -54,9 +54,24 @@ class UserController extends Controller
         $user->last_name=$request->last_name;
         $user->email=$request->email;
         $user->password=$request->password;
-        $user->contact_number=$request->contact_no;
-        $user->date_of_birth=$request->date_of_birth;
-        $user->country_id=$request->country;
+        if($request->has('contact_no')) {
+            $user->contact_number=$request->contact_no;
+        }
+        else {
+            $user->contact_number=null;
+        }
+        if($request->has('date_of_birth')) {
+            $user->date_of_birth=$request->date_of_birth;
+        }
+        else {
+            $user->date_of_birth=null;
+        }
+        if($request->has('country')) {
+            $user->country_id=$request->country;
+        }
+        else {
+            $user->country_id=null;
+        }
         if($request->hasFile('profile_picture')) {
             $destinationPath = 'uploads/profile_pic';
             $imgName = $request->profile_picture->getClientOriginalName();
@@ -110,8 +125,24 @@ class UserController extends Controller
         $temp=$user->profile_picture;
         $user->first_name=$request->first_name;
         $user->last_name=$request->last_name;
-        $user->country_id=$request->country_id;
-        $user->contact_number=$request->contact_number;
+        if($request->has('contact_number')) {
+            $user->contact_number=$request->contact_number;
+        }
+        else {
+            $user->contact_number=null;
+        }
+        if($request->has('date_of_birth')) {
+            $user->date_of_birth=$request->date_of_birth;
+        }
+        else {
+            $user->date_of_birth=null;
+        }
+        if($request->has('country_id')) {
+            $user->country_id=$request->country_id;
+        }
+        else {
+            $user->country_id=null;
+        }
         if($request->hasFile('profile_picture')) {
             $destinationPath = 'uploads/profile_pic';
             $imgName = $request->profile_picture->getClientOriginalName();

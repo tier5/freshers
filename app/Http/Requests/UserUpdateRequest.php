@@ -24,8 +24,8 @@ class UserUpdateRequest extends Request
     public function rules()
     {
         return [
-            'first_name'=>'required|min:2|alpha',
-            'last_name'=>'required|min:2|alpha',
+            'first_name'=>'required|min:2',
+            'last_name'=>'required|min:2',
             'contact_number'=>'required|min:10|numeric',
             'country_id'=>'required',
             'profile_picture' => 'image'
