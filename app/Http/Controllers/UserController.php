@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Country;
+use App\Subdomain;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -81,6 +82,12 @@ class UserController extends Controller
         else
             $user->profile_picture='default.jpg';
         $user->save();
+        $sub=new Subdomain();
+        $sub->subdomain=$user->first_name.$user->id;
+        $sub->user_id=$user->id;
+        $sub->publish=0;
+        $sub->theme=1;
+        $sub->save();
         return redirect()->route('login')->with('success','You are Successfully Register Yourself');
     }
 
@@ -184,7 +191,7 @@ class UserController extends Controller
             return redirect()->route('article.index');
         }
         else
-            return redirect()->back()->with('Err','Enter a valid email or password');
+            return redirect()->route('login')->with('Err','Enter a valid email or password');
     }
 
     public function logout()
@@ -226,4 +233,8 @@ class UserController extends Controller
         }
         return redirect()->back()->with('success',"Enter Your Old password Correctly");
     }
+
+
+
+
 }

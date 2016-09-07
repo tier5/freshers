@@ -34,16 +34,6 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($password);
     }
-
-    /**
-     * A user could own many articles.
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function articles()
-    {
-        return $this->hasMany('App\Article');
-    }
      public function comment()//--added from here
     {
         return $this->hasMany(Comment::class);
@@ -56,4 +46,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(Article::class);
     }
+
 }

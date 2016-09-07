@@ -1,0 +1,94 @@
+element.style {
+}
+@media (min-width: 768px)
+    .navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+        margin-left: -15px;
+    }
+    @media only screen and (min-width: 768px)
+        .navbar-custom .navbar-brand {
+            color: #b32929;
+            padding: 20px;
+        }
+        .navbar-custom .nav li a, .navbar-custom .navbar-brand, h1, h2, h3, h4, h5, h6 {
+            font-weight: 800;
+        }
+
+        .navbar-default .navbar-brand {
+            color: #777;
+        }
+        .navbar-brand {
+            float: left;
+            height: 50px;
+            padding: 15px 15px;
+            font-size: 18px;
+            line-height: 20px;
+        }
+        a, body {
+            color: #2b10ab;
+        }
+        a {
+            color: #1f9e12;
+            text-decoration: none;
+        }
+        a {
+            background-color: transparent;
+        }
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        user agent stylesheet
+        a:-webkit-any-link {
+            color: -webkit-link;
+            text-decoration: underline;
+            cursor: auto;
+        }
+        Inherited from nav.navbar.navbar-default.navbar-custom.navbar-fixed-top
+        .intro-header .page-heading .subheading, .intro-header .post-heading .subheading, .intro-header .site-heading .subheading, .navbar-custom, h1, h2, h3, h4, h5, h6 {
+            font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+        }
+        Inherited from body
+        body {
+            font-family: Lora,'Times New Roman',serif;
+            font-size: 20px;
+            -webkit-tap-highlight-color: #0085A1;
+        }
+        a, body {
+            color: #2b10ab;
+        }
+        body {
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #333;
+            background-color: #fff;
+        }
+        Inherited from html
+        html {
+            font-size: 10px;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+        }
+        html {
+            font-family: sans-serif;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        Pseudo ::before element
+        :after, :before {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        Pseudo ::after element
+        :after, :before {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        Pseudo ::selection element
+        ::selection {
+            color: #f1f1f1;
+            text-shadow: none;
+            background: #0085A1;
+        }

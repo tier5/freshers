@@ -32,5 +32,12 @@ v0.4
     2.Add About us page
 V0.4.1
     1.Fix registration page
+    2.Fix photo uploading problem in registration page
+V0.5
+    1. Implement Subdomain
+    2. Make functionality for user to choose his Subdomain theme
+    3.Fix up Some Bugs of Articles
+V0.5.1
+    1.Fix route 
 
 

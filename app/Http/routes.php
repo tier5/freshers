@@ -1,8 +1,27 @@
 <?php
 
+
     Route::get('fbauth/{auth?}',array('as'=>'facebookAuth' , 'uses'=>'ReplyController@getFacebookLogin'));
 
-    Route::get('/', ['uses' => 'AppController@getIndex','as' => 'app.index']);
+/*
+|--------------------------------------------------------------------------
+| Application Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register all of the routes for an application.
+| It's a breeze. Simply tell Laravel the URIs it should respond to
+| and give it the controller to call when that URI is requested.
+|
+*/
+$router->group(array('domain' => 'laravelsite.dev'), function()
+{
+    Route::get('/', [
+        'uses' => 'AppController@getIndex',
+        'as' => 'app.index'
+    ]);
+
+
+    
 
     Route::resource('article', 'ArticleController', ['names'=> ['index' => 'article.index']]);
 
@@ -100,6 +119,7 @@
             'as' => 'resetprofilepassword'
         ]);
 
+
         Route::resource('comment', 'CommentController', ['names'=> ['index' => 'comment.index']]);
 
         Route::post('cmt', 'CommentController@edit');
@@ -123,6 +143,16 @@
         Route::post('/Like/reply',      ['uses'=>'LSVController@likereply',    'as'=>'reply_like_increase']);
 
         Route::post('/Dislike/reply',   ['uses'=>'LSVController@dislikereply', 'as'=>'reply_like_decrease']);
+
+
+        Route::get('subdomain', [
+            'uses' => 'SubdomainController@getSubdomain',
+            'as' => 'getsubdomain'
+        ]);
+        Route::patch('subdomain', [
+            'uses' => 'SubdomainController@update',
+            'as' => 'updatesubdomain'
+        ]);
 
     });
 
@@ -159,4 +189,26 @@
         'uses'=>'PageController@postcontact',
         'as'=>'postcontact'
     ]);
+   
+}); //end of router group
+
+$router->group(array('domain' => '{subdomain}.laravelsite.dev'), function()
+{
+
+    Route::get('/', function($subdomain) {
+        $sub=\App\Subdomain::where('subdomain','=',$subdomain)->first();
+        if($sub) {
+            if($sub->publish==1) {
+                $article = App\Article::where('user_id','=',$sub->user_id)->get();
+                return view('subdomain.subdomain_app', ['articles' => $article,'subdomain' => $sub]);
+            }
+            else {
+                abort(404);
+            }
+        }
+        else {
+            return Redirect::to('http://laravelsite.dev');
+        }
+    });
+});
 

@@ -13,7 +13,7 @@
         @if($errors->any())
         <ul>
             @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
+                <li> <div style="color:red">{{ $error }}</div></li>
             @endforeach
         </ul>
     @endif
@@ -21,7 +21,7 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="form-group">
             <label for="article-title">Title</label>
-            <input id="article-title" type="text" name="title" class="form-control input-sm" />
+            <input id="article-title" value="{{old('title')}}" type="text" name="title" class="form-control input-sm" />
         </div>
         {{-- <div class="form-group">
             <label for="article-slug">Slug</label>
@@ -29,7 +29,7 @@
         </div> --}}
         <div class="form-group">
             <label for="article-category">Category</label>
-            <select id="article-category" name="category" class="form-control input-sm">
+            <select id="article-category" value="{{old('category')}}" name="category" class="form-control input-sm">
                 <option value="">-- Select --</option>
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -38,11 +38,11 @@
         </div>
         <div class="form-group">
             <label for="article-body">Body</label>
-            <textarea id="article-body" rows="25" name="body" class="form-control"></textarea>
+            <textarea id="article-body" rows="25" name="body" class="form-control">{{old('body')}}</textarea>
         </div>
         <div id="prefetch" class="form-group">
             <label for="article-tags">Tags</label>
-            <input type="text" id="article-tags" class="form-control input-sm" name="tags" placeholder="Tags" />
+            <input type="text" value="{{old('tags')}}" id="article-tags" class="form-control input-sm" name="tags" placeholder="Tags" />
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-md btn-success pull-right">Post</button>

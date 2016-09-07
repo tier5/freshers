@@ -138,10 +138,72 @@
                 </div>
             </div>
     </form>
+        <div id="pswd_info">
+            <h4>Password must meet the following requirements:</h4>
+            <ul>
+                <li id="smaller" class="invalid">At least <strong>one smaller letter</strong></li>
+                <li id="capital" class="invalid">At least <strong>one capital letter</strong></li>
+                <li id="number" class="invalid">At least <strong>one number</strong></li>
+                <li id="length" class="invalid">Be at least <strong>8 characters</strong></li>
+            </ul>
+        </div>
+        <div id="cpswd_info">
+            <strong id="cpswd" class="invalid">password & confirm Password Should be match</strong>
+        </div>
     </div>
 
     <script>
         $('input[name=date_of_birth]').datepicker({ dateFormat: 'yy/mm/dd',changeMonth: true,changeYear: true,yearRange: '1950:Date'});
+
+        $('input[name=new_password]').keyup(function() {
+            var pswd = $(this).val();
+            if ( pswd.length < 8 ) {
+                $('#length').removeClass('valid').addClass('invalid');
+            } else {
+                $('#length').removeClass('invalid').addClass('valid');
+            }
+            //validate letter
+            if ( pswd.match(/[a-z]/) ) {
+                $('#smaller').removeClass('invalid').addClass('valid');
+            } else {
+                $('#smaller').removeClass('valid').addClass('invalid');
+            }
+
+//validate capital letter
+            if ( pswd.match(/[A-Z]/) ) {
+                $('#capital').removeClass('invalid').addClass('valid');
+            } else {
+                $('#capital').removeClass('valid').addClass('invalid');
+            }
+
+//validate number
+            if ( pswd.match(/\d/) ) {
+                $('#number').removeClass('invalid').addClass('valid');
+            } else {
+                $('#number').removeClass('valid').addClass('invalid');
+            }
+        }).focus(function() {
+            $('#pswd_info').show();
+        }).blur(function() {
+            $('#pswd_info').hide();
+        })
+        $('input[name=confirm_new_password]').keyup(function() {
+            var pswd = $(this).val();
+            var cpassword = $('#user_password').val();
+            if ( pswd == cpassword) {
+                $('#cpswd').removeClass('invalid').addClass('valid');
+            }
+            else {
+                $('#cpswd').removeClass('valid').addClass('invalid');
+            }
+
+        }).focus(function() {
+            $('#cpswd_info').show();
+        }).blur(function() {
+            $('#cpswd_info').hide();
+        })
+
     </script>
 
 @endsection
+

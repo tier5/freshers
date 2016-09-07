@@ -68,4 +68,19 @@ $(document).ready(function() {
                 .html(percent+"%");
         }
 
+/*
+    function checkAvailability() {
+        //$("#loaderIcon").show();
+        jQuery.ajax({
+            url: "js.php",
+            data:'subdomain='+$("#subdomain").val(),
+            type: "POST",
+            success:function(data){
+                $("#subdomain-availability-status").html(data);
+               // $("#loaderIcon").hide();
+            },
+            error:function (){}
+        });
+    }*/
+
 });
