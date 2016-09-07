@@ -11,6 +11,7 @@
 |
 */
 $router->group(array('domain' => Request::server('HTTP_HOST')), function()
+
 {
 
    Route::get('/', [
@@ -141,6 +142,7 @@ $router->group(array('domain' => Request::server('HTTP_HOST')), function()
 });
 
 $router->group(array('domain' => '{subdomain}.'.Request::server('HTTP_HOST')), function()
+
 {
 
     Route::get('/', function($subdomain) {
