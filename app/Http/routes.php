@@ -15,8 +15,6 @@
 */
 
 $router->group(array('domain' => 'laravelsite.dev'), function()
-
-
 {
     Route::get('/', [
         'uses' => 'AppController@getIndex',
@@ -212,9 +210,7 @@ $router->group(array('domain' => '{subdomain}.laravelsite.dev'), function()
             }
         }
         else {
-
             return Redirect::to('http://laravelsite.dev');
-
         }
     });
 });
