@@ -10,8 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
-$router->group(array('domain' => Request::server('HTTP_HOST')), function()
+$router->group(array('domain' => 'laravelsite.dev'), function()
 {
 
    Route::get('/', [
@@ -157,7 +156,6 @@ $router->group(array('domain' => '{subdomain}.'.Request::server('HTTP_HOST')), f
             }
         }
         else {
-
             return Redirect::to(Request::server('HTTP_HOST'));
         }
     });
