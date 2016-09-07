@@ -1,3 +1,4 @@
+
 @extends('subdomain.layouts.'.$subdomain->theme)
 
 @section('title')

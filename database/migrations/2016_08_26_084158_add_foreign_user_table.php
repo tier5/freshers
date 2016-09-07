@@ -17,7 +17,7 @@ class AddForeignUserTable extends Migration
             $table->foreign('country_id')
                 ->references('id')
                 ->on('countries')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
         });
     }
 

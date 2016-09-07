@@ -36,6 +36,7 @@ V0.5
     1. Implement Subdomain
     2. Make functionality for user to choose his Subdomain theme
     3.Fix up Some Bugs of Articles
+<<<<<<< f85370202eddabc29531589ce201a75cd01c2a71
 V0.5.1
     1.Fix route
 V0.6
@@ -45,5 +46,7 @@ V0.6.1
 V0.6.2
     1.Fix some resolution problems
 
+=======
+>>>>>>> Release V0.5
 
 
