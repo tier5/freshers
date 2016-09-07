@@ -21,7 +21,7 @@
             <label for="user_email" class="control-label col-md-3 col-sm-3 col-xs-12">Email</label>
             <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="row">
-                    <input type="email" class="form-control col-md-6 col-sm-6 col-xs-12" id="user_email" name="email" placeholder="Email" />
+                    <input type="email" value="{{old('email')}}" class="form-control col-md-6 col-sm-6 col-xs-12" id="user_email" name="email" placeholder="Email" />
                 </div>
                 @if ($errors->any()) <div style="color:red">{{$errors->first('email')}}</div>@endif
             </div>

@@ -15,8 +15,8 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
         <!-- Bootstrap Core CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/password.css" rel="stylesheet">
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/password.css" rel="stylesheet">
         <!-- Custom CSS -->
         {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -88,6 +88,7 @@
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="{{ route('profile') }}"><i class="fa fa-img"></i><img src="{{URL::to('uploads/profile_pic/'.Auth::user()->profile_picture)}}" class="img-circle" alt="Cinque Terre" width="42" height="42"> Profile</a></li>
                                         <li><a href="{{route('editprofile')}}"><i class="fa fa-btn fa-update"></i>Update Profile</a> </li>
+                                        <li><a href="{{route('getsubdomain')}}"><i class="fa fa-link"></i>Subdomain</a></li>
                                         <li><a href="{{ route('logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                                     </ul>
                                 </li>

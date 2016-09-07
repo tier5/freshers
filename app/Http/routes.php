@@ -10,8 +10,10 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+$router->group(array('domain' => Request::server('HTTP_HOST')), function()
+{
 
-    Route::get('/', [
+   Route::get('/', [
         'uses' => 'AppController@getIndex',
         'as' => 'app.index'
     ]);
@@ -91,6 +93,14 @@
             'uses' => 'UserController@resetprofilepassword',
             'as' => 'resetprofilepassword'
         ]);
+        Route::get('subdomain', [
+            'uses' => 'SubdomainController@getSubdomain',
+            'as' => 'getsubdomain'
+        ]);
+        Route::patch('subdomain', [
+            'uses' => 'SubdomainController@update',
+            'as' => 'updatesubdomain'
+        ]);
     });
 
     Route::get('resetpassword', [
@@ -125,4 +135,28 @@
         'uses'=>'PageController@postcontact',
         'as'=>'postcontact'
     ]);
+
+
+
+});
+
+$router->group(array('domain' => '{subdomain}.'.Request::server('HTTP_HOST')), function()
+{
+
+    Route::get('/', function($subdomain) {
+        $sub=\App\Subdomain::where('subdomain','=',$subdomain)->first();
+        if($sub) {
+            if($sub->publish==1) {
+                $article = App\Article::where('user_id','=',$sub->user_id)->get();
+                return view('subdomain.subdomain_app', ['articles' => $article,'subdomain' => $sub]);
+            }
+            else {
+                abort(404);
+            }
+        }
+        else {
+            return Redirect::to(Request::server('HTTP_HOST'));
+        }
+    });
+});
 

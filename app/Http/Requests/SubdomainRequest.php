@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class UserUpdateRequest extends Request
+class SubdomainRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,8 @@ class UserUpdateRequest extends Request
     public function rules()
     {
         return [
-            'first_name'=>'required|min:2',
-            'last_name'=>'required|min:2',
-            'contact_number'=>'min:10|numeric',
-            'profile_picture' => 'image'
+            'subdomain' => 'required|unique:subdomains,subdomain',
+
         ];
     }
 }

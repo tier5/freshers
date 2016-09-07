@@ -44,4 +44,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Article');
     }
+
+    /*public function subdomain()
+    {
+        return $this->belongsTo('App\Subdomain');
+    }*/
 }
