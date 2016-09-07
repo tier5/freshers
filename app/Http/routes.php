@@ -13,12 +13,10 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-<<<<<<< 1cacb6ba08d50282ccc122d93de41a3ec032861d
-$router->group(array('domain' => 'laravelsite.dev'), function()
-=======
-$router->group(array('domain' => Request::server('HTTP_HOST')), function()
 
->>>>>>> Release V0.5
+$router->group(array('domain' => 'laravelsite.dev'), function()
+
+
 {
     Route::get('/', [
         'uses' => 'AppController@getIndex',
@@ -214,7 +212,9 @@ $router->group(array('domain' => '{subdomain}.laravelsite.dev'), function()
             }
         }
         else {
+
             return Redirect::to('http://laravelsite.dev');
+
         }
     });
 });
