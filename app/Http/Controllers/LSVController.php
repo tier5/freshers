@@ -256,6 +256,8 @@ class LSVController extends Controller
 	//aboout replies
 	public function likereply(Request $request)
 	{
+
+		
 		//return($reply);
 		$dislike_num = 0;
 		$like_num    = 0;

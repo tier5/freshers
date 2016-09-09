@@ -24,9 +24,13 @@
 
  function increase_like_article(id)
  {
-
+    var ses_id = "{{Session::get('id')}}";
+    if(ses_id == null)
+    {
+        window.location.replace('/login');
+    }
     var article_id = id;
-    //alert(article_id);
+    alert(article_id);
     $.ajax({
         type: 'POST',
         url: "{{ route('article_like_increase') }}",
@@ -36,12 +40,17 @@
            // alert(response);
             $('#article_div_like_'+id).html(response.like);
             $('#article_div_dislike_'+id).html(response.dislike); 
+           
         }
     });
  }
  function decrease_like_article(id)
  {
-
+    var ses_id = "{{Session::get('id')}}";
+    if(ses_id == null)
+    {
+        window.location.replace('/login');
+    }
     var article_id = id;
     //alert(article_id);
     $.ajax({
@@ -50,14 +59,20 @@
         data: {id: article_id, _token: "{{ csrf_token() }}"},
         success: function (response){
 
-            //alert(response);
+            alert(response.like);
           $('#article_div_like_'+id).html(response.like);
-            $('#article_div_dislike_'+id).html(response.dislike); 
+          $('#article_div_dislike_'+id).html(response.dislike);
+          
         }
     });
  }
  function increase_like_comment(id)
  {
+    var ses_id = "{{Session::get('id')}}";
+    if(ses_id == null)
+    {
+        window.location.replace('/login');
+    }
 
     var comment_id = id;
     //alert(article_id);
@@ -75,6 +90,11 @@
  }
  function decrease_like_comment(id)
  {
+    var ses_id = "{{Session::get('id')}}";
+    if(ses_id == null)
+    {
+        window.location.replace('/login');
+    }
 
     var comment_id = id;
     //alert(article_id);
@@ -92,6 +112,11 @@
  }
  function increase_like_reply(id)
  {
+    var ses_id = "{{Session::get('id')}}";
+    if(ses_id == null)
+    {
+        window.location.replace('/login');
+    }
 
     var reply_id = id;
     //alert(article_id);
@@ -109,7 +134,11 @@
  }
  function decrease_like_reply(id)
  {
-
+    var ses_id = "{{Session::get('id')}}";
+    if(ses_id == null)
+    {
+        window.location.replace('/login');
+    }
     var reply_id = id;
     //alert(article_id);
     $.ajax({
@@ -130,7 +159,7 @@
     var replyText = $('#reply_body_'+id).val();
     var replyId   = $('#reply_id_'+id).val();
     //alert(replyId);
-    $.ajax({
+        $.ajax({
         type: 'POST',
         url: "{{ route('edit_reply_route') }}",
         data: {reply_body: replyText, _token: "{{ csrf_token() }}", reply_id: replyId, submit_stat: 1, cancel_stat:-1},
@@ -248,7 +277,7 @@
         <p class="normal">
         <a href="{{  URL::to('userarticle/'.$article->user_id) }}">
 
-        <span class="glyphicon glyphicon-user"></span> {{ $article->user->first_name }} {{ $article->user->last_name }}</a> <span class="glyphicon glyphicon-time"></span> {{ $article->created_at }}</p>
+        <span class="glyphicon glyphicon-user"></span> {{ $article->user->first_name }} {{ $article->user->last_name }}</a>&nbsp; <span class="glyphicon glyphicon-time"></span> {{ $article->created_at }}</p>
         <p>
         <hr><br>
         <p class="lead">{!! $article->body !!}</p>
@@ -266,7 +295,7 @@
 
 
 
-            <div class="row col-md-12 social-actions">
+            <div class="row col-md-12 social-actions" id="article_div_{{$article->div}}">
 
             <div class='col-md-2'>
                 @if($article->like->where('user_id',Session::get('id'))->where('article_id',$article->id)->first()!=null)
@@ -457,9 +486,11 @@
                         <h5 class="media-heading">{{ $reply->user->first_name }}{{' '}}{{ $reply->user->last_name }} 
                             <small>{{ $reply->created_at }}</small>
                            
-                            <small style="float:center"> 
+                            <div class="col-md-12 social-actions">
 
-                            @if($reply->like->where('user_id',Session::get('id'))->where('reply_id',$reply->id)->first() != null)
+                            <div class="col-md-3 social-actions">
+                                
+                                @if($reply->like->where('user_id',Session::get('id'))->where('reply_id',$reply->id)->first() != null)
                                 <form action="#" method="POST">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button type="button" id="reply-like-{{$reply->id}}" onclick="increase_like_reply('{{$reply->id}}')" class="btn btn-xs" style="color: #337AB7"><i class="fa fa-thumbs-up"></i>
@@ -474,8 +505,10 @@
                                 <span id="reply_div_like_{{$reply->id}}"> LIKES: {{ $reply->likes }} | </span>
                                 </form> 
                             @endif
+                            </div>
 
-                            @if($reply->dislike->where('user_id',Session::get('id'))->where('reply_id',$reply->id)->first() != null)
+                            <div class="col-md-4 social-actions">
+                                 @if($reply->dislike->where('user_id',Session::get('id'))->where('reply_id',$reply->id)->first() != null)
                                 <form action="#" method="POST">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button type="button" id="reply-dislike-{{$reply->id}}" onclick="decrease_like_reply('{{$reply->id}}')" class="btn btn-xs" style="color: #337AB7"><i class="fa fa-thumbs-down"></i>
@@ -491,8 +524,8 @@
                                 </form>
 
                             @endif
-                            
-                            <div class="pull-right">
+                            </div>
+                                <div class="pull-right">
                             @if( Session::get('id')==$reply->user_id)
                             
                                 
@@ -510,9 +543,12 @@
                                 </form>
                             @endif
                             </div>
-                            </small>
+
+                            </div>
+
 
                         </h5>
+                        <br>
                          <div id="reply-body-material-{{ $reply->id }}" class="well reply-body-material">
                                 {{ $reply->reply_body }}
                         </div>

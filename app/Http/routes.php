@@ -72,8 +72,7 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
 
     
 
-    Route::get('login', [
-        'uses' => 'UserController@getLogin',
+    Route::get('login',  ['uses' => 'UserController@getLogin',
         'as' => 'login'
     ]);
 
@@ -195,7 +194,7 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
 
 
 $router->group(array('domain' => '{subdomain}.laravelsite.dev'), function()
-
+{
 
 
     Route::get('/', function($subdomain) {

@@ -174,6 +174,7 @@ class UserController extends Controller
     }
     public function getLogin()
     {
+        
         if(Auth::check())
         {
             return redirect(route('article.index'));
