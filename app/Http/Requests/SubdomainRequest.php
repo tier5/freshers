@@ -24,8 +24,9 @@ class SubdomainRequest extends Request
     public function rules()
     {
         return [
-            'subdomain' => 'required|unique:subdomains,subdomain',
-
+            'subdomain' => 'required|Regex:/^[A-Za-z0-9]+$/|unique:subdomains,subdomain',
+            'theme' => 'required',
+            'publish' => 'required'
         ];
     }
 }

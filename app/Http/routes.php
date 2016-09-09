@@ -13,7 +13,8 @@
 $router->group(array('domain' => 'laravelsite.dev'), function()
 {
 
-   Route::get('/', [
+
+    Route::get('/', [
         'uses' => 'AppController@getIndex',
         'as' => 'app.index'
     ]);
@@ -101,6 +102,11 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             'uses' => 'SubdomainController@update',
             'as' => 'updatesubdomain'
         ]);
+        Route::post('subdomaincheck', [
+            'uses' => 'SubdomainController@check_availablity',
+            'as' => 'subdomaincheck'
+        ]);
+
     });
 
     Route::get('resetpassword', [
@@ -136,12 +142,9 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
         'as'=>'postcontact'
     ]);
 
-
-
 });
 
-$router->group(array('domain' => '{subdomain}.'.Request::server('HTTP_HOST')), function()
-
+$router->group(array('domain' => '{subdomain}.laravelsite.dev'), function()
 {
 
     Route::get('/', function($subdomain) {
@@ -156,8 +159,11 @@ $router->group(array('domain' => '{subdomain}.'.Request::server('HTTP_HOST')), f
             }
         }
         else {
-            return Redirect::to(Request::server('HTTP_HOST'));
+            return Redirect::to('http://laravelsite.dev');
         }
+    });
+    Route::get('/about',function ($subdomain) {
+        $sub=\App\Subdomain::where('subdomain','=',$subdomain)->first();
     });
 });
 

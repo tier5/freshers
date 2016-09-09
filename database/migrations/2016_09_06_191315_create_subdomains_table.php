@@ -17,7 +17,7 @@ class CreateSubdomainsTable extends Migration
             $table->string('subdomain')->unique();
             $table->integer('user_id')->unsigned();
             $table->boolean('publish');
-            $table->integer('theme');
+            $table->integer('theme')->default(1);
             $table->timestamps();
             $table->foreign('user_id')
                     ->references('id')
