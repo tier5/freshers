@@ -10,7 +10,6 @@ use App\Http\Requests;
 use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Session;
 
@@ -55,9 +54,11 @@ class ArticleController extends Controller
         $article->slug = str_slug($request->title);
         $article->body = $request->body;
         $article->category_id = $request->category;
-
         $article->user_id = $user_id;
-
+        $article->views = 0;
+        $article->shares = 0;
+        $article->likes =0;
+        $article->dislikes=0;
         $article->save();
         $article->tags()->attach($tags);
 
@@ -79,7 +80,7 @@ class ArticleController extends Controller
 
         $view = View::where('article_id',$article->id)->first(); //fetchimg the view field for this article
 
-        if($view == null)
+        if($view == null) // incrementing the view
         {
             $new_view = new View();
             $new_view->user_id      = Session::get('id');

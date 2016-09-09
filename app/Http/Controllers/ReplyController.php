@@ -18,6 +18,33 @@ class ReplyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function getFacebookLogin($auth = NULL)
+    {
+        
+        if($auth == 'auth')
+        {
+            try
+            {
+                Hybrid_Endpoint::process();
+            }
+            catch (Exception $e)
+            {
+                return Redirect::to('fbauth');
+            }
+            return;
+        }
+        $auth = new Hybrid_Auth(app_path(). '/config/fb_auth.php');
+        $provider = $oauth->authenticate('Facebook');
+        $profile = $provider->getUserProfile();
+        return var_dump($profile).'<a href="logout">Log Out</a>';
+    }
+    public function getLoggedOut()
+    {
+        $fauth=new Hybrid_auth(app_path().'/config/fb_auth.php');
+        $fauth->logoutAllProviders();
+        return View::make('login');
+
+    }
     public function index()
     {
         //
@@ -45,7 +72,7 @@ class ReplyController extends Controller
 
         $user_id=Session::get('id');
        $this->validate($request, [
-                'reply_body'=>'required|max:200|min:1'
+                'reply_body'=>'required|max:2000|min:1'
         ]);
         
 
@@ -54,6 +81,7 @@ class ReplyController extends Controller
         $reply->comment_id  = $request->comment_id; //hidden variable
         $reply->user_id = $user_id;
         $reply->likes = 0;
+        $reply->dislikes =0;
         $reply->shares= 0;
         $reply->save();
 
@@ -78,9 +106,28 @@ class ReplyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        //return($request->submit_stat);
+        $reply=Reply::where('id',$request->reply_id)->first();
+        if($request->submit_stat == 1)
+        {    
+            $reply->reply_body = $request->reply_body;
+            $reply->save();
+            return $request->reply_body;
+        }
+        else if($request->cancel_stat == 1)
+        {
+            //
+            return $reply->reply_body;
+        }
+        else
+        {
+            return("oh! snap..  error in ReplyController@edit");
+        }
+        //else{
+        //    return('some error in ReplyController@edit');
+        //}
     }
 
     /**
@@ -104,5 +151,13 @@ class ReplyController extends Controller
     public function destroy($id)
     {
         //
+        $reply = Reply::where('id',$id);
+        $reply->delete();
+        return back();
     }
+
+    /*public function abc(Request $request)
+    {
+        return $request->reply_body;
+    }*/
 }

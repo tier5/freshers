@@ -25,10 +25,15 @@ class Comment extends Model
     {
         return $this->hasMany(Like::class);
     }
+    public function dislike()
+    {
+        return $this->hasMany(Dislike::class);
+    }
     public function share()
     {
         return $this->hasMany(Share::class);
     }
+
     public function addReply(Note $reply)
     {
     	$this->reply()->save($reply);

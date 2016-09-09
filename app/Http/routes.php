@@ -1,49 +1,17 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-    //Route::get('article',                    'ArticlesCon@showArticles'); //by akash
-    
-    //Route::get('/article/{article}/comments','ArticlesCon@CommentsbyArticle');
-
-    //Route::get('comments','CommentsController@index');
-
-    //Route::get('commentadd/{err_cmt_id}','CommentsController@index');
-
-    //Route::get('/comments/{comment}', ['uses' => 'CommentsController@show', 'as' => 'getComment']);
-
-    /*Route::post('comments/{article_id}','CommentsController@addcomment');
-
-    Route::post('comments/{comment}/replies','repliesController@store');
-
-    Route::get('/replies/{reply}/edit',      'repliesController@edit');
-
-    Route::patch('/replies/{reply}',         'repliesController@update');
-    
-    Route::post('/users',      'usersController@loginusers');//new
-
-    Route::get('/users/{user}','usersController@showuser');//new
-
-    Route::get('/login','usersController@login');*/
-
-
+    Route::get('fbauth/{auth?}',array('as'=>'facebookAuth' , 'uses'=>'ReplyController@getFacebookLogin'));
 
     Route::get('/', ['uses' => 'AppController@getIndex','as' => 'app.index']);
 
     Route::resource('article', 'ArticleController', ['names'=> ['index' => 'article.index']]);
 
-    Route::get('/Like/comment/{id}', 'LSVController@likecomment');
-    Route::get('/Like/reply/{id}',   'LSVController@likereply');
-    Route::get('/Like/article/{id}', 'LSVController@likearticle');
-
+    //Route::get('/Like/comment/{id}',    'LSVController@likecomment');
+    //Route::get('/Dislike/comment/{id}', 'LSVController@dislikecomment');
+    Route::get('/Like/reply/{id}',      'LSVController@likereply');
+    Route::get('/Dislike/reply/{id}',   'LSVController@dislikereply');
+    
+    Route::get('/Dislike/article/{id}', 'LSVController@dislikearticle');
 
     //Route::resource('article/{{article_id}}','ArticleController@show');
 
@@ -95,7 +63,9 @@
         'as' => 'postlogin'
     ]);
 
-    Route::group(['middleware'=>'auth'],function() {
+    
+    Route::group(['middleware'=>'auth'],function() 
+    {
         Route::get('logout', [
             'uses'=>'UserController@logout',
             'as'=>'logout'
@@ -130,11 +100,29 @@
             'as' => 'resetprofilepassword'
         ]);
 
-        Route::resource('comment', 'CommentController', 
-        ['names'=> ['index' => 'comment.index']]);
+        Route::resource('comment', 'CommentController', ['names'=> ['index' => 'comment.index']]);
 
-        Route::resource('reply', 'ReplyController', 
-        ['names'=> ['index' => 'comment.index']]);
+        Route::post('cmt', 'CommentController@edit');
+
+        Route::resource('reply', 'ReplyController', ['names'=> ['index' => 'comment.index']]);
+
+        //Route::post('rply', ['uses' => 'ReplyController@edit','as' => 'replyEditroute']);
+
+        Route::post('/test', ['uses' => 'ReplyController@edit','as' => 'edit_reply_route']);
+
+        Route::post('/testa', ['uses' => 'CommentController@edit','as' => 'edit_comment_route']);
+
+        Route::post('/Like/article',    ['uses'=>'LSVController@likearticle',    'as'=>'article_like_increase']);
+
+        Route::post('/Dislike/article', ['uses'=>'LSVController@dislikearticle', 'as'=>'article_like_decrease']);
+
+        Route::post('/Like/comment',    ['uses'=>'LSVController@likecomment',    'as'=>'comment_like_increase']);
+
+        Route::post('/Dislike/comment', ['uses'=>'LSVController@dislikecomment', 'as'=>'comment_like_decrease']);
+
+        Route::post('/Like/reply',      ['uses'=>'LSVController@likereply',    'as'=>'reply_like_increase']);
+
+        Route::post('/Dislike/reply',   ['uses'=>'LSVController@dislikereply', 'as'=>'reply_like_decrease']);
 
     });
 

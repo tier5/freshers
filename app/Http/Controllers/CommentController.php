@@ -5,7 +5,7 @@ use App\Reply;
 use App\Article;
 use App\User;
 use App\Comment;
-use App\Http\Requests;
+//use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -42,7 +42,7 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         //
-        //return ('here');
+        
         $user_id=Session::get('id');
        $this->validate($request, [
                 'comment_body'=>'required|max:2000|min:1'
@@ -54,6 +54,7 @@ class CommentController extends Controller
         $comment->article_id  = $request->article_id; //hidden variable
         $comment->user_id = $user_id;
         $comment->likes = 0;
+        $comment->dislikes=0;
         $comment->shares= 0;
         $comment->approved = 1;
         $comment->save();
@@ -80,9 +81,44 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
         //
+        /*$user_id=Session::get('id');
+        if($request->cancel_btn == 1)
+        {
+            return back();
+        }
+        if($request->submit_btn == 1)
+        {
+            $comment=Comment::where('id',$request->comment_id)->first();
+            $comment->comment_body = $request->comment_body;
+            $comment->save();
+
+            $request->session()->flash('success', 'Commennt Editted Succesfully!');
+            return back();
+        }
+        else{
+            return('some error in CommentController@edit');
+        }*/
+        $comment=Comment::where('id',$request->comment_id)->first();
+        if($request->submit_stat == 1)
+        {    
+            $comment->comment_body = $request->comment_body;
+            $comment->save();
+            return $request->comment_body;
+        }
+        else if($request->cancel_stat == 1)
+        {
+            //
+            return $comment->comment_body;
+        }
+        else
+        {
+            return("oh! snap..  error in CommentController@edit");
+        }
+        
+
     }
 
     /**
@@ -106,5 +142,10 @@ class CommentController extends Controller
     public function destroy($id)
     {
         //
+        //return($id);
+        $comment = Comment::where('id',$id)->first();
+        $comment->delete();
+        return back();
+
     }
 }

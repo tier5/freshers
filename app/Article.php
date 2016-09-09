@@ -39,4 +39,8 @@ class Article extends Model
     {
          return $this->hasMany(View::class);
     }
+    public function dislike()
+    {
+        return $this->hasMany(Dislike::class);
+    }
 }

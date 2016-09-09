@@ -16,6 +16,14 @@ class Reply extends Model
     {
     	return $this->belongsTo(User::class);
     }
+    public function dislike()
+    {
+        return $this->hasMany(Dislike::class);
+    }
+    public function like()
+    {
+        return $this->hasMany(Like::class);
+    }
     public function addReply(Note $reply)
     {
     	$this->replies()->save($reply);
