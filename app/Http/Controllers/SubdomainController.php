@@ -21,20 +21,33 @@ class SubdomainController extends Controller
         }
     }
 
-    public function update(SubdomainRequest $request)
+    public function update(Request $request)
     {
         $subdomain=Subdomain::where('user_id','=',Session::get('id'))->first();
         if($subdomain->is_edit == 0) {
+            $this->validate($request, [
+                'subdomain' => 'required|Regex:/^[A-Za-z0-9]+$/|unique:subdomains,subdomain',
+                'theme' => 'required',
+                'publish' => 'required'
+            ]);
             $subdomain->subdomain=$request->subdomain;
+            $subdomain->theme=$request->theme;
+            $subdomain->publish=$request->publish;
+            $subdomain->is_edit=1;
+            $subdomain->save();
+            Return redirect()->route('getsubdomain')->with('success','You Successfully edited Your Subdomain');
         }
         else {
-            return redirect()->route('getsubdomain')->with('success','You can not edit Subdomain more than one time');
+            $this->validate($request,[
+                'theme' => 'required',
+                'publish' => 'required'
+            ]);
+            $subdomain->theme=$request->theme;
+            $subdomain->publish=$request->publish;
+            $subdomain->save();
+            return redirect()->route('getsubdomain')->with('success','You Successfully edited your Subdomain without changing subdomain name');
         }
-        $subdomain->theme=$request->theme;
-        $subdomain->publish=$request->publish;
-        $subdomain->is_edit=1;
-        $subdomain->save();
-        Return redirect()->route('profile')->with('success','You Successfully publish Your Subdomain');
+
     }
 
     public function about()

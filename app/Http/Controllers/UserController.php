@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use \App\User;
+use \App\Article;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -206,7 +207,8 @@ class UserController extends Controller
         $user=User::where('id','=',$id)->first();
         if($user->count())
         {
-            return view('user.profile')->with('user',$user);
+            $article = Article::where('user_id','=',$id)->get();
+            return view('user.profile',['user' => $user,'articles' => $article]);
         }
         return App::abort(404);
     }
