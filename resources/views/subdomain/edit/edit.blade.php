@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+    <div class="row">
     @if(Session::has('success'))
         <div class="co-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
             <p class="alert alert-warning">
@@ -13,7 +14,8 @@
             </p>
         </div>
     @endif
-
+</div>
+    <div class="row">
     <div class="container ">
         <h1 class="panel-heading">Manage your Subdomain</h1>
     <form class="form-horizontal" role="form" method="POST" action="{{route('updatesubdomain')}}" enctype="multipart/form-data">
@@ -23,7 +25,7 @@
             <label for="user_subdomain" class="control-label col-md-3 col-sm-3 col-xs-12">Your Subdomain</label>
             <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="row">
-                    <input name="subdomain" {{$sub->is_edit?'readonly':''}} id="user_subdomain" value="{{$sub->subdomain}}" class="form-control col-md-3 col-sm-3 col-xs-6" />
+                    <input name="subdomain" {{$sub->is_edit?'disabled':''}} id="user_subdomain" value="{{$sub->subdomain}}" class="form-control col-md-3 col-sm-3 col-xs-6" />
                     @if($sub->is_edit == 0)<div style="color: #00A6C7"> You are only able to edit your Subdomain for onetime</div>@endif
                     <div id='subdomain_availability_result'></div>
                 @if ($errors->any()) <div style="color:red">{{$errors->first('subdomain')}}</div>@endif
@@ -38,14 +40,18 @@
                     <label class="radio-inline">
                         <input type="radio" name="theme" id="theme" value=1 checked="checked" >
                        Theme 1
+                        <div class="row"><img src="/themes/1.jpg" height=125px width=125px  /></div>
                     </label>
                     <label class="radio-inline">
                         <input type="radio" name="theme" id="theme" value=2>
-                       Theme 2
+                        Theme 2
+                        <div class="row"><img src="/themes/2.jpg" height=125px width=125px /></div>
                     </label>
+
                     <label class="radio-inline">
                         <input type="radio" name="theme" id="theme" value=3>
                         Theme 3
+                        <div class="row"><img src="/themes/3.jpg" height=125px width=125px  /></div>
                     </label>
                 </div>
                 @if ($errors->any()) <div style="color:red">{{$errors->first('theme')}}</div>@endif
@@ -73,6 +79,7 @@
 
     </form>
     </div>
+        </div>
     <script>
 
         $(document).ready(function() {

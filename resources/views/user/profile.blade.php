@@ -25,7 +25,7 @@
                                 <div class="col-xs-12 col-sm-4 img-circle"> <img src="uploads/profile_pic/{{$user->profile_picture}}" style="height: 120px; width: 120px;  border-radius: 50%" alt="Profile Picture" /></div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-12 col-sm-6"><h2>{{ucfirst($user->first_name)." ".ucfirst($user->last_name)}}</h2></div>
+                                <div class="col-xs-12 col-sm-12"><h2>{{ucfirst($user->first_name)." ".ucfirst($user->last_name)}}</h2></div>
                             </div>
                                 <div class="row">
                                 <div class="col-xs-12 col-sm-4">Email:</div>
