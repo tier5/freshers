@@ -1,18 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="row">
+    @if(Session::has('success'))
+        <p class="alert alert-warning">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{Session::get('success')}}
+        </p>
+    @endif
+        </div>
+    <div class="row">
     <div class="container">
     <div class="clearfix" style="margin-top:50px;">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="well well-sm">
                         <form class="form-horizontal" method="post" action="{{route('postcontact')}}">
-                            @if(Session::has('success'))
-                                    <p class="alert alert-warning">
-                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                        {{Session::get('success')}}
-                                    </p>
-                            @endif
                             <fieldset>
                                 <legend class="text-center header">Contact us</legend>
 
@@ -60,7 +63,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12 col-sm-12 col-xs-12">
                     <div>
                         <div class="panel panel-default">
                             <div class="text-center header">Our Office</div>
@@ -72,4 +75,5 @@
                                     Saltlake sector-5 <br>
                                     Tier5.in<br>
                                 </div>
+    </div>
 @endsection

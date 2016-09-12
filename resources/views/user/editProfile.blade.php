@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+    <div class="row">
     @if(Session::has('success'))
         <div class="co-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
             <p class="alert alert-warning">
@@ -13,7 +14,9 @@
             </p>
         </div>
     @endif
-    <div class="container">
+        </div>
+    <div class="row">
+        <div class="container">
         <form action="{{  route('updateprofile') }}" method="POST" class="form-horizontal" role="form" enctype="multipart/form-data">
             <input type="hidden" name="_method" value="PATCH">
             <legend>Update your profile  ({{$user->email}})</legend>
@@ -148,6 +151,7 @@
             <strong id="cpswd" class="invalid">password & confirm Password Should be match</strong>
         </div>
     </div>
+        </div>
     <script>
         $('input[name=date_of_birth]').datepicker({ dateFormat: 'yy/mm/dd',changeMonth: true,changeYear: true,yearRange: '1950:Date'});
 

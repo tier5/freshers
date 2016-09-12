@@ -5,6 +5,8 @@
 @endsection
 
 @section('content')
+
+    <div class="row">
     @if(Session::has('success'))
         <div class="co-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
             <p class="alert alert-warning">
@@ -13,6 +15,8 @@
             </p>
         </div>
     @endif
+        </div>
+    <div class="row">
     <div class="container">
             <div class="form">
         <form action="{{route('postlogin')}}" method="POST" class="form-horizontal" role="form"">
