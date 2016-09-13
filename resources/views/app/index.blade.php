@@ -12,7 +12,7 @@
     <div class="row">
         <p>
             <h3>
-                Hey.. welcome to laravelsite.dev..!!
+                Hey.. welcome to laravelsite..!!
             </h3>
         </p>
     </div>

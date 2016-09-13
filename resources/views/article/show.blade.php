@@ -253,7 +253,7 @@
     @endif
     <!-- Blog Post Content Column -->
 
-    <div class="col-lg-8">
+    <div class="col-md-8 col-sm-8 col-lg-6">
         <!-- Blog Post -->
         <!-- Title -->
         <h1>{{ $article->title }}</h1>
@@ -368,7 +368,7 @@
        </p>
 
         <!-- Comment -->
-        
+
         @foreach($article->comment as $comment)
         <hr>
         <div class="media">
@@ -572,7 +572,6 @@
                     </div>
                 </div>
                 @endforeach
-               {{ 'here' }}
                 <div id="reply-form" class="well" >
                     <h4>Leave a Reply:</h4>
                         <form role="form" method="POST"  action="/reply">
@@ -594,7 +593,7 @@
              <hr>
        
         @endforeach
-        <div class="well" style="display:none">
+        <div class="well">
             <h4>Leave a Comment:</h4>
             <form role="form" method="POST"  action="/comment">
                 <div class="form-group">

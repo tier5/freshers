@@ -256,7 +256,7 @@
     @endif
     <!-- Blog Post Content Column -->
 
-    <div class="col-lg-8">
+    <div class="col-md-8 col-sm-8 col-lg-6">
         <!-- Blog Post -->
         <!-- Title -->
         <h1>{{ $article->title }}</h1>

@@ -148,9 +148,13 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             'uses' => 'SubdomainController@getSubdomain',
             'as' => 'getsubdomain'
         ]);
-        Route::patch('subdomain', [
+        Route::patch('subdomain/update', [
             'uses' => 'SubdomainController@update',
             'as' => 'updatesubdomain'
+        ]);
+        Route::patch('subdomain/publish', [
+            'uses' => 'SubdomainController@publish',
+            'as' => 'publishsubdomain'
         ]);
 
         Route::post('subdomaincheck', [

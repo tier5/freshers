@@ -7,7 +7,8 @@
 @section('content')
      @yield('article-content')
     <!-- Blog Sidebar Widgets Column -->
-    <div class="col-md-4">
+    <div class="col-sm-4 col-lg-4 col-md-4">
+        <nav class="navbar navbar-default navbar-fixed-side">
         <!-- Blog Search Well -->
         <div class="well">
             <h4>Search Everything</h4>
@@ -38,6 +39,7 @@
                 @endforeach
             </p>
         </div>
+            </nav>
     </div>
 @stop
 

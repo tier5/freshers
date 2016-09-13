@@ -193,7 +193,7 @@ class UserController extends Controller
             return redirect()->route('article.index');
         }
         else
-            return redirect()->route('login')->with('Err','Enter a valid email or password');
+            return redirect()->route('login')->with('Err','Enter a valid email or password')->withInput();
     }
 
     public function logout()

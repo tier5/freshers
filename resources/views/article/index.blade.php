@@ -7,7 +7,7 @@
 @section('article-content')
 
     <!-- Blog Entries Column -->
-    <div class="col-md-8">
+    <div class="col-md-8 col-sm-8 col-lg-8">
         <h1 class="page-header">
             Latest Post
             {{-- <small>Secondary Text</small> --}}

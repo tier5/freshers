@@ -9,7 +9,7 @@
 @stop
 
 @section('article-content')
-    <div class="col-md-8">
+    <div class="col-md-8 col-sm-8 col-lg-8">
         @if($errors->any())
         <ul>
             @foreach ($errors->all() as $error)
