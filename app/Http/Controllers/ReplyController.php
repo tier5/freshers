@@ -109,6 +109,7 @@ class ReplyController extends Controller
     public function edit(Request $request)
     {
         //return($request->submit_stat);
+        //return ('here');
         $reply=Reply::where('id',$request->reply_id)->first();
         if($request->submit_stat == 1)
         {    

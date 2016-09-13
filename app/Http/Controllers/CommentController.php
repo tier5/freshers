@@ -1,16 +1,14 @@
 <?php
-
 namespace App\Http\Controllers;
 use App\Reply;
 use App\Article;
 use App\User;
 use App\Comment;
-//use App\Http\Requests;
+use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Session;
-
 class CommentController extends Controller
 {
     /**
@@ -42,7 +40,7 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         //
-        
+        //return ('reached here');
         $user_id=Session::get('id');
        $this->validate($request, [
                 'comment_body'=>'required|max:2000|min:1'
@@ -83,24 +81,6 @@ class CommentController extends Controller
      */
     public function edit(Request $request)
     {
-        //
-        /*$user_id=Session::get('id');
-        if($request->cancel_btn == 1)
-        {
-            return back();
-        }
-        if($request->submit_btn == 1)
-        {
-            $comment=Comment::where('id',$request->comment_id)->first();
-            $comment->comment_body = $request->comment_body;
-            $comment->save();
-
-            $request->session()->flash('success', 'Commennt Editted Succesfully!');
-            return back();
-        }
-        else{
-            return('some error in CommentController@edit');
-        }*/
         $comment=Comment::where('id',$request->comment_id)->first();
         if($request->submit_stat == 1)
         {    
@@ -120,6 +100,7 @@ class CommentController extends Controller
         
 
     }
+
 
     /**
      * Update the specified resource in storage.

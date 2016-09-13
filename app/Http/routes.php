@@ -33,7 +33,7 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
     
     Route::get('/Dislike/article/{id}', 'LSVController@dislikearticle');
 
-    //Route::resource('article/{{article_id}}','ArticleController@show');
+    Route::get('/article/{{slug}}','ArticleController@show');
 
     Route::group(['prefix' => 'search'], function () 
     {
@@ -85,6 +85,8 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
     
     Route::group(['middleware'=>'auth'],function() 
     {
+         //Route::post('/comment',   ['uses'=>'CommentController@store', 'as'=>'store_new_comment']);
+
         Route::get('logout', [
             'uses'=>'UserController@logout',
             'as'=>'logout'
@@ -130,7 +132,7 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
 
         Route::post('/test', ['uses' => 'ReplyController@edit','as' => 'edit_reply_route']);
 
-        Route::post('/testa', ['uses' => 'CommentController@edit','as' => 'edit_comment_route']);
+        Route::post('/cv', ['uses' => 'CommentController@edit','as' => 'edit_comment_route']);
 
         Route::post('/Like/article',    ['uses'=>'LSVController@likearticle',    'as'=>'article_like_increase']);
 

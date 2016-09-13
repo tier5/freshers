@@ -23,6 +23,7 @@ class ArticleController extends Controller
     public function index()
     {
 
+
         $articles = Article::latest()->get();
         
         return view('article.index', ['articles' => $articles]);
@@ -71,6 +72,7 @@ class ArticleController extends Controller
     public function show($slug)
     {
 
+        
         $article = Article::where('slug', $slug)->get()
                 ->first();
 

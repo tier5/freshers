@@ -5,6 +5,7 @@
 @endsection
 
 @section('article-content')
+
     <!-- Blog Entries Column -->
     <div class="col-md-8">
         <h1 class="page-header">
