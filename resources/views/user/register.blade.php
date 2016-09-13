@@ -10,7 +10,7 @@
             <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="well well-sm">
                     <form class="form-horizontal" method="post" action="{{route('postregister')}}" id="registrationform" enctype="multipart/form-data">
 

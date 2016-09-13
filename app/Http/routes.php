@@ -194,8 +194,16 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
         'uses'=>'PageController@postcontact',
         'as'=>'postcontact'
     ]);
-   
-}); //end of router group
+    Route::get('tags/{tag}',[
+        'uses' => 'ArticleController@tags',
+        'as' => 'showtagarticle'
+    ]);
+    Route::get('categories/{category}',[
+        'uses' => 'ArticleController@category',
+        'as' => 'showcategoryarticle'
+    ]);
+
+});
 
 $router->group(array('domain' => '{subdomain}.laravelsite.dev'), function()
 {

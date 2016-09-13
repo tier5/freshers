@@ -196,4 +196,18 @@ class ArticleController extends Controller
         return view('article.showuserarticle', ['articles' => $article]);
 
     }
+
+    public function tags($tag)
+    {
+        $tag=Tag::where('name','=',$tag)->first();
+        $articles=$tag->articles;
+        return view('article.showuserarticle',['articles' => $articles]);
+    }
+
+    public function category($category)
+    {
+        $category_id=Category::where('name','=',$category)->first()->id;
+        $articles=Article::where('category_id','=',$category_id)->get();
+        return view('article.showuserarticle',['articles' => $articles]);
+    }
 }

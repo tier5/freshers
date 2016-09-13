@@ -21,7 +21,7 @@
                 <div class="col-lg-6">
                     <ul class="list-unstyled">
                         @foreach ($categories as $category)
-                            <li><a href="#">{{ $category->name }}</a></li>
+                            <li><a href="{{ route('showcategoryarticle',[$category->name]) }}">{{ $category->name }}</a></li>
                         @endforeach
                     </ul>
                 </div>
@@ -34,7 +34,7 @@
             <h4>Popular Tags</h4>
             <p>
                 @foreach ($tags as $tag)
-                    <a href="#"><span class="glyphicon glyphicon-tag"></span>{{ $tag->name }}</a>&nbsp;
+                    <a href="{{ route('showtagarticle',[$tag->name]) }}"><span class="glyphicon glyphicon-tag"></span>{{ $tag->name }}</a>&nbsp;
                 @endforeach
             </p>
         </div>

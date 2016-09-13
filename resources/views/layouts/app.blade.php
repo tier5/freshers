@@ -106,18 +106,11 @@
             </div>
             <!-- /.row -->
             <hr>
-            <!-- Footer -->
-            <footer>
-                <div class="row text-center">
-                    <div class="col-lg-12">
-                        <p>Copyright &copy; Laravelsite {{ date('Y') }}</p>
-                    </div>
-                    <!-- /.col-lg-12 -->
-                </div>
-                <!-- /.row -->
-            </footer>
         </div>
+
         <!-- /.container -->
+        <!-- Footer -->
+
 
         <!-- JavaScripts -->
         <!-- jQuery -->
@@ -129,4 +122,13 @@
         @yield('script')
         @yield('extended-script')
     </body>
+    <footer>
+        <div class="row text-center">
+            <div class="col-lg-12">
+                <p>Copyright &copy; Laravelsite {{ date('Y') }}</p>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+    </footer>
 </html>

@@ -285,7 +285,7 @@
         <p>
             @unless($article->tags->isEmpty())
                 @foreach($article->tags as $tag)
-                    <a href="#">
+                    <a href="{{ route('showtagarticle',[$tag->name]) }}">
                         <span class="glyphicon glyphicon-tag"></span>{{ $tag->name }}
                     </a>
                 @endforeach
