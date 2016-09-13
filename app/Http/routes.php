@@ -1,5 +1,8 @@
 <?php
 
+
+    Route::get('fbauth/{auth?}',array('as'=>'facebookAuth' , 'uses'=>'ReplyController@getFacebookLogin'));
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -14,18 +17,29 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
 {
 
 
+$router->group(array('domain' => 'laravelsite.dev'), function()
+{
     Route::get('/', [
         'uses' => 'AppController@getIndex',
         'as' => 'app.index'
     ]);
 
-    Route::resource('article', 'ArticleController', [
-        'names'=> [
-            'index' => 'article.index'
-        ]
-    ]);
 
-    Route::group(['prefix' => 'search'], function () {
+    
+
+    Route::resource('article', 'ArticleController', ['names'=> ['index' => 'article.index']]);
+
+    //Route::get('/Like/comment/{id}',    'LSVController@likecomment');
+    //Route::get('/Dislike/comment/{id}', 'LSVController@dislikecomment');
+    Route::get('/Like/reply/{id}',      'LSVController@likereply');
+    Route::get('/Dislike/reply/{id}',   'LSVController@dislikereply');
+    
+    Route::get('/Dislike/article/{id}', 'LSVController@dislikearticle');
+
+    Route::get('/article/{{slug}}','ArticleController@show');
+
+    Route::group(['prefix' => 'search'], function () 
+    {
         Route::get('/', [
             'uses' => 'SearchController@search',
             'as' => 'search'
@@ -43,6 +57,8 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             'as' => 'search.data'
         ]);
     });
+
+    
     Route::get('/userarticle/{user_id?}', [
         'uses' => 'ArticleController@userarticle',
     ]);
@@ -56,16 +72,24 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
         'uses'=>'UserController@store',
         'as'=>'postregister'
     ]);
-    Route::get('login', [
-        'uses' => 'UserController@getLogin',
+
+    
+
+    Route::get('login',  ['uses' => 'UserController@getLogin',
         'as' => 'login'
     ]);
+
+    
     Route::post('login', [
         'uses' => 'UserController@postLogin',
         'as' => 'postlogin'
     ]);
 
-    Route::group(['middleware'=>'auth'],function() {
+    
+    Route::group(['middleware'=>'auth'],function() 
+    {
+         //Route::post('/comment',   ['uses'=>'CommentController@store', 'as'=>'store_new_comment']);
+
         Route::get('logout', [
             'uses'=>'UserController@logout',
             'as'=>'logout'
@@ -74,6 +98,7 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             'uses' => 'UserController@profile',
             'as' => 'profile'
         ]);
+
         Route::get('logout', [
             'uses' => 'UserController@logout',
             'as' => 'logout'
@@ -82,6 +107,8 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             'uses' => 'UserController@profile',
             'as' => 'profile'
         ]);
+
+
         Route::get('editprofile', [
             'uses' => 'UserController@editprofile',
             'as' => 'editprofile'
@@ -90,10 +117,37 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             'uses' => 'UserController@updateprofile',
             'as' => 'updateprofile'
         ]);
+
+
         Route::patch('resetprofilepassword', [
             'uses' => 'UserController@resetprofilepassword',
             'as' => 'resetprofilepassword'
         ]);
+
+        Route::resource('comment', 'CommentController', ['names'=> ['index' => 'comment.index']]);
+
+        Route::post('cmt', 'CommentController@edit');
+
+        Route::resource('reply', 'ReplyController', ['names'=> ['index' => 'comment.index']]);
+
+        //Route::post('rply', ['uses' => 'ReplyController@edit','as' => 'replyEditroute']);
+
+        Route::post('/test', ['uses' => 'ReplyController@edit','as' => 'edit_reply_route']);
+
+        Route::post('/cv', ['uses' => 'CommentController@edit','as' => 'edit_comment_route']);
+
+        Route::post('/Like/article',    ['uses'=>'LSVController@likearticle',    'as'=>'article_like_increase']);
+
+        Route::post('/Dislike/article', ['uses'=>'LSVController@dislikearticle', 'as'=>'article_like_decrease']);
+
+        Route::post('/Like/comment',    ['uses'=>'LSVController@likecomment',    'as'=>'comment_like_increase']);
+
+        Route::post('/Dislike/comment', ['uses'=>'LSVController@dislikecomment', 'as'=>'comment_like_decrease']);
+
+        Route::post('/Like/reply',      ['uses'=>'LSVController@likereply',    'as'=>'reply_like_increase']);
+
+        Route::post('/Dislike/reply',   ['uses'=>'LSVController@dislikereply', 'as'=>'reply_like_decrease']);
+
         Route::get('subdomain', [
             'uses' => 'SubdomainController@getSubdomain',
             'as' => 'getsubdomain'
@@ -102,10 +156,12 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             'uses' => 'SubdomainController@update',
             'as' => 'updatesubdomain'
         ]);
+
         Route::post('subdomaincheck', [
             'uses' => 'SubdomainController@check_availablity',
             'as' => 'subdomaincheck'
         ]);
+
 
     });
 
@@ -127,6 +183,7 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
     ]);
 
 
+
     Route::get('about',[
         'uses'=>'PageController@about',
         'as'=>'about'
@@ -141,8 +198,8 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
         'uses'=>'PageController@postcontact',
         'as'=>'postcontact'
     ]);
-
-});
+   
+}); //end of router group
 
 $router->group(array('domain' => '{subdomain}.laravelsite.dev'), function()
 {
@@ -166,4 +223,3 @@ $router->group(array('domain' => '{subdomain}.laravelsite.dev'), function()
         $sub=\App\Subdomain::where('subdomain','=',$subdomain)->first();
     });
 });
-

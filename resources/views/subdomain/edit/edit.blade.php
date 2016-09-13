@@ -43,6 +43,7 @@
                         <input type="radio" name="theme" id="theme" value=2>
                        Theme 2
                     </label>
+
                     <label class="radio-inline">
                         <input type="radio" name="theme" id="theme" value=3>
                         Theme 3
@@ -122,8 +123,5 @@
         $(function() {
             $('input').bind('focus', false);
         });
-
-
-
     </script>
 @endsection

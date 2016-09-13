@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+
     @if(Session::has('success'))
         <div class="co-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
             <p class="alert alert-warning">
@@ -13,6 +14,7 @@
             </p>
         </div>
     @endif
+
     <div class="container">
         <form action="{{  route('updateprofile') }}" method="POST" class="form-horizontal" role="form" enctype="multipart/form-data">
             <input type="hidden" name="_method" value="PATCH">
@@ -95,6 +97,7 @@
 
         </form>
     </div>
+
     <hr />
     <div class="container">
         <form action="{{  route('resetprofilepassword') }}" method="POST" class="form-horizontal" role="form" enctype="multipart/form-data">
@@ -198,7 +201,6 @@
         }).blur(function() {
             $('#cpswd_info').hide();
         })
-
     </script>
 @endsection
 

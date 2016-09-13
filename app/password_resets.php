@@ -9,10 +9,5 @@ class password_resets extends Model
 
     protected $table='password_resets';
 
-    protected $fillable=[
-        'email',
-        'token'
-        ];
-
-
+    protected $fillable=['email','token'];
 }

@@ -1,11 +1,8 @@
 @extends('subdomain.layouts.'.$subdomain->theme)
-
 @section('title')
     about
 @endsection
-
 @section('content')
-
     <!-- Services Section -->
     <section id="services">
         <div class="container">

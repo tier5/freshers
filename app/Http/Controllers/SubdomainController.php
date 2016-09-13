@@ -1,12 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
-//use App\Http\Requests\Request;
 use App\Http\Requests\SubdomainRequest;
 use App\Subdomain;
-use Illuminate\Http\Request;
-
+//use Illuminate\Http\Request;
 //use App\Http\Requests;
 use Illuminate\Support\Facades\Session;
 use phpDocumentor\Reflection\DocBlock\Tags\Return_;
@@ -20,7 +17,6 @@ class SubdomainController extends Controller
             return view('subdomain.edit.edit',compact('sub'));
         }
     }
-
     public function update(Request $request)
     {
         $subdomain=Subdomain::where('user_id','=',Session::get('id'))->first();
@@ -47,7 +43,6 @@ class SubdomainController extends Controller
             $subdomain->save();
             return redirect()->route('getsubdomain')->with('success','You Successfully edited your Subdomain without changing subdomain name');
         }
-
     }
 
     public function about()
@@ -68,5 +63,4 @@ class SubdomainController extends Controller
         }
 
     }
-
 }

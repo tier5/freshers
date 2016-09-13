@@ -24,7 +24,7 @@ class SubdomainRequest extends Request
     public function rules()
     {
         return [
-           //
+        //
         ];
     }
 }
