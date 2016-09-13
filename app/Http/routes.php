@@ -15,10 +15,6 @@
 */
 $router->group(array('domain' => 'laravelsite.dev'), function()
 {
-
-
-$router->group(array('domain' => 'laravelsite.dev'), function()
-{
     Route::get('/', [
         'uses' => 'AppController@getIndex',
         'as' => 'app.index'

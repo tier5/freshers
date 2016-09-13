@@ -357,9 +357,15 @@
 
                 </div>
 
-                <div>
-
-                    <h5> <a href="/article/{{$article->slug}}">View Comments</a> </h5>
+                <div >
+                    <?php $cnt_comments=0; $cnt_replies=0 ?>
+                   @foreach($article->comment as $comments)
+                        <?php $cnt_comments++ ; ?>
+                        @foreach($comments->reply as $replies)
+                            <?php $cnt_replies++; ?>
+                        @endforeach
+                   @endforeach
+                    <h5> <a href="/article/{{$article->slug}}">{{$cnt_comments}} comments {{$cnt_replies}} replies</a> </h5>
                 </div>
                 
              </div>     

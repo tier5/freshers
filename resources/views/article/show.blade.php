@@ -592,8 +592,9 @@
             <hr>
              </div>
              <hr>
+       
         @endforeach
-        <div class="well">
+        <div class="well" style="display:none">
             <h4>Leave a Comment:</h4>
             <form role="form" method="POST"  action="/comment">
                 <div class="form-group">
