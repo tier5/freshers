@@ -5,8 +5,9 @@
 @endsection
 
 @section('article-content')
+
     <!-- Blog Entries Column -->
-    <div class="col-md-8">
+    <div class="col-md-8 col-sm-8 col-lg-8">
         <h1 class="page-header">
             Latest Post
             {{-- <small>Secondary Text</small> --}}
@@ -21,7 +22,7 @@
             @foreach($articles as $article)
                 <article class="panel panel-default">
                     <div class="panel-heading">
-                        <h2><a href="{{ route('article.show', [$article->slug]) }}">{{ $article->title }}</a>&nbsp;<small>(<a href="#">{{ $article->category->name }}</a>)</small></h2>
+                        <h2><a href="{{ route('article.show', [$article->slug]) }}">{{ $article->title }}</a>&nbsp;<small>(<a href="{{ route('showcategoryarticle',[$article->category->name]) }}">{{ $article->category->name }}</a>)</small></h2>
                     </div>
                     <div class="panel-body">
                         <p><a href="{{  URL::to('userarticle/'.$article->user_id) }}"><span class="glyphicon glyphicon-user"></span> {{ $article->user->first_name }} {{ $article->user->last_name }}</a> <span class="glyphicon glyphicon-time"></span> {{ $article->created_at }}</p>

@@ -1,5 +1,8 @@
 <?php
 
+
+    Route::get('fbauth/{auth?}',array('as'=>'facebookAuth' , 'uses'=>'ReplyController@getFacebookLogin'));
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -12,11 +15,12 @@
 */
 $router->group(array('domain' => 'laravelsite.dev'), function()
 {
-
     //Auth Routes
 
+    Route::group(['middleware'=>'auth'],function() 
+    {
+         //Route::post('/comment',   ['uses'=>'CommentController@store', 'as'=>'store_new_comment']);
 
-    Route::group(['middleware'=>'auth'],function() {
         Route::get('logout', [
             'uses'=>'UserController@logout',
             'as'=>'logout'
@@ -25,6 +29,7 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             'uses' => 'UserController@profile',
             'as' => 'profile'
         ]);
+
         Route::get('logout', [
             'uses' => 'UserController@logout',
             'as' => 'logout'
@@ -33,6 +38,8 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             'uses' => 'UserController@profile',
             'as' => 'profile'
         ]);
+
+
         Route::get('editprofile', [
             'uses' => 'UserController@editprofile',
             'as' => 'editprofile'
@@ -41,22 +48,83 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             'uses' => 'UserController@updateprofile',
             'as' => 'updateprofile'
         ]);
+
+
         Route::patch('resetprofilepassword', [
             'uses' => 'UserController@resetprofilepassword',
             'as' => 'resetprofilepassword'
         ]);
+
+        Route::resource('comment', 'CommentController', ['names'=> ['index' => 'comment.index']]);
+
+        Route::post('cmt', 'CommentController@edit');
+
+        Route::resource('reply', 'ReplyController', ['names'=> ['index' => 'comment.index']]);
+
+        //Route::post('rply', ['uses' => 'ReplyController@edit','as' => 'replyEditroute']);
+
+        Route::post('/test', [
+            'uses' => 'ReplyController@edit',
+            'as' => 'edit_reply_route'
+        ]);
+
+        Route::post('/cv', [
+            'uses' => 'CommentController@edit',
+            'as' => 'edit_comment_route'
+        ]);
+
+        Route::post('/Like/article',    [
+            'uses'=>'LSVController@likearticle',
+            'as'=>'article_like_increase'
+        ]);
+
+        Route::post('/Dislike/article', [
+            'uses'=>'LSVController@dislikearticle',
+            'as'=>'article_like_decrease'
+        ]);
+
+        Route::post('/Like/comment',    [
+            'uses'=>'LSVController@likecomment',
+            'as'=>'comment_like_increase'
+        ]);
+
+        Route::post('/Dislike/comment', [
+            'uses'=>'LSVController@dislikecomment',
+            'as'=>'comment_like_decrease'
+        ]);
+
+        Route::post('/Like/reply',      [
+            'uses'=>'LSVController@likereply',
+            'as'=>'reply_like_increase'
+        ]);
+
+        Route::post('/Dislike/reply',   [
+            'uses'=>'LSVController@dislikereply',
+            'as'=>'reply_like_decrease'
+        ]);
+
         Route::get('subdomain', [
             'uses' => 'SubdomainController@getSubdomain',
             'as' => 'getsubdomain'
         ]);
-        Route::patch('subdomain', [
+        Route::patch('subdomain/update', [
             'uses' => 'SubdomainController@update',
             'as' => 'updatesubdomain'
         ]);
+        Route::patch('subdomain/publish', [
+            'uses' => 'SubdomainController@publish',
+            'as' => 'publishsubdomain'
+        ]);
+
         Route::post('subdomaincheck', [
             'uses' => 'SubdomainController@check_availablity',
             'as' => 'subdomaincheck'
         ]);
+        Route::get('/Like/reply/{id}',      'LSVController@likereply');
+        Route::get('/Dislike/reply/{id}',   'LSVController@dislikereply');
+
+        Route::get('/Dislike/article/{id}', 'LSVController@dislikearticle');
+
 
         //Admin Routes
 
@@ -111,7 +179,7 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
         'uses' => 'AppController@getIndex',
         'as' => 'app.index'
     ]);
-
+    Route::get('/article/{{slug}}','ArticleController@show');
     Route::resource('article', 'ArticleController', [
         'names'=> [
             'index' => 'article.index'
@@ -168,6 +236,14 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
         'uses'=>'PageController@postcontact',
         'as'=>'postcontact'
     ]);
+    Route::get('tags/{tag}',[
+        'uses' => 'ArticleController@tags',
+        'as' => 'showtagarticle'
+    ]);
+    Route::get('categories/{category}',[
+        'uses' => 'ArticleController@category',
+        'as' => 'showcategoryarticle'
+    ]);
 
 
     //Routes For Search
@@ -217,4 +293,3 @@ $router->group(array('domain' => '{subdomain}.laravelsite.dev'), function()
         $sub=\App\Subdomain::where('subdomain','=',$subdomain)->first();
     });
 });
-

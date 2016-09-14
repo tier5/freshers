@@ -69,4 +69,32 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    public function getFacebookLogin($auth = NULL)
+    {
+        return('here');
+        if($auth == 'auth')
+        {
+            try
+            {
+                Hybrid_Endpoint::process();
+            }
+            catch (Exception $e)
+            {
+                return Redirect::to('fbauth');
+            }
+            return;
+        }
+        $auth = new Hybrid_Auth(app_path(). '/config/fb_auth.php');
+        $provider = $oauth->authenticate('Facebook');
+        $profile = $provider->getUserProfile();
+        return var_dump($profile).'<a href="logout">Log Out</a>';
+    }
+    public function getLoggedOut()
+    {
+        $fauth=new Hybrid_auth(app_path().'/config/fb_auth.php');
+        $fauth->logoutAllProviders();
+        return View::make('login');
+
+    }
 }

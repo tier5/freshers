@@ -98,6 +98,7 @@
 
         </form>
     </div>
+
     <hr />
     <div class="container">
         <form action="{{  route('resetprofilepassword') }}" method="POST" class="form-horizontal" role="form" enctype="multipart/form-data">
@@ -202,7 +203,6 @@
         }).blur(function() {
             $('#cpswd_info').hide();
         })
-
     </script>
 @endsection
 

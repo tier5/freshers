@@ -8,8 +8,9 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "unisharp/laravel-ckeditor": "^4.5",
-        "hashids/hashids": "^1.0",
-        "vinkla/hashids": "^2.3"
+        "vinkla/hashids": "^2.3",
+        "laravel/socialite":"^2.0",
+        "hybridauth/hybridauth": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

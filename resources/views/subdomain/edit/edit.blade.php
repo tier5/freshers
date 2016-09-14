@@ -38,18 +38,18 @@
             <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="row">
                     <label class="radio-inline">
-                        <input type="radio" name="theme" id="theme" value=1 checked="checked" >
+                        <input type="radio" name="theme" id="theme" value=1 {{$sub->theme==1?'checked':''}} >
                        Theme 1
                         <div class="row"><img src="/themes/1.jpg" height=125px width=125px  /></div>
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="theme" id="theme" value=2>
+                        <input type="radio" name="theme" id="theme" value=2 {{$sub->theme==2?'checked':''}}>
                         Theme 2
                         <div class="row"><img src="/themes/2.jpg" height=125px width=125px /></div>
                     </label>
 
                     <label class="radio-inline">
-                        <input type="radio" name="theme" id="theme" value=3>
+                        <input type="radio" name="theme" id="theme" value=3 {{$sub->theme==3?'checked':''}}>
                         Theme 3
                         <div class="row"><img src="/themes/3.jpg" height=125px width=125px  /></div>
                     </label>
@@ -58,28 +58,22 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="publish" class="control-label col-md-3 col-sm-3 col-xs-12">Publish</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <div class="row">
-                    <select name="publish" id="publish" class="form-control col-md-6 col-sm-6 col-xs-12">
-                        <option value="{{$sub->publish}}" selected>---Select--</option>
-                        <option value=1>Yes</option>
-                        <option value=0>No</option>
-                    </select>
-                    @if ($errors->any()) <div style="color:red">{{$errors->first('publish')}}</div>@endif
-                </div>
+            <div class="co-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
+                <button type="submit" class="btn btn-success btn-lg pull-right" name="save" alt="Save">Save</button>
             </div>
         </div>
+                </form>
         <div class="form-group">
             <div class="co-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
-                <button type="reset" class="btn btn-warning btn-md pull-left">Reset</button>
-                <button type="submit" class="btn btn-success btn-md pull-right">Submit</button>
+                <form class="form" target="_blank" method="POST" action="{{route('publishsubdomain')}}">
+                    <input type="hidden" name="_method" value="PATCH">
+                    <button type="submit" class="btn btn-warning btn-lg pull-left" name="publish" alt="Publish">Publish</button>
+                </form>
+                </div>
+            </div>
             </div>
         </div>
 
-    </form>
-    </div>
-        </div>
     <script>
 
         $(document).ready(function() {
@@ -129,8 +123,5 @@
         $(function() {
             $('input').bind('focus', false);
         });
-
-
-
     </script>
 @endsection

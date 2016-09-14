@@ -30,6 +30,8 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
+                            <div class="row">
+                            <div class="col-lg-6 table-responsive">
                             <div class="clearfix">&nbsp;</div>
                             <table width="100%" class="table table-striped table-bordered table-hover ">
                                 <thead>
@@ -65,5 +67,7 @@
             </div>
         </div>
     </div>
+            </div>
+        </div>
     <!-- /.row -->
 @endsection

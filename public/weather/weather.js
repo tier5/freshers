@@ -27,13 +27,13 @@ else{
             datatype: "json",
             success:function(data){
             	var date= new Date(data.dt*1000);
-            	$(ht).append("<h3 class='pull-right' id='city' class='text'>"+data.name+"</h3>");
+            	$(ht).append("<h3 class='pull-right' style='color: #0000ee;' id='city' class='text'>"+data.name+"</h3>");
             	$(ht).append("<img id='icon' src='/weather/css/_images/"+data.weather[0].icon+".png' width='100' height='100'>");
             	$(ht).css("background","url(/weather/css/_images/"+data.weather[0].icon+".jpg)");
             	var num =data.main.temp-272.15;
 					var n = parseInt(num, 10);
-            	$(ht).append("<h1  id='temp' class='text'>"+n+"&deg;C</h1>");
-            	$(ht).append("<h1 id='desc' class='text'>"+data.weather[0].description+"</h1>");
+            	$(ht).append("<h1  id='temp' style='color: #0000ee;  class='text'>"+n+"&deg;C</h1>");
+            	$(ht).append("<h1 id='desc' style='color: #0000ee; class='text'>"+data.weather[0].description+"</h1>");
             	
             }
          });

@@ -70,13 +70,12 @@
                                             @if ($errors->any()) <div style="color:red">{{$errors->first('last_name')}}</div>@endif
                                         </div>
 
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="co-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
-                                            <input onclick="showSection(1);"  type="button" name="previous" class="previous btn btn-default pull-left" value="previous" id="previous" />
-                                            <input onclick="showSection(3);"  type="button" name="next" class="next btn btn-info pull-right" value="Next" />
-                                        </div>
-                                    </div>
+                            <div class="form-group">
+                                <div class="co-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
+                                    <input onclick="showSection(1);"  type="button" name="previous" class="previous btn btn-default pull-left" value="previous" id="previous" />
+                                    <input onclick="showSection(3);" type="button" name="next" class="next btn btn-info pull-right" value="Next" />
+                                </div>
+                            </div>
                         </fieldset>
 
                         <fieldset class="section" id="sec-3" >
@@ -152,14 +151,12 @@
         </div>
     </div>
 <script>
-
    function showSection(id){
         $('.section').hide();
         $('#sec-'+id).show();
     }
     showSection(1);
     $('input[name=date_of_birth]').datepicker({ dateFormat: 'yy/mm/dd',changeMonth: true,changeYear: true,yearRange: '1950:Date'});
-
 </script>
 @endsection
 

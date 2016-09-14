@@ -7,6 +7,7 @@
 @section('content')
     <div class="container">
         <div class="row">
+        <div class="row">
             <div class="col-lg-8">
                 <h1 class="page-header">Blog Management</h1>
             </div>
@@ -23,7 +24,7 @@
     <!-- /.row -->
         <div class="row">
             <div class="row">
-                <div class="col-lg-offset-2 col-lg-6">
+                <div class="col-lg-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Blog Management
@@ -103,6 +104,7 @@
             </div>
         </div>
     </div>
+        </div>
     <!-- /.row -->
 @endsection
 

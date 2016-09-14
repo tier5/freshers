@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\View;
 use App\Article;
 use App\ArticleTag;
 use App\Category;
@@ -9,8 +10,8 @@ use App\Http\Requests;
 use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Session;
 
 class ArticleController extends Controller
 {
@@ -21,16 +22,13 @@ class ArticleController extends Controller
      */
     public function index()
     {
+
+
         $articles = Article::latest()->get();
         
         return view('article.index', ['articles' => $articles]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
             $categories = Category::all();
@@ -41,16 +39,11 @@ class ArticleController extends Controller
             ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $tags = $this->listTags(explode(', ', $request->tags));
-        $userid=Session::get('id');
+        $user_id=Session::get('id');
+
        $this->validate($request, [
                 'title' => 'required|unique:articles',
                 'category' => 'required',
@@ -62,7 +55,11 @@ class ArticleController extends Controller
         $article->slug = str_slug($request->title);
         $article->body = $request->body;
         $article->category_id = $request->category;
-        $article->user_id = $userid;
+        $article->user_id = $user_id;
+        $article->views = 0;
+        $article->shares = 0;
+        $article->likes =0;
+        $article->dislikes=0;
         $article->save();
         $article->tags()->attach($tags);
 
@@ -71,14 +68,11 @@ class ArticleController extends Controller
         return redirect()->route('article.show', [$article->slug]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  string  $slug
-     * @return \Illuminate\Http\Response
-     */
+   
     public function show($slug)
     {
+
+        
         $article = Article::where('slug', $slug)->get()
                 ->first();
 
@@ -86,15 +80,29 @@ class ArticleController extends Controller
             abort(404);
         }
 
-        return view('article.show', ['article' => $article]);
+        $view = View::where('article_id',$article->id)->first(); //fetchimg the view field for this article
+
+        if($view == null) // incrementing the view
+        {
+            $new_view = new View();
+            $new_view->user_id      = Session::get('id');
+            $new_view->article_id   = $article->id;
+            $new_view->save();
+        }
+        else
+        {
+            $view->user_id      = Session::get('id');
+            $view->article_id   = $article->id;
+            $view->save();
+        }
+
+        $article->views = $article->views+1;
+        $article->save();
+
+            return view('article.show', ['article' => $article]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  string  $slug
-     * @return \Illuminate\Http\Response
-     */
+    
     public function edit($slug)
     {
         $article = Article::where('slug', $slug)->get()
@@ -114,13 +122,7 @@ class ArticleController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $slug
-     * @return \Illuminate\Http\Response
-     */
+   
     public function update(Request $request, $slug)
     {
             $tags = $this->listTags(explode(', ', $request->tags));
@@ -146,12 +148,6 @@ class ArticleController extends Controller
             return redirect()->route('article.show', [$article->slug]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  string  $slug
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($slug)
     {
         $article = Article::where('slug', $slug)->get()
@@ -164,15 +160,7 @@ class ArticleController extends Controller
         return redirect()->route('article.index');
     }
 
-    /**
-     * Takes an array of tags from user and checks the if same tags are stored
-     * on database or not.
-     * Fetches available tag IDs from databse and stores new tags into database
-     * and returns an array consiting tags IDs respected to all input tags.
-     * 
-     * @param  array $input_tags Array containing tag names
-     * @return array             Array containing tag IDs
-     */
+    
     private function listTags($input_tags) {
         $stored_tags = Tag::all();
         $new_tags = $input_tags;
@@ -207,5 +195,19 @@ class ArticleController extends Controller
 
         return view('article.showuserarticle', ['articles' => $article]);
 
+    }
+
+    public function tags($tag)
+    {
+        $tag=Tag::where('name','=',$tag)->first();
+        $articles=$tag->articles;
+        return view('article.showuserarticle',['articles' => $articles]);
+    }
+
+    public function category($category)
+    {
+        $category_id=Category::where('name','=',$category)->first()->id;
+        $articles=Article::where('category_id','=',$category_id)->get();
+        return view('article.showuserarticle',['articles' => $articles]);
     }
 }

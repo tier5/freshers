@@ -7,7 +7,8 @@
 @section('content')
      @yield('article-content')
     <!-- Blog Sidebar Widgets Column -->
-    <div class="col-md-4">
+    <div class="col-sm-4 col-lg-4 col-md-4">
+        <nav class="navbar navbar-default navbar-fixed-side">
         <!-- Blog Search Well -->
         <div class="well">
             <h4>Search Everything</h4>
@@ -21,7 +22,7 @@
                 <div class="col-lg-6">
                     <ul class="list-unstyled">
                         @foreach ($categories as $category)
-                            <li><a href="#">{{ $category->name }}</a></li>
+                            <li><a href="{{ route('showcategoryarticle',[$category->name]) }}">{{ $category->name }}</a></li>
                         @endforeach
                     </ul>
                 </div>
@@ -34,10 +35,11 @@
             <h4>Popular Tags</h4>
             <p>
                 @foreach ($tags as $tag)
-                    <a href="#"><span class="glyphicon glyphicon-tag"></span>{{ $tag->name }}</a>&nbsp;
+                    <a href="{{ route('showtagarticle',[$tag->name]) }}"><span class="glyphicon glyphicon-tag"></span>{{ $tag->name }}</a>&nbsp;
                 @endforeach
             </p>
         </div>
+            </nav>
     </div>
 @stop
 
