@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\ContactUs;
 use Illuminate\Http\Request;
 use App\User;
 use App\Article;
 use App\Http\Requests;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -47,5 +50,38 @@ class AdminController extends Controller
             $user->profile_picture=$temp;
         $user->save();
         return redirect()->route('usertable')->with('success','You are Successfully Update Profile');
+    }
+
+    public function contactmanagement()
+    {
+        $contacts=ContactUs::latest()->get();
+        return view('contact.admincontact',[ 'contacts' => $contacts]);
+    }
+    public function blogmanagement()
+    {
+        $blogs=Article::latest()->get();
+        return view('admin.blog', ['blogs' => $blogs]);
+    }
+
+    public function blogbardata()
+    {
+        $data=Article::select([
+                    DB::raw('COUNT(*) as value'),
+                    DB::raw('DATE(created_at) as date')])
+                    ->groupBy('date')
+                    ->orderBy('date', 'ASC')
+                    ->get();
+        return \Response::json($data);
+    }
+
+    public function registrationbardata()
+    {
+        $reg=User::select([
+            DB::raw('COUNT(*) as value'),
+            DB::raw('DATE(created_at) as date')])
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->get();
+        return \Response::json($reg);
     }
 }

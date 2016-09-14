@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class AdminMiddleware
 {
@@ -15,7 +16,7 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user()->isAdmin == '1') // is an admin
+        if(Auth::user()->isadmin == '1') // is an admin
         {
             return $next($request); // pass the admin
         }

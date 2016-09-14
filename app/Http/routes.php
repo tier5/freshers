@@ -13,57 +13,8 @@
 $router->group(array('domain' => 'laravelsite.dev'), function()
 {
 
+    //Auth Routes
 
-    Route::get('/', [
-        'uses' => 'AppController@getIndex',
-        'as' => 'app.index'
-    ]);
-
-    Route::resource('article', 'ArticleController', [
-        'names'=> [
-            'index' => 'article.index'
-        ]
-    ]);
-
-    Route::group(['prefix' => 'search'], function () {
-        Route::get('/', [
-            'uses' => 'SearchController@search',
-            'as' => 'search'
-        ]);
-        Route::get('tag/{id?}', [
-            'uses' => 'SearchController@searchTag',
-            'as' => 'search.tag'
-        ]);
-        Route::get('category/{id?}', [
-            'uses' => 'SearchController@searchCategory',
-            'as' => 'search.category'
-        ]);
-        Route::get('data', [
-            'uses' => 'SearchController@getSearchData',
-            'as' => 'search.data'
-        ]);
-    });
-    Route::get('/userarticle/{user_id?}', [
-        'uses' => 'ArticleController@userarticle',
-    ]);
-
-    Route::get('register',[
-        'uses'=>'UserController@create',
-        'as'=>'register'
-    ]);
-
-    Route::post('register',[
-        'uses'=>'UserController@store',
-        'as'=>'postregister'
-    ]);
-    Route::get('login', [
-        'uses' => 'UserController@getLogin',
-        'as' => 'login'
-    ]);
-    Route::post('login', [
-        'uses' => 'UserController@postLogin',
-        'as' => 'postlogin'
-    ]);
 
     Route::group(['middleware'=>'auth'],function() {
         Route::get('logout', [
@@ -107,7 +58,86 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             'as' => 'subdomaincheck'
         ]);
 
+        //Admin Routes
+
+        Route::group(['prefix' => 'admin','middleware'=>'admin'], function() {
+
+            Route::get('/', [
+                'uses' => 'AdminController@getIndex',
+                'as' => 'admin.index'
+            ]);
+            Route::resource('category', 'CategoryController');
+            Route::resource('tag', 'TagController');
+            Route::get('contact/management', [
+                'uses' => 'AdminController@contactmanagement',
+                'as' => 'contactmanagement'
+            ]);
+            Route::get('blog/management', [
+                'uses' => 'AdminController@blogmanagement',
+                'as' => 'blogmanagement'
+            ]);
+            Route::get('user',[
+                'uses' => 'AdminController@usertable',
+                'as' => 'admin.user.index'
+            ]);
+
+            Route::get('user/edit/{id}', [
+                'uses' => 'AdminController@getedituser',
+                'as' => 'adminuseredit'
+            ]);
+            Route::get('user/edit/{id}', [
+                'uses' => 'AdminController@postedituser',
+                'as' => 'adminuseredit'
+            ]);
+            Route::get('user/delete/{id}', [
+                'uses' => 'AdminController@deleteuser',
+                'as' => 'adminuserdelete'
+            ]);
+            Route::get('bar/blod',[
+                'uses' => 'AdminController@blogbardata',
+                'as' => 'getbarforblog'
+            ]);
+            Route::get('bar/registration',[
+                'uses' => 'AdminController@registrationbardata',
+                'as' => 'getbarforregisttration'
+            ]);
+        });
+
     });
+
+    //General Routes
+
+    Route::get('/', [
+        'uses' => 'AppController@getIndex',
+        'as' => 'app.index'
+    ]);
+
+    Route::resource('article', 'ArticleController', [
+        'names'=> [
+            'index' => 'article.index'
+        ]
+    ]);
+    Route::get('/userarticle/{user_id?}', [
+        'uses' => 'ArticleController@userarticle',
+    ]);
+
+    Route::get('register',[
+        'uses'=>'UserController@create',
+        'as'=>'register'
+    ]);
+
+    Route::post('register',[
+        'uses'=>'UserController@store',
+        'as'=>'postregister'
+    ]);
+    Route::get('login', [
+        'uses' => 'UserController@getLogin',
+        'as' => 'login'
+    ]);
+    Route::post('login', [
+        'uses' => 'UserController@postLogin',
+        'as' => 'postlogin'
+    ]);
     Route::get('resetpassword', [
         'uses' => 'PasswordController@resetpassword',
         'as' => 'resetpassword'
@@ -124,8 +154,6 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
         'uses'=>'PasswordController@postreset',
         'as'=>'postreset'
     ]);
-
-
     Route::get('about',[
         'uses'=>'PageController@about',
         'as'=>'about'
@@ -140,26 +168,32 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
         'uses'=>'PageController@postcontact',
         'as'=>'postcontact'
     ]);
-    Route::group(['prefix' => 'admin'], function() {
+
+
+    //Routes For Search
+
+
+    Route::group(['prefix' => 'search'], function () {
         Route::get('/', [
-            'uses' => 'AdminController@getIndex',
-            'as' => 'admin.index'
+            'uses' => 'SearchController@search',
+            'as' => 'search'
         ]);
-        Route::resource('category', 'CategoryController');
-        Route::get('user/edit/{id}', [
-            'uses' => 'AdminController@getedituser',
-            'as' => 'adminuseredit'
+        Route::get('tag/{id?}', [
+            'uses' => 'SearchController@searchTag',
+            'as' => 'search.tag'
         ]);
-        Route::get('user/edit/{id}', [
-            'uses' => 'AdminController@postedituser',
-            'as' => 'adminuseredit'
+        Route::get('category/{id?}', [
+            'uses' => 'SearchController@searchCategory',
+            'as' => 'search.category'
         ]);
-        Route::get('user/delete/{id}', [
-            'uses' => 'AdminController@deleteuser',
-            'as' => 'adminuserdelete'
-            ]);
+        Route::get('data', [
+            'uses' => 'SearchController@getSearchData',
+            'as' => 'search.data'
+        ]);
     });
 });
+
+//Routes For Subdomain
 
 $router->group(array('domain' => '{subdomain}.laravelsite.dev'), function()
 {

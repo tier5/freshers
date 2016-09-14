@@ -18,6 +18,9 @@
         <!-- Custom Fonts -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
         @yield('style')
         @yield('extended-style')
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -47,12 +50,12 @@
                             <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                            <li><a href="{{ route('profile') }}"><i class="fa fa-user fa-fw"></i> User Profile</a>
                             </li>
-                            <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                            <li><a href="{{route('editprofile')}}"><i class="fa fa-gear fa-fw"></i> Settings</a>
                             </li>
                             <li class="divider"></li>
-                            <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            <li><a href="{{ route('logout') }}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                             </li>
                         </ul>
                         <!-- /.dropdown-user -->
@@ -79,6 +82,18 @@
                             </li>
                             <li>
                                 <a href="{{ route('admin.category.index') }}"><i class="fa fa-filter fa-fw"></i> Category Management</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.tag.index') }}"><i class="fa fa-tags fa-fw"></i> Tag Management</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.user.index') }}"><i class="fa fa-user fa-fw"></i> User Management</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('blogmanagement') }}"><i class="fa fa-floppy-o fa-fw"></i>  Blog Management</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('contactmanagement') }}"><i class="fa fa-phone-square fa-fw"></i>  Contact Management</a>
                             </li>
                             <li>
                                 <a href="#"><i class="fa fa-list fa-fw"></i> Compact Menu<span class="fa arrow"></span></a>

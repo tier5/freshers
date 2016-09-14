@@ -92,6 +92,11 @@
                                         <li><a href="{{ route('profile') }}"><i class="fa fa-img"></i><img src="{{URL::to('uploads/profile_pic/'.Auth::user()->profile_picture)}}" class="img-circle" alt="Cinque Terre" width="42" height="42"> Profile</a></li>
                                         <li><a href="{{route('editprofile')}}"><i class="fa fa-btn fa-update"></i>Update Profile</a> </li>
                                         <li><a href="{{route('getsubdomain')}}"><i class="fa fa-link"></i>Subdomain</a></li>
+                                        @if (Auth::user()->isadmin == 1)
+                                            <li class="divider"></li>
+                                            <li><a href="{{route('admin.index')}}"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+                                        @endif
+                                        <li class="divider"></li>
                                         <li><a href="{{ route('logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                                     </ul>
                                 </li>

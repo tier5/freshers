@@ -3,7 +3,7 @@
     <div class="contaner">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">User Table</h1>
+                <h1 class="page-header">User Management</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -16,32 +16,32 @@
                         <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                             <thead>
                             <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
+                                <th>Name</th>
                                 <th>Email</th>
-                                <th>Date of Birth</th>
-                                <th>Country</th>
-                                <th>Contact Number</th>
-                                <th>Profile Pictute</th>
-                                <th>Edit / Delete</th>
+                                <th>Role</th>
+                                <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($users as $user)
                                 <tr>
-                                    <td>{{$user->first_name}}</td>
-                                    <td>{{$user->last_name}}</td>
+                                    <td>{{$user->first_name.' '.$user->last_name}}</td>
                                     <td>{{$user->email}}</td>
-                                    <td>{{$user->date_of_birth}}</td>
-                                    <td>{{App\Country::where('id','=',$user->country_id)->first()->name}}</td>
-                                    <td>{{$user->contact_number}}</td>
-                                    <td><img src="{{URL::to('uploads/profile_pic/'.$user->profile_picture)}}" height=90 width=90> </td>
                                     <td>
                                         @if($user->isadmin==0)
-                                            <a href="{{URL::to('/admin/user/edit/'.$user->id)}}"><i class="fa fa-edit"></i> Edit </a><br><a href="{{URL::to('/admin/user/delete/'.$user->id)}}"><i class="fa fa-exclamation-triangle"></i> Delete </a>
+                                            <p class="user">User</p>
                                 @else
-                                            Admin
+                                           <p class="admin">Admin</p>
                                         @endif
+                                    </td>
+                                    <td>
+                                    <a href="#"><button class="btn btn-primary btn-xs"><i class="fa fa-info-circle fa-fw"></i> Info</button></a>
+                                    <a href="#"><button class="btn btn-warning btn-xs"><i class="fa fa-pencil-square-o fa-fw"></i> Edit</button></a>
+                                    <form class="form form-inline" action="#" method="post">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <button class="btn btn-danger btn-xs" type="submit"><i class="fa fa-trash-o fa-fw"></i> Delete</button>
+                                    </form>
                                     </td>
                                 </tr>
                              @endforeach
