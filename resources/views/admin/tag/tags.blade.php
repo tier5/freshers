@@ -30,9 +30,6 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <a href="{{ route('admin.tag.create') }}">
-                                <button class="btn btn-success btn-sm" type="submit">Create</button>
-                            </a>
                             </form>
                             <div class="clearfix">&nbsp;</div>
                             <table width="100%" class="table table-striped table-bordered table-hover">

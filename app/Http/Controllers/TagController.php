@@ -18,13 +18,35 @@ class TagController extends Controller
     {
         $tags = Tag::latest()->get();
 
-        return view('tag.tags', ['tags' => $tags]);
+        return view('admin.tag.tags', ['tags' => $tags]);
     }
 
-    /*
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function show($id)
+    {
+        $tag=Tag::find(Hashids::decode($id));
+        return view('admin.tag.show', ['tag' => $tag[0]]);
+    }
+    public function edit($id)
+    {
+        $tag=Tag::find(Hashids::decode($id));
+        return view('admin.tag.edit',['tag' => $tag[0]]);
+    }
+    public function update(Request $request,$id)
+    {
+        $this->validate($request, ['name' => 'required|unique:tags,name']);
+
+        $tag = Tag::find(Hashids::decode($id));
+        $tag[0]->name = $request->name;
+        $tag[0]->save();
+
+        return redirect()->route('admin.tag.index');
+    }
+    public function destroy($id)
+    {
+        $tag = Tag::find(Hashids::decode($id));
+        $tag[0]->delete();
+
+        return redirect()->route('admin.tag.index');
+    }
 
 }

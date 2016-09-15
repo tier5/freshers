@@ -5,9 +5,10 @@
 @stop
 
 @section('content')
+    <div class="row">
      @yield('article-content')
     <!-- Blog Sidebar Widgets Column -->
-    <div class="col-sm-4 col-lg-4 col-md-4">
+    <div class="col-sm-4 col-lg-4 col-md-4 col-xs-12">
         <nav class="navbar navbar-default navbar-fixed-side">
         <!-- Blog Search Well -->
         <div class="well">
@@ -41,6 +42,7 @@
         </div>
             </nav>
     </div>
+         </div>
 @stop
 
 @section('extended-script')

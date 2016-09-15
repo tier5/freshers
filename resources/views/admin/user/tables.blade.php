@@ -28,20 +28,34 @@
                                     <td>{{$user->first_name.' '.$user->last_name}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>
-                                        @if($user->isadmin==0)
+                                        @if($user->isadmin == 0)
                                             <p class="user">User</p>
-                                @else
+                                            <form class="form form-inline" action="{{ route('admin.user.promote',[$user->id]) }}" method="post">
+                                                <input type="hidden" name="_method" value="PATCH">
+                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                <button class="btn btn-warning"><i class="fa fa-user-plus fa-fw"></i> Make Admin</button>
+                                            </form>
+                                        @else
                                            <p class="admin">Admin</p>
+                                            @if($user->id != Session::get('id'))
+                                                <form class="form form-inline" action="{{ route('admin.user.demote',[$user->id]) }}" method="post">
+                                                    <input type="hidden" name="_method" value="PATCH">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <button class="btn btn-primary"><i class="fa fa-user-md fa-fw"></i>Make User</button>
+                                                </form>
+                                                @endif
                                         @endif
                                     </td>
                                     <td>
-                                    <a href="#"><button class="btn btn-primary btn-xs"><i class="fa fa-info-circle fa-fw"></i> Info</button></a>
-                                    <a href="#"><button class="btn btn-warning btn-xs"><i class="fa fa-pencil-square-o fa-fw"></i> Edit</button></a>
-                                    <form class="form form-inline" action="#" method="post">
+                                    <a href="{{ URL::to('admin/userprofile/'.$user->id) }}"><button class="btn btn-primary btn-xs"><i class="fa fa-info-circle fa-fw"></i> Info</button></a>
+                                    <a href="{{ URL::to('admin/usermanagement/edit/'.$user->id) }}"><button class="btn btn-warning btn-xs"><i class="fa fa-pencil-square-o fa-fw"></i> Edit</button></a>
+                                        @if($user->id != Session::get('id'))
+                                    <form class="form form-inline" action="{{ URl::to('admin/usermanagement/delete/'.$user->id) }}" method="post">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <button class="btn btn-danger btn-xs" type="submit"><i class="fa fa-trash-o fa-fw"></i> Delete</button>
                                     </form>
+                                            @endif
                                     </td>
                                 </tr>
                              @endforeach

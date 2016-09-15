@@ -234,7 +234,7 @@
  
 </script>
 
-
+    <div class="row">
     @if (Session::has('success'))
         <div class="row">
             <div class="alert alert-success">
@@ -251,9 +251,10 @@
             </div>
         </div>
     @endif
+        </div>
     <!-- Blog Post Content Column -->
 
-    <div class="col-md-8 col-sm-8 col-lg-6">
+    <div class="col-md-8 col-sm-8 col-lg-8 col-xs-12">
         <!-- Blog Post -->
         <!-- Title -->
         <h1>{{ $article->title }}</h1>
@@ -368,7 +369,7 @@
        </p>
 
         <!-- Comment -->
-
+        <div class="col-md-8 col-sm-8 col-lg-8 col-xs-12">
         @foreach($article->comment as $comment)
         <hr>
         <div class="media">
@@ -604,8 +605,9 @@
                 <button type="submit" class="btn btn-primary pull-right">Comment</button>
                 <br />
             </form>
+        <div>
         </div>
+    </div>
+            </div>
         </div>
-        
-   
 @endsection

@@ -149,17 +149,19 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
                 'as' => 'admin.user.index'
             ]);
 
-            Route::get('user/edit/{id}', [
+            Route::get('usermanagement/edit/{id}', [
                 'uses' => 'AdminController@getedituser',
-                'as' => 'adminuseredit'
             ]);
-            Route::get('user/edit/{id}', [
+            Route::patch('user/edit/{id}', [
                 'uses' => 'AdminController@postedituser',
-                'as' => 'adminuseredit'
+                'as' => 'admin.user.edit'
             ]);
-            Route::get('user/delete/{id}', [
+            Route::delete('usermanagement/delete/{id}', [
                 'uses' => 'AdminController@deleteuser',
                 'as' => 'adminuserdelete'
+            ]);
+            Route::get('userprofile/{id}', [
+                'uses' => 'AdminController@viewuser'
             ]);
             Route::get('bar/blod',[
                 'uses' => 'AdminController@blogbardata',
@@ -168,6 +170,22 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             Route::get('bar/registration',[
                 'uses' => 'AdminController@registrationbardata',
                 'as' => 'getbarforregisttration'
+            ]);
+            Route::patch('user/demote/{id}', [
+                'uses' => 'AdminController@demoteadmin',
+                'as' => 'admin.user.demote'
+            ]);
+            Route::patch('user/promote/{id}', [
+                'uses' => 'AdminController@promoteuser',
+                'as' => 'admin.user.promote'
+            ]);
+            Route::get('email/reply/{id}', [
+                'uses' => 'AdminController@getemailbody',
+                'as' => 'admin.email.reply'
+            ]);
+            Route::post('email/reply/postreply', [
+                'uses' => 'AdminController@postreply',
+                'as' => 'admin.postreply'
             ]);
         });
 

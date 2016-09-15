@@ -133,5 +133,6 @@
         <script src="{{ URL::to('src/js/sb-admin-2.js') }}"></script>
         @yield('script')
         @yield('extended-script')
+    </div>
     </body>
 </html>

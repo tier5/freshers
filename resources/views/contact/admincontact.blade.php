@@ -7,7 +7,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-8 col-md-7">
                 <h1 class="page-header">Contact Management</h1>
             </div>
             <!-- /.col-lg-12 -->
@@ -17,7 +17,7 @@
                 <div class="alert alert-success">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     {{ Session::get('success') }}
-                </div>s
+                </div>
             </div>
     @endif
     <!-- /.row -->
@@ -41,6 +41,7 @@
                                     <th>Phone</th>
                                     <th>Message</th>
                                     <th>Time</th>
+                                    <th>Reply</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -52,6 +53,7 @@
                                     <td>{{ $contact->phone }}</td>
                                     <td>{{ $contact->message }}</td>
                                     <td>{{ $contact->created_at }}</td>
+                                        <td><a href="{{ route('admin.email.reply',[ $contact->id]) }}"><button class="btn btn-primary btn-xs"><i class="fa fa-info-circle fa-fw"></i>Reply</button></a></td>
                                     </tr>
                                 @endforeach
 

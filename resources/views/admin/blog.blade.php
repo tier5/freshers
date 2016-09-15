@@ -24,7 +24,7 @@
     <!-- /.row -->
         <div class="row">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-4 col-xs-12 col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Blog Management
