@@ -1,7 +1,6 @@
 <?php
 
-
-    Route::get('fbauth/{auth?}',array('as'=>'facebookAuth' , 'uses'=>'ReplyController@getFacebookLogin'));
+Route::get('fbauth/{auth?}',array('as'=>'facebookAuth' , 'uses'=>'ReplyController@getFacebookLogin'));
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +52,30 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
         Route::patch('resetprofilepassword', [
             'uses' => 'UserController@resetprofilepassword',
             'as' => 'resetprofilepassword'
+        ]);
+        Route::get('article/new', [
+            'uses' => 'ArticleController@create',
+            'as' => 'article.create'
+        ]);
+        Route::post('article', [
+            'uses' => 'ArticleController@store',
+            'as' => 'article.store'
+        ]);
+        Route::get('article/{slug}/edit', [
+            'uses' => 'ArticleController@edit',
+            'as' => 'article.edit'
+        ]);
+        Route::Patch('article/{slug}', [
+            'uses' => 'ArticleController@update',
+            'as' => 'article.update'
+        ]);
+        Route::Put('article/{slug}', [
+            'uses' => 'ArticleController@update',
+            'as' => 'article.update'
+        ]);
+        Route::delete('article/{slug}', [
+            'uses' => 'ArticleController@destroy',
+            'as' => 'article.destroy'
         ]);
 
         Route::resource('comment', 'CommentController', ['names'=> ['index' => 'comment.index']]);
@@ -136,10 +159,6 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             ]);
             Route::resource('category', 'CategoryController');
             Route::resource('tag', 'TagController');
-            Route::get('contact/management', [
-                'uses' => 'AdminController@contactmanagement',
-                'as' => 'contactmanagement'
-            ]);
             Route::get('blog/management', [
                 'uses' => 'AdminController@blogmanagement',
                 'as' => 'blogmanagement'
@@ -187,6 +206,18 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
                 'uses' => 'AdminController@postreply',
                 'as' => 'admin.postreply'
             ]);
+            Route::get('email/inbox', [
+                'uses' => 'AdminController@inbox',
+                'as' => 'admin.inbox'
+            ]);
+            Route::delete('email/delete/{id}', [
+                'uses' => 'AdminController@delete',
+                'as' => 'message.delete'
+            ]);
+            Route::get('contact/management/{id}', [
+                'uses' => 'AdminController@contactmanagement',
+                'as' => 'contactmanagement'
+            ]);
         });
 
     });
@@ -197,11 +228,14 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
         'uses' => 'AppController@getIndex',
         'as' => 'app.index'
     ]);
-    Route::get('/article/{{slug}}','ArticleController@show');
-    Route::resource('article', 'ArticleController', [
-        'names'=> [
-            'index' => 'article.index'
-        ]
+    Route::get('article', [
+        'uses' =>'ArticleController@index',
+        'as' => 'article.index'
+    ]);
+
+    Route::get('article/{slug}', [
+        'uses' => 'ArticleController@show',
+        'as' => 'article.show'
     ]);
     Route::get('/userarticle/{user_id?}', [
         'uses' => 'ArticleController@userarticle',
@@ -309,5 +343,17 @@ $router->group(array('domain' => '{subdomain}.laravelsite.dev'), function()
     });
     Route::get('/about',function ($subdomain) {
         $sub=\App\Subdomain::where('subdomain','=',$subdomain)->first();
+        if($sub) {
+            if ($sub->publish == 1) {
+                $user = \App\User::where('id', '=', $sub->user_id)->first();
+                return view('subdomain.about', ['user' => $user, 'subdomain' => $sub]);
+            }
+            else {
+                abort(404);
+            }
+        }
+        else {
+            return Redirect::to('http://laravelsite.dev');
+        }
     });
 });

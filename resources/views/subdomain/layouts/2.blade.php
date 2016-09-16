@@ -47,7 +47,7 @@
                     <a href="{{url('/')}}">Home</a>
                 </li>
                 <li>
-                    <a href="#">About</a>
+                    <a href="/about">About</a>
                 </li>
                 <li>
                     <a href="#">Contact</a>

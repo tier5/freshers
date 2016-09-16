@@ -17,13 +17,13 @@
                 <div class="alert alert-success">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     {{ Session::get('success') }}
-                </div>s
+                </div>
             </div>
-    @endif
+        @endif
     <!-- /.row -->
         <div class="row">
             <div class="row">
-                <div class="col-lg-offset-2 col-lg-8">
+                <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Reply Email
@@ -53,8 +53,8 @@
                                     <label for="body" class="control-label col-md-3 col-sm-3 col-xs-12">Body</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <div class="row">
-                                            <input type="text" name="geeting" id="body" value="Hi {{$contact->first_name}}," readonly>
-                                            <textarea class="form-control"  name="body" id="body_geet">{{old('body')}}</textarea>
+                                            <input type="text" name="geeting" class="form-control" id="body" value="Hi {{$contact->first_name}}," readonly>
+                                            <textarea class="form-control" rows=10 name="body" id="body_geet">{{old('body')}}</textarea>
                                             @if ($errors->any()) <div style="color:red">{{$errors->first('email')}}</div>@endif
                                         </div>
                                     </div>
@@ -62,7 +62,7 @@
                                 <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token()}}"/>
                                 <div class="form-group">
                                     <div class="co-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
-                                        <button type="submit" class="btn btn-success btn-md pull-right">Send</button>
+                                        <button type="submit" class="btn btn-success btn-md pull-right"><i class="fa fa-paper-plane fa-fw"></i> Send</button>
                                     </div>
                                 </div>
                             </form>

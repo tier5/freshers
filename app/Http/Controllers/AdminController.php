@@ -11,6 +11,8 @@ use App\Http\Requests;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
@@ -18,7 +20,8 @@ class AdminController extends Controller
      * Creates view for Aadmin index page.
      */
     public function getIndex() {
-        return view('admin.index');
+        $user=User::find(session('id'));
+        return view('admin.index',[ 'user' => $user]);
     }
     public function usertable() {
         $users=User::all();
@@ -61,11 +64,6 @@ class AdminController extends Controller
         return view('admin.user.profile',['user' => $user]);
     }
 
-    public function contactmanagement()
-    {
-        $contacts=ContactUs::latest()->get();
-        return view('contact.admincontact',[ 'contacts' => $contacts]);
-    }
     public function blogmanagement()
     {
         $blogs=Article::latest()->get();
@@ -114,18 +112,34 @@ class AdminController extends Controller
     }
     public function postreply(Request $request)
     {
+        $contacts=ContactUs::latest()->get();
        $email=$request->email;
         $subject=$request->subject;
         $geatings=$request->geeting;
         $body=$geatings.'  '.$request->body;
-
         Mail::raw($email, function ($m) use ($email, $subject,$body,$geatings) {
             $m->to($email,$geatings)
                 ->subject($subject)
                 ->setBody($body);
         });
 
-        return redirect()->route('contactmanagement')->with('success', 'Mail Send');
+        return redirect()->route('admin.inbox',['contacts' => $contacts])->with('success', 'Mail Send to '.$email);
+    }
+    public function inbox()
+    {
+        $contacts=ContactUs::latest()->get();
+        return view('admin.email.inbox',[ 'contacts' => $contacts]);
+    }
+    public function contactmanagement($id)
+    {
+        $contact=ContactUs::find($id);
+        return view('admin.email.admincontact',[ 'contact' => $contact]);
+    }
+    public function delete($id)
+    {
+        $contact=ContactUs::find($id);
+        $contact->delete();
+        return redirect()->back()->with('success','Deleted Successfully');
     }
 
 

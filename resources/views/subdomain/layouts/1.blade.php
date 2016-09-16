@@ -67,7 +67,7 @@
                     <li><a href="/">Home</a></li>
                 </ul>
                 <ul class="nav navbar-nav">
-                    <li><a href="#">About</a></li>
+                    <li><a href="/about">About</a></li>
                 </ul>
                 <ul class="nav navbar-nav">
                     <li><a href="#">Contact</a></li>

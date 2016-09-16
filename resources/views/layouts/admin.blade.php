@@ -93,7 +93,7 @@
                                 <a href="{{ route('blogmanagement') }}"><i class="fa fa-floppy-o fa-fw"></i>  Blog Management</a>
                             </li>
                             <li>
-                                <a href="{{ route('contactmanagement') }}"><i class="fa fa-phone-square fa-fw"></i>  Contact Management</a>
+                                <a href="{{ route('admin.inbox') }}"><i class="fa fa-phone-square fa-fw"></i>  Contact Management</a>
                             </li>
                             <li>
                                 <a href="#"><i class="fa fa-list fa-fw"></i> Compact Menu<span class="fa arrow"></span></a>
