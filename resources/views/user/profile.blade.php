@@ -16,9 +16,9 @@
         @endif
     </div>
     <div class="row">
-        <div class="container-fluid">
+        <div class="container">
             <div class="row">
-                <div class="col-sm-3 col-lg-2 col-sm-push-9 col-lg-push-10">
+                <div class="col-sm-4 col-lg-4 col-md-4 col-xs-12 pull-right">
                     <nav class="navbar navbar-default navbar-fixed-side">
                         <!-- normal collapsable navbar markup -->
                         <div class="row">
@@ -64,9 +64,8 @@
                         </div>
                     </nav>
                 </div>
-                <div class="col-sm-9 col-lg-10 col-sm-pull-3 col-lg-pull-2">
+                <div class="col-sm-8 col-lg-8 col-md-8 col-xs-12">
                     <!-- your page content -->
-                    <div class="col-md-8">
                         <h1 class="page-header">
                             Your Latest Post
                             {{-- <small>Secondary Text</small> --}}

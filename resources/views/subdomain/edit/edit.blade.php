@@ -57,7 +57,7 @@
                 @if ($errors->any()) <div style="color:red">{{$errors->first('theme')}}</div>@endif
             </div>
         </div>
-        <div class="form-group">
+            <div class="form-group">
             <div class="co-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
                 <button type="submit" class="btn btn-success btn-lg pull-right" name="save" alt="Save">Save</button>
             </div>
