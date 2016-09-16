@@ -72,7 +72,7 @@ class ArticleController extends Controller
     public function show($slug)
     {
 
-        
+        //return(Session::get('id'));
         $article = Article::where('slug', $slug)->get()
                 ->first();
 
@@ -80,22 +80,23 @@ class ArticleController extends Controller
             abort(404);
         }
 
-        $view = View::where('article_id',$article->id)->first(); //fetchimg the view field for this article
+        $view = View::where('article_id',$article->id); //fetchimg the view field for this article
 
-        if($view == null) // incrementing the view
+        $view_1 = $view->first();
+        if($view_1 == null) // incrementing the view
         {
             $new_view = new View();
             $new_view->user_id      = Session::get('id');
             $new_view->article_id   = $article->id;
+            $new_view->count =1;
             $new_view->save();
         }
         else
         {
-            $view->user_id      = Session::get('id');
-            $view->article_id   = $article->id;
-            $view->save();
+            $store = $view->where('user_id',Session::get('id'))->first();
+            $store->count = $store->count+1;
+            $store->save();
         }
-
         $article->views = $article->views+1;
         $article->save();
 

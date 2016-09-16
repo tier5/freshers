@@ -1,5 +1,8 @@
 <?php
 
+    Route::get('/aaa',function(){
+        return view('article.view_who_reacted');
+    });
 
     Route::get('fbauth/{auth?}',array('as'=>'facebookAuth' , 'uses'=>'ReplyController@getFacebookLogin'));
 
@@ -57,6 +60,7 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
     
     Route::get('/userarticle/{user_id?}', [
         'uses' => 'ArticleController@userarticle',
+        'as'=>'user_profile_show'
     ]);
 
     Route::get('register',[
@@ -82,8 +86,8 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
     ]);
 
     
-    Route::group(['middleware'=>'auth'],function() 
-    {
+    /*Route::group(['middleware'=>'auth'],function() 
+    {*/
          //Route::post('/comment',   ['uses'=>'CommentController@store', 'as'=>'store_new_comment']);
 
         Route::get('logout', [
@@ -120,7 +124,27 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             'as' => 'resetprofilepassword'
         ]);
 
-        Route::resource('comment', 'CommentController', ['names'=> ['index' => 'comment.index']]);
+        Route::get('/lll', 'm1@test');
+
+        Route::post('/req_modal',['uses'=>'ModalController@like_article', 'as'=>'show_modal']);
+
+        Route::post('/req_dislike_article',['uses'=>'ModalController@dislike_article', 'as'=>'show_modal_dislike_article']);
+
+        Route::post('/req_view_article',['uses'=>'ModalController@view_article', 'as'=>'show_modal_view_article']);
+
+        Route::post('/req_like_comment',['uses'=>'ModalController@like_comment', 'as'=>'show_modal_like_comment']);
+
+        Route::post('/req_dislike_comment',['uses'=>'ModalController@dislike_comment', 'as'=>'show_modal_dislike_comment']);
+
+        Route::post('/req_like_reply',['uses'=>'ModalController@like_reply', 'as'=>'show_modal_like_reply']);
+
+        Route::post('/req_dislike_reply',['uses'=>'ModalController@dislike_reply', 'as'=>'show_modal_dislike_reply']);
+
+        Route::post('new_comment', ['uses'=>'CommentController@store', 'as'=>'new_comment']);
+
+        Route::post('new_reply', ['uses'=>'ReplyController@store', 'as'=>'new_reply']);
+
+        Route::resource('comment', 'CommentController', ['names'=> ['store' => 'comment.store']]);
 
         Route::post('cmt', 'CommentController@edit');
 
@@ -159,7 +183,7 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
         ]);
 
 
-    });
+    /*});*/
 
     Route::get('resetpassword', [
         'uses' => 'PasswordController@resetpassword',
