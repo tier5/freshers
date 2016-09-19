@@ -252,13 +252,12 @@
     @endif
         </div>
     <!-- Blog Post Content Column -->
-
     <div class="col-md-8 col-sm-8 col-lg-8 col-xs-12">
         <!-- Blog Post -->
         <!-- Title -->
         <h1>{{ $article->title }}</h1>
         <!-- Author -->
-            @if(Session::get('id')==$article->user_id)
+            @if(Session::get('id')==$article->user_id or auth()->user()->isadmin)
             <div class="pull-right">
                 <a href="{{ route('article.edit', [$article->slug]) }}" style="float: left">
                     <button type="button" class="btn btn-xs" style="float: left">
@@ -291,425 +290,424 @@
             @endunless
         </p>
 
-
             <!-- start -->
-            <div class="row col-md-12 social-actions" id="article_div_{{$article->id}}">
+         <div class="row col-md-12 social-actions" id="article_div_{{$article->id}}">
 
-            <div class='col-md-3' id="likes_section_{{$article->id}}">
-                
-                
-                      <form action="#" method="POST" id="article_like_form_{{$article->id}}">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+         <div class='col-md-3' id="likes_section_{{$article->id}}">
 
-                        <button type="button" id="article-like-{{$article->id}}" onclick="increase_like_article('{{$article->id}}')" class="btn btn-xs" style="color: #337AB7">
-                        @if($article->like->where('user_id',Session::get('id'))->where('article_id',$article->id)->first()!=null)
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                        @else
-                        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                        @endif
-                        </button>
-                        <span  id="like_name_article_{{$article->id}}"> LIKES:</span>
-                         <span type="button" onclick="hover_like_a('{{$article->id}}')" id="article_div_like_{{$article->id}}">{{ $article->likes }} </span>
-                         <input type="hidden" id="a_L_{{$article->id}}" value="{{ $article->likes }}" >
-                    </form> 
+
+                   <form action="#" method="POST" id="article_like_form_{{$article->id}}">
+                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                     <button type="button" id="article-like-{{$article->id}}" onclick="increase_like_article('{{$article->id}}')" class="btn btn-xs" style="color: #337AB7">
+                     @if($article->like->where('user_id',Session::get('id'))->where('article_id',$article->id)->first()!=null)
+                     <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                     @else
+                     <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                     @endif
+                     </button>
+                     <span  id="like_name_article_{{$article->id}}"> LIKES:</span>
+                      <span type="button" onclick="hover_like_a('{{$article->id}}')" id="article_div_like_{{$article->id}}">{{ $article->likes }} </span>
+                      <input type="hidden" id="a_L_{{$article->id}}" value="{{ $article->likes }}" >
+                 </form>
+         </div>
+
+
+            <div class='col-md-3' id="dislikes_section_{{$article->id}}">
+                  <form action="#" method="POST" id="article_dislike_form_{{$article->id}}">
+                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                     <button type="button" id="article-dislike-{{$article->id}}" onclick="decrease_like_article('{{$article->id}}')" class="btn btn-xs" style="color: #337AB7">
+
+
+                     @if($article->dislike->where('user_id',Session::get('id'))->where('article_id',$article->id)->first() !=null)
+                         <i class="fa fa-thumbs-down"></i>
+                     @else
+                         <i class="fa fa-thumbs-o-down"></i>
+                     @endif
+                     </button>
+                     <span id="dislike_name_article_{{$article->id}}">DISLIKES:</span>
+                     <span type="button" onclick="hover_dislike_a('{{$article->id}}')" id="article_div_dislike_{{$article->id}}">{{ $article->dislikes }}</span>
+                     <input type="hidden" id="a_DL_{{$article->id}}" value="{{ $article->dislikes }}" >
+                 </form>
             </div>
-                        
-                       
-               <div class='col-md-3' id="dislikes_section_{{$article->id}}">
-                     <form action="#" method="POST" id="article_dislike_form_{{$article->id}}">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <button type="button" id="article-dislike-{{$article->id}}" onclick="decrease_like_article('{{$article->id}}')" class="btn btn-xs" style="color: #337AB7">
 
-                        
-                        @if($article->dislike->where('user_id',Session::get('id'))->where('article_id',$article->id)->first() !=null)
-                            <i class="fa fa-thumbs-down"></i>
-                        @else
-                            <i class="fa fa-thumbs-o-down"></i>
-                        @endif
-                        </button>
-                        <span id="dislike_name_article_{{$article->id}}">DISLIKES:</span>
-                        <span type="button" onclick="hover_dislike_a('{{$article->id}}')" id="article_div_dislike_{{$article->id}}">{{ $article->dislikes }}</span>
-                        <input type="hidden" id="a_DL_{{$article->id}}" value="{{ $article->dislikes }}" >
-                    </form> 
-               </div>
-                  
-                <div class='col-md-2'>
-                    <small>
-                        <i type="button"  onclick="hover_view_a('{{$article->id}}')" class="fa fa-binoculars fa-border"></i> 
-                        <span id="view_name_article_{{$article->id}}">VIEWS:</span>
-                        <span id="article_view_{{$article->id}}">{{ $article->views }}</span>
+             <div class='col-md-2'>
+                 <small>
+                     <i type="button"  onclick="hover_view_a('{{$article->id}}')" class="fa fa-binoculars fa-border"></i>
+                     <span id="view_name_article_{{$article->id}}">VIEWS:</span>
+                     <span id="article_view_{{$article->id}}">{{ $article->views }}</span>
 
-                        <input type="hidden" id="a_V_{{$article->id}}" value="{{ $article->dislikes }}" >
-                    </small>
-                </div>
-
-                <div class='col-md-3'>
-                        <span style="display:none; color:green;" id="user_choice_article_like_{{$article->id}}"></span>
-                        <span style="display:none; color:#4F0826; " id="user_choice_article_dislike_{{$article->id}}"></span>
-                        <h5 style="display:none; color:#4F0826;" id="login_please_article">PLEASE LOGIN..!!</h5>
-                </div>
+                     <input type="hidden" id="a_V_{{$article->id}}" value="{{ $article->dislikes }}" >
+                 </small>
              </div>
-             <div class="modal" id="myModal_like_{{$article->id}}" role="dialog" >
-                <div class="modal-dialog">
-    
-                <!-- Modal content-->
-                <div class="modal-content col-md-8 " style="height: 300px; overflow-y: auto;">
-                    <div class="modal-header">
-                        <button type="button" onclick="hover_like_a_close('{{$article->id}}')" id="myModal_like_close_{{$article->id}}" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">People who liked..</h4>
-                    </div>
-                                <table class="table">
-    
-                                    <tbody id="likearticleList_{{$article->id}}">
-                                      
-                                    </tbody>
-                                  </table>
-                                
-                    </div>
-      
-                </div>
-            </div> 
 
-            <div class="modal" id="myModal_dislike_{{$article->id}}" role="dialog" >
-                <div class="modal-dialog">
-    
-                <!-- Modal content-->
-                <div class="modal-content col-md-8 " style="height: 300px; overflow-y: auto;">
-                    <div class="modal-header">
-                        <button type="button" onclick="hover_dislike_a_close('{{$article->id}}')" id="myModal_dislike_close_{{$article->id}}" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">People who disliked..</h4>
-                    </div>
-                                <table class="table">
-    
-                                    <tbody id="dislikearticleList_{{$article->id}}">
-                                      
-                                    </tbody>
-                                  </table>
-                                
-                    </div>
-      
-                </div>
-            </div> 
-
-             <div class="modal" id="myModal_view_{{$article->id}}" role="dialog" >
-                <div class="modal-dialog">
-    
-                <!-- Modal content-->
-                <div class="modal-content col-md-8 " style="height: 300px; overflow-y: auto;">
-                    <div class="modal-header">
-                        <button type="button" onclick="hover_view_a_close('{{$article->id}}')" id="myModal_view_close_{{$article->id}}" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">People who viewed..</h4>
-                    </div>
-                                <table class="table">
-    
-                                    <tbody id="viewarticleList_{{$article->id}}">
-                                      
-                                    </tbody>
-                                  </table>                
-                    </div>
-                </div>
-            </div>  
-             <!-- end -->   
-        <hr>
-       </p>
-
-        <!-- Comment -->
-        <div class="col-md-8 col-sm-8 col-lg-8 col-xs-12">
-        @foreach($article->comment as $comment)
-        <hr>
-        <div class="media">
-            <div id="this_comment_id_{{$comment->id}}">
-                <a class="pull-left" href="#">
-                    <img class="media-object" src="/uploads/profile_pic/{{$comment->user->profile_picture }}" style="width:65px; height:65px; float:left; border-radius:150%; margin-right:25px; ">
-                </a>
-            <div class="media-body">
-                <h4 class="media-heading"><a href="{{  URL::to('userarticle/'.$comment->user->id) }}">{{ $comment->user->first_name }}{{' '}}{{ $comment->user->last_name }}</a> <small class="pull-right">{{ $comment->created_at }}</small>
-                
-                    
-                    
-                    <div class="col-md-12 social-actions">
-                        
-                         
-
-                        <div class="col-md-2">
-                            <form action="#" method="POST">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <button type="button" id="comment-like-{{$comment->id}}" onclick="increase_like_comment('{{$comment->id}}')" class="btn btn-xs" style="color: #337AB7">
-                                @if($comment->like->where('user_id',Session::get('id'))->where('comment_id',$comment->id)->first()!=null)
-                                    <i class="fa fa-thumbs-up"></i>
-                                @else
-                                    <i class="fa fa-thumbs-o-up"></i>
-                                @endif
-                                </button>
-                                 <span id="like_name_comment_{{$comment->id}}"> LIKES:</span>
-                                 <span type="button" onclick="hover_like_c('{{$comment->id}}')" id="comment_div_like_{{$comment->id}}">{{ $comment->likes }} </span>
-                                 <input type="hidden" id="c_L_{{$comment->id}}" value="{{ $comment->likes }}" >
-                            </form>   
-                        </div>                         
-                    
-                        <div class="col-md-3">
-                            <form action="#" method="POST">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <button type="button" id="comment-dislike-{{$comment->id}}" onclick="decrease_like_comment('{{$comment->id}}')" class="btn btn-xs" style="color: #337AB7">
-                                @if($comment->dislike->where('user_id',Session::get('id'))->where('comment_id',$comment->id)->first()!=null)
-                                    <i class="fa fa-thumbs-down"></i>
-                                @else
-                                    <i class="fa fa-thumbs-o-down"></i>
-                                @endif
-                                </button>
-                                <span id="dislike_name_comment_{{$comment->id}}"> DISLIKES:</span>
-                                <span onclick="hover_dislike_c('{{$comment->id}}')" id="comment_div_dislike_{{$comment->id}}">{{ $comment->dislikes }} </span>
-                                <input type="hidden" id="c_DL_{{$comment->id}}" value="{{ $comment->dislikes }}" >
-                            </form>
-                        </div>
-                        
-                        <div class='col-md-3'>
-                    
-                            <span style="display:none; color:green;" id="user_choice_comment_like_{{$comment->id}}"></span>
-                            <span style="display:none; color:#4F0826;" id="user_choice_comment_dislike_{{$comment->id}}"></span>
-                            <span style="display:none; color:#4F0836;" id="user_choice_comment_login_{{$comment->id}}"> PLEASE LOGIN!!</span>
-                            <span style="display:none; color:#4F0826;" id="login_please_comment_{{$comment->id}}" > PLEASE LOGIN..!! </span>
-                        </div>
-                    
-                    
-                        <div class="pull-right" >
-                            @if(Session::get('id')==$comment->user_id)
-                     
-                        <!-- <a href="{{ route('comment.edit', [$comment->id]) }}" style="float: left"> -->
-                                <button type="button" id="comment-butn-id" onclick="openEditcomment('{{$comment->id}}')" class="btn btn-xs comment-butn" style="float: left">
-                                <i class="fa fa-pencil fa-1x"></i>
-                                </button>
-                            @endif
-
-                            <!-- </a>  -->
-                            @if(Session::get('id')==$comment->user_id or Session::get('id')==$article->user_id)
-                                <form action="{{ route('comment.destroy', [$comment->id]) }}" method="POST" style="float: left">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                    <button type="submit" class="btn btn-xs" style="color: #337AB7"><i class="fa fa-times fa-1x"></i></button>  
-                                </form>
-                            @endif
-
-                            
-                        </div>
-                    </div>
-
-                    <div class="modal" id="myModal_like_c_{{$comment->id}}" role="dialog" >
-                        <div class="modal-dialog">
-                            <!-- Modal content-->
-                            <div class="modal-content col-md-8 " style="height: 300px; overflow-y: auto;">
-                                <div class="modal-header">
-                                    <button type="button" onclick="hover_like_c_close('{{$comment->id}}')" id="myModal_like_comment_close_{{$article->id}}" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">People who liked comment..</h4>
-                                </div>
-                                <table class="table">
-                                    <tbody id="commentlikeList_{{$comment->id}}">  
-                                    </tbody>
-                                </table>           
-                            </div>
-                        </div>
-                    </div> 
-
-                    <div class="modal" id="myModal_dislike_c_{{$comment->id}}" role="dialog" >
-                        <div class="modal-dialog">
-                            <!-- Modal content-->
-                            <div class="modal-content col-md-8 " style="height: 300px; overflow-y: auto;">
-                                <div class="modal-header">
-                                    <button type="button" onclick="hover_dislike_c_close('{{$comment->id}}')" id="myModal_dislike_comment_close_{{$article->id}}" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">People who disliked comment..</h4>
-                                </div>
-                                <table class="table">
-                                    <tbody id="commentdislikeList_{{$comment->id}}">  
-                                    </tbody>
-                                </table>           
-                            </div>
-                        </div>
-                    </div> 
-
-
-
-                    </h4>
-
-                <br>
-                
-
-                    <div id="comment-body-material-{{$comment->id}}" class="well comment-body-material" >
-                        {{ $comment->comment_body }}
-                    </div>
-
-                   <div id="comment-body-edit-id-{{$comment->id}}" class="well comment-body-edit" style="display:none">
-                        <h4>Edit Comment:</h4>
-                        <form role="form" method="POST"  action="/cmt">
-                            <div class="form-group">
-                                <textarea type="input" id="comment_body_{{$comment->id}}" name="comment_body" class="form-control" rows="5">{{ $comment->comment_body }}</textarea>
-                            </div>
-                            <input type="hidden" id="comment_id_{{$comment->id}}" name="comment_id" value="{{ $comment->id }}">
-
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-
-                            <button type="button" onclick="submitbtn_com({{$comment->id}})" name="submit_btn_for_cmt" value="1" class="btn btn-primary pull-left">Edit Comment</button>
-                            <button type="button" onclick="cancelbtn_com({{$comment->id}})" name="cancel_btn_for_cmt" value="1" class="btn btn-primary pull-right"> <i class="fa fa-times fa-1x"></i> </button>
-
-                            <br />
-
-                        </form>
-                    </div>
-                <!-- Nested Comment -->
-                <hr>
-                @foreach($comment->reply as $reply)
-                    <div class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="/uploads/profile_pic/{{$reply->user->profile_picture }}" style="width:45px; height:45px; float:left; border-radius:150%; margin-right:25px; ">
-                    </a>
-                    <div class="media-body">
-                        <h5 class="media-heading"><a href="{{  URL::to('userarticle/'.$reply->user->id) }}">{{ $reply->user->first_name }}{{' '}}{{ $reply->user->last_name }}</a>
-                            <small class="pull-right">{{ $reply->created_at }}</small>
-                           
-                            <div class="col-md-12 social-actions">
-
-                            <div class="col-md-3 social-actions">
-                                <form action="#" method="POST">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <button type="button" id="reply-like-{{$reply->id}}" onclick="increase_like_reply('{{$reply->id}}')" class="btn btn-xs" style="color: #337AB7">
-                                @if($reply->like->where('user_id',Session::get('id'))->where('reply_id',$reply->id)->first() != null)
-                                    <i class="fa fa-thumbs-up"></i>
-                                @else
-                                    <i class="fa fa-thumbs-o-up"></i>
-                                @endif
-                                </button>
-                                <span id="like_name_reply_{{$reply->id}}"> LIKES:</span>
-                                 <span onclick="hover_like_r('{{$reply->id}}')" id="reply_div_like_{{$reply->id}}">{{ $reply->likes }} </span>
-                                 <input type="hidden" id="r_L_{{$reply->id}}" value="{{ $reply->likes }}" >
-                                </form>  
-                            </div>
-
-                            <div class="col-md-4 social-actions">
-                                <form action="#" method="POST">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <button type="button" id="reply-dislike-{{$reply->id}}" onclick="decrease_like_reply('{{$reply->id}}')" class="btn btn-xs" style="color: #337AB7">
-                                @if($reply->dislike->where('user_id',Session::get('id'))->where('reply_id',$reply->id)->first() != null)
-                                    <i class="fa fa-thumbs-down"></i>
-                                @else
-                                    <i class="fa fa-thumbs-o-down"></i>
-                                @endif
-                                </button>
-                                <span id="dislike_name_reply_{{$reply->id}}"> DISLIKES:</span>
-                                <span onclick="hover_dislike_r('{{$reply->id}}')" id="reply_div_dislike_{{$reply->id}}">{{ $reply->dislikes }} </span>
-                                <input type="hidden" id="r_DL_{{$reply->id}}" value="{{ $reply->dislikes }}" >    
-                                </form>
-                            </div>
-
-                            <div class='col-md-3'>
-                            <span style="display:none; color:green;" id="user_choice_reply_like_{{$reply->id}}"></span>
-                            <span style="display:none; color:#4F0826;" id="user_choice_reply_dislike_{{$reply->id}}"></span>
-                            </div>
-
-                                <div class="pull-right">
-                                    @if( Session::get('id')==$reply->user_id)
-                                    <button type="button" id="reply_btn_" onclick="openEdit('{{$reply->id}}')" class="btn btn-xs reply-butn" style="float: left">
-                                    <i class="fa fa-pencil fa-1x"></i>
-                                    </button>
-                            
-                                    @endif
-
-                                    @if(Session::get('id')==$comment->user_id or Session::get('id')==$article->user_id or Session::get('id')==$reply->user_id)
-                                    <form action="{{ route('reply.destroy', [$reply->id]) }}" method="POST" style="float: left">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                    <button type="submit" class="btn btn-xs" style="color: #337AB7"><i class="fa fa-times fa-1x"></i></button>
-                                    </form>
-                                    @endif
-
-                                    <h5 id="login_please_reply_{{$reply->id}}" style="display:none; color:#4F0826;">PLEASE LOGIN..!!</h5>
-                                </div>
-                            </div>
-                            <div class="modal" id="myModal_like_r_{{$reply->id}}" role="dialog" >
-                                <div class="modal-dialog">
-                                    <!-- Modal content-->
-                                    <div class="modal-content col-md-8 " style="height: 300px; overflow-y: auto;">
-                                        <div class="modal-header">
-                                            <button type="button" onclick="hover_like_r_close('{{$reply->id}}')" id="myModal_like_reply_close_{{$reply->id}}" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">People who liked reply..</h4>
-                                        </div>
-                                        <table class="table">
-                                            <tbody id="replylikeList_{{$reply->id}}">  
-                                            </tbody>
-                                        </table>           
-                                    </div>
-                                </div>
-                            </div> 
-
-                            <div class="modal" id="myModal_dislike_r_{{$reply->id}}" role="dialog" >
-                                <div class="modal-dialog">
-                                    <!-- Modal content-->
-                                    <div class="modal-content col-md-8 " style="height: 300px; overflow-y: auto;">
-                                        <div class="modal-header">
-                                            <button type="button" onclick="hover_dislike_r_close('{{$reply->id}}')" id="myModal_dislike_reply_close_{{$reply->id}}" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">People who disliked reply..</h4>
-                                        </div>
-                                        <table class="table">
-                                            <tbody id="replydislikeList_{{$reply->id}}">  
-                                            </tbody>
-                                        </table>           
-                                    </div>
-                                </div>
-                            </div> 
-                        </h5>
-                        <br>
-                         
-                         <div id="reply-body-material-{{ $reply->id }}" class="well reply-body-material">
-                                {{ $reply->reply_body }}
-                        </div>
-                        <div id="reply-body-edit-id-{{$reply->id}}" style="display:none" class="well reply-body-edit">
-                            <h4>Edit Reply:</h4>
-                            <form role="form" method="POST"  action="/rply">
-                                <div class="form-group">
-                                <textarea type="input" id="reply_body_{{$reply->id}}" name="reply_body" class="form-control" rows="4">{{ $reply->reply_body }}</textarea>
-                                </div>
-                                <input type="hidden" id="reply_id_{{$reply->id}}" name="reply_id" value="{{ $reply->id }}">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <button type="button" onclick="submitbtn_rep({{$reply->id}})" name="submit_btn" value="1" class="btn btn-primary pull-left">Edit Reply</button>
-                                <button type="button" onclick="cancelbtn_rep({{$reply->id}})" name="cancel_btn" value="1" class="btn btn-primary pull-right"> <i class="fa fa-times fa-1x"></i> </button>
-                                <br />
-                            </form>
-                        </div>
-                </div>
-                </div>
-                @endforeach
-                <div id="reply-form" class="well" >
-                    <h4>Leave a Reply:</h4>
-                        <form role="form" method="POST"  action="/reply">
-                        <div class="form-group">
-                             <textarea type="input" name="reply_body" class="form-control" rows="1"></textarea>
-                        </div>
-                         <input type="hidden" name="comment_id" value="{{ $comment->id }}">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <button type="submit" class="btn btn-primary pull-right">Reply</button>
-                        <br />
-                        </form>
-                </div>
-            <hr>
+             <div class='col-md-3'>
+                     <span style="display:none; color:green;" id="user_choice_article_like_{{$article->id}}"></span>
+                     <span style="display:none; color:#4F0826; " id="user_choice_article_dislike_{{$article->id}}"></span>
+                     <h5 style="display:none; color:#4F0826;" id="login_please_article">PLEASE LOGIN..!!</h5>
              </div>
-              </div>
-        </div>
+          </div>
+          <div class="modal" id="myModal_like_{{$article->id}}" role="dialog" >
+             <div class="modal-dialog">
+
+             <!-- Modal content-->
+             <div class="modal-content col-md-8 " style="height: 300px; overflow-y: auto;">
+                 <div class="modal-header">
+                     <button type="button" onclick="hover_like_a_close('{{$article->id}}')" id="myModal_like_close_{{$article->id}}" class="close" data-dismiss="modal">&times;</button>
+                         <h4 class="modal-title">People who liked..</h4>
+                 </div>
+                             <table class="table">
+
+                                 <tbody id="likearticleList_{{$article->id}}">
+
+                                 </tbody>
+                               </table>
+
+                 </div>
+
+             </div>
+         </div>
+
+         <div class="modal" id="myModal_dislike_{{$article->id}}" role="dialog" >
+             <div class="modal-dialog">
+
+             <!-- Modal content-->
+             <div class="modal-content col-md-8 " style="height: 300px; overflow-y: auto;">
+                 <div class="modal-header">
+                     <button type="button" onclick="hover_dislike_a_close('{{$article->id}}')" id="myModal_dislike_close_{{$article->id}}" class="close" data-dismiss="modal">&times;</button>
+                         <h4 class="modal-title">People who disliked..</h4>
+                 </div>
+                             <table class="table">
+
+                                 <tbody id="dislikearticleList_{{$article->id}}">
+
+                                 </tbody>
+                               </table>
+
+                 </div>
+
+             </div>
+         </div>
+
+          <div class="modal" id="myModal_view_{{$article->id}}" role="dialog" >
+             <div class="modal-dialog">
+
+             <!-- Modal content-->
+             <div class="modal-content col-md-8 " style="height: 300px; overflow-y: auto;">
+                 <div class="modal-header">
+                     <button type="button" onclick="hover_view_a_close('{{$article->id}}')" id="myModal_view_close_{{$article->id}}" class="close" data-dismiss="modal">&times;</button>
+                         <h4 class="modal-title">People who viewed..</h4>
+                 </div>
+                             <table class="table">
+
+                                 <tbody id="viewarticleList_{{$article->id}}">
+
+                                 </tbody>
+                               </table>
+                 </div>
+             </div>
+         </div>
+          <!-- end -->
+     <hr>
+    </p>
+
+     <!-- Comment -->
+     <div class="col-md-8 col-sm-8 col-lg-8 col-xs-12">
+     @foreach($article->comment as $comment)
+     <hr>
+     <div class="media">
+         <div id="this_comment_id_{{$comment->id}}">
+             <a class="pull-left" href="#">
+                 <img class="media-object" src="/uploads/profile_pic/{{$comment->user->profile_picture }}" style="width:65px; height:65px; float:left; border-radius:150%; margin-right:25px; ">
+             </a>
+         <div class="media-body">
+             <h4 class="media-heading"><a href="{{  URL::to('userarticle/'.$comment->user->id) }}">{{ $comment->user->first_name }}{{' '}}{{ $comment->user->last_name }}</a> <small class="pull-right">{{ $comment->created_at }}</small>
+
+
+
+                 <div class="col-md-12 social-actions">
+
+
+
+                     <div class="col-md-2">
+                         <form action="#" method="POST">
+                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                             <button type="button" id="comment-like-{{$comment->id}}" onclick="increase_like_comment('{{$comment->id}}')" class="btn btn-xs" style="color: #337AB7">
+                             @if($comment->like->where('user_id',Session::get('id'))->where('comment_id',$comment->id)->first()!=null)
+                                 <i class="fa fa-thumbs-up"></i>
+                             @else
+                                 <i class="fa fa-thumbs-o-up"></i>
+                             @endif
+                             </button>
+                              <span id="like_name_comment_{{$comment->id}}"> LIKES:</span>
+                              <span type="button" onclick="hover_like_c('{{$comment->id}}')" id="comment_div_like_{{$comment->id}}">{{ $comment->likes }} </span>
+                              <input type="hidden" id="c_L_{{$comment->id}}" value="{{ $comment->likes }}" >
+                         </form>
+                     </div>
+
+                     <div class="col-md-3">
+                         <form action="#" method="POST">
+                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                             <button type="button" id="comment-dislike-{{$comment->id}}" onclick="decrease_like_comment('{{$comment->id}}')" class="btn btn-xs" style="color: #337AB7">
+                             @if($comment->dislike->where('user_id',Session::get('id'))->where('comment_id',$comment->id)->first()!=null)
+                                 <i class="fa fa-thumbs-down"></i>
+                             @else
+                                 <i class="fa fa-thumbs-o-down"></i>
+                             @endif
+                             </button>
+                             <span id="dislike_name_comment_{{$comment->id}}"> DISLIKES:</span>
+                             <span onclick="hover_dislike_c('{{$comment->id}}')" id="comment_div_dislike_{{$comment->id}}">{{ $comment->dislikes }} </span>
+                             <input type="hidden" id="c_DL_{{$comment->id}}" value="{{ $comment->dislikes }}" >
+                         </form>
+                     </div>
+
+                     <div class='col-md-3'>
+
+                         <span style="display:none; color:green;" id="user_choice_comment_like_{{$comment->id}}"></span>
+                         <span style="display:none; color:#4F0826;" id="user_choice_comment_dislike_{{$comment->id}}"></span>
+                         <span style="display:none; color:#4F0836;" id="user_choice_comment_login_{{$comment->id}}"> PLEASE LOGIN!!</span>
+                         <span style="display:none; color:#4F0826;" id="login_please_comment_{{$comment->id}}" > PLEASE LOGIN..!! </span>
+                     </div>
+
+
+                     <div class="pull-right" >
+                         @if(Session::get('id')==$comment->user_id)
+
+                     <!-- <a href="{{ route('comment.edit', [$comment->id]) }}" style="float: left"> -->
+                             <button type="button" id="comment-butn-id" onclick="openEditcomment('{{$comment->id}}')" class="btn btn-xs comment-butn" style="float: left">
+                             <i class="fa fa-pencil fa-1x"></i>
+                             </button>
+                         @endif
+
+                         <!-- </a>  -->
+                         @if(Session::get('id')==$comment->user_id or Session::get('id')==$article->user_id)
+                             <form action="{{ route('comment.destroy', [$comment->id]) }}" method="POST" style="float: left">
+                                 <input type="hidden" name="_method" value="DELETE">
+                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                 <button type="submit" class="btn btn-xs" style="color: #337AB7"><i class="fa fa-times fa-1x"></i></button>
+                             </form>
+                         @endif
+
+
+                     </div>
+                 </div>
+
+                 <div class="modal" id="myModal_like_c_{{$comment->id}}" role="dialog" >
+                     <div class="modal-dialog">
+                         <!-- Modal content-->
+                         <div class="modal-content col-md-8 " style="height: 300px; overflow-y: auto;">
+                             <div class="modal-header">
+                                 <button type="button" onclick="hover_like_c_close('{{$comment->id}}')" id="myModal_like_comment_close_{{$article->id}}" class="close" data-dismiss="modal">&times;</button>
+                                 <h4 class="modal-title">People who liked comment..</h4>
+                             </div>
+                             <table class="table">
+                                 <tbody id="commentlikeList_{{$comment->id}}">
+                                 </tbody>
+                             </table>
+                         </div>
+                     </div>
+                 </div>
+
+                 <div class="modal" id="myModal_dislike_c_{{$comment->id}}" role="dialog" >
+                     <div class="modal-dialog">
+                         <!-- Modal content-->
+                         <div class="modal-content col-md-8 " style="height: 300px; overflow-y: auto;">
+                             <div class="modal-header">
+                                 <button type="button" onclick="hover_dislike_c_close('{{$comment->id}}')" id="myModal_dislike_comment_close_{{$article->id}}" class="close" data-dismiss="modal">&times;</button>
+                                 <h4 class="modal-title">People who disliked comment..</h4>
+                             </div>
+                             <table class="table">
+                                 <tbody id="commentdislikeList_{{$comment->id}}">
+                                 </tbody>
+                             </table>
+                         </div>
+                     </div>
+                 </div>
+
+
+
+                 </h4>
+
+             <br>
+
+
+                 <div id="comment-body-material-{{$comment->id}}" class="well comment-body-material" >
+                     {{ $comment->comment_body }}
+                 </div>
+
+                <div id="comment-body-edit-id-{{$comment->id}}" class="well comment-body-edit" style="display:none">
+                     <h4>Edit Comment:</h4>
+                     <form role="form" method="POST"  action="/cmt">
+                         <div class="form-group">
+                             <textarea type="input" id="comment_body_{{$comment->id}}" name="comment_body" class="form-control" rows="5">{{ $comment->comment_body }}</textarea>
+                         </div>
+                         <input type="hidden" id="comment_id_{{$comment->id}}" name="comment_id" value="{{ $comment->id }}">
+
+                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+
+                         <button type="button" onclick="submitbtn_com({{$comment->id}})" name="submit_btn_for_cmt" value="1" class="btn btn-primary pull-left">Edit Comment</button>
+                         <button type="button" onclick="cancelbtn_com({{$comment->id}})" name="cancel_btn_for_cmt" value="1" class="btn btn-primary pull-right"> <i class="fa fa-times fa-1x"></i> </button>
+
+                         <br />
+
+                     </form>
+                 </div>
+             <!-- Nested Comment -->
              <hr>
-        @endforeach 
-        <div class="well"  id="CommentBox_{{$article->id}}">
-            <h4>Leave a Comment:</h4>
-            <form role="form" method="POST"  action="/comment">
-                <div class="form-group">
-                    <textarea type="input" id="new_comment_body" name="comment_body" class="form-control" rows="3"></textarea>
-                </div>
-                <input type="hidden" name="article_id" value="{{ $article->id }}">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <button type="submit" class="btn btn-primary pull-right">Comment</button>
-                <br />
-            </form>
-        <div>
-        </div>
-    </div>
-            </div>
+             @foreach($comment->reply as $reply)
+                 <div class="media">
+                 <a class="pull-left" href="#">
+                     <img class="media-object" src="/uploads/profile_pic/{{$reply->user->profile_picture }}" style="width:45px; height:45px; float:left; border-radius:150%; margin-right:25px; ">
+                 </a>
+                 <div class="media-body">
+                     <h5 class="media-heading"><a href="{{  URL::to('userarticle/'.$reply->user->id) }}">{{ $reply->user->first_name }}{{' '}}{{ $reply->user->last_name }}</a>
+                         <small class="pull-right">{{ $reply->created_at }}</small>
+
+                         <div class="col-md-12 social-actions">
+
+                         <div class="col-md-3 social-actions">
+                             <form action="#" method="POST">
+                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                             <button type="button" id="reply-like-{{$reply->id}}" onclick="increase_like_reply('{{$reply->id}}')" class="btn btn-xs" style="color: #337AB7">
+                             @if($reply->like->where('user_id',Session::get('id'))->where('reply_id',$reply->id)->first() != null)
+                                 <i class="fa fa-thumbs-up"></i>
+                             @else
+                                 <i class="fa fa-thumbs-o-up"></i>
+                             @endif
+                             </button>
+                             <span id="like_name_reply_{{$reply->id}}"> LIKES:</span>
+                              <span onclick="hover_like_r('{{$reply->id}}')" id="reply_div_like_{{$reply->id}}">{{ $reply->likes }} </span>
+                              <input type="hidden" id="r_L_{{$reply->id}}" value="{{ $reply->likes }}" >
+                             </form>
+                         </div>
+
+                         <div class="col-md-4 social-actions">
+                             <form action="#" method="POST">
+                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                             <button type="button" id="reply-dislike-{{$reply->id}}" onclick="decrease_like_reply('{{$reply->id}}')" class="btn btn-xs" style="color: #337AB7">
+                             @if($reply->dislike->where('user_id',Session::get('id'))->where('reply_id',$reply->id)->first() != null)
+                                 <i class="fa fa-thumbs-down"></i>
+                             @else
+                                 <i class="fa fa-thumbs-o-down"></i>
+                             @endif
+                             </button>
+                             <span id="dislike_name_reply_{{$reply->id}}"> DISLIKES:</span>
+                             <span onclick="hover_dislike_r('{{$reply->id}}')" id="reply_div_dislike_{{$reply->id}}">{{ $reply->dislikes }} </span>
+                             <input type="hidden" id="r_DL_{{$reply->id}}" value="{{ $reply->dislikes }}" >
+                             </form>
+                         </div>
+
+                         <div class='col-md-3'>
+                         <span style="display:none; color:green;" id="user_choice_reply_like_{{$reply->id}}"></span>
+                         <span style="display:none; color:#4F0826;" id="user_choice_reply_dislike_{{$reply->id}}"></span>
+                         </div>
+
+                             <div class="pull-right">
+                                 @if( Session::get('id')==$reply->user_id)
+                                 <button type="button" id="reply_btn_" onclick="openEdit('{{$reply->id}}')" class="btn btn-xs reply-butn" style="float: left">
+                                 <i class="fa fa-pencil fa-1x"></i>
+                                 </button>
+
+                                 @endif
+
+                                 @if(Session::get('id')==$comment->user_id or Session::get('id')==$article->user_id or Session::get('id')==$reply->user_id)
+                                 <form action="{{ route('reply.destroy', [$reply->id]) }}" method="POST" style="float: left">
+                                 <input type="hidden" name="_method" value="DELETE">
+                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                 <button type="submit" class="btn btn-xs" style="color: #337AB7"><i class="fa fa-times fa-1x"></i></button>
+                                 </form>
+                                 @endif
+
+                                 <h5 id="login_please_reply_{{$reply->id}}" style="display:none; color:#4F0826;">PLEASE LOGIN..!!</h5>
+                             </div>
+                         </div>
+                         <div class="modal" id="myModal_like_r_{{$reply->id}}" role="dialog" >
+                             <div class="modal-dialog">
+                                 <!-- Modal content-->
+                                 <div class="modal-content col-md-8 " style="height: 300px; overflow-y: auto;">
+                                     <div class="modal-header">
+                                         <button type="button" onclick="hover_like_r_close('{{$reply->id}}')" id="myModal_like_reply_close_{{$reply->id}}" class="close" data-dismiss="modal">&times;</button>
+                                         <h4 class="modal-title">People who liked reply..</h4>
+                                     </div>
+                                     <table class="table">
+                                         <tbody id="replylikeList_{{$reply->id}}">
+                                         </tbody>
+                                     </table>
+                                 </div>
+                             </div>
+                         </div>
+
+                         <div class="modal" id="myModal_dislike_r_{{$reply->id}}" role="dialog" >
+                             <div class="modal-dialog">
+                                 <!-- Modal content-->
+                                 <div class="modal-content col-md-8 " style="height: 300px; overflow-y: auto;">
+                                     <div class="modal-header">
+                                         <button type="button" onclick="hover_dislike_r_close('{{$reply->id}}')" id="myModal_dislike_reply_close_{{$reply->id}}" class="close" data-dismiss="modal">&times;</button>
+                                         <h4 class="modal-title">People who disliked reply..</h4>
+                                     </div>
+                                     <table class="table">
+                                         <tbody id="replydislikeList_{{$reply->id}}">
+                                         </tbody>
+                                     </table>
+                                 </div>
+                             </div>
+                         </div>
+                     </h5>
+                     <br>
+
+                      <div id="reply-body-material-{{ $reply->id }}" class="well reply-body-material">
+                             {{ $reply->reply_body }}
+                     </div>
+                     <div id="reply-body-edit-id-{{$reply->id}}" style="display:none" class="well reply-body-edit">
+                         <h4>Edit Reply:</h4>
+                         <form role="form" method="POST"  action="/rply">
+                             <div class="form-group">
+                             <textarea type="input" id="reply_body_{{$reply->id}}" name="reply_body" class="form-control" rows="4">{{ $reply->reply_body }}</textarea>
+                             </div>
+                             <input type="hidden" id="reply_id_{{$reply->id}}" name="reply_id" value="{{ $reply->id }}">
+                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                             <button type="button" onclick="submitbtn_rep({{$reply->id}})" name="submit_btn" value="1" class="btn btn-primary pull-left">Edit Reply</button>
+                             <button type="button" onclick="cancelbtn_rep({{$reply->id}})" name="cancel_btn" value="1" class="btn btn-primary pull-right"> <i class="fa fa-times fa-1x"></i> </button>
+                             <br />
+                         </form>
+                     </div>
+             </div>
+             </div>
+             @endforeach
+             <div id="reply-form" class="well" >
+                 <h4>Leave a Reply:</h4>
+                     <form role="form" method="POST"  action="/reply">
+                     <div class="form-group">
+                          <textarea type="input" name="reply_body" class="form-control" rows="1"></textarea>
+                     </div>
+                      <input type="hidden" name="comment_id" value="{{ $comment->id }}">
+                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                     <button type="submit" class="btn btn-primary pull-right">Reply</button>
+                     <br />
+                     </form>
+             </div>
+         <hr>
+          </div>
+           </div>
+     </div>
+          <hr>
+     @endforeach
+     <div class="well"  id="CommentBox_{{$article->id}}">
+         <h4>Leave a Comment:</h4>
+         <form role="form" method="POST"  action="/comment">
+             <div class="form-group">
+                 <textarea type="input" id="new_comment_body" name="comment_body" class="form-control" rows="3"></textarea>
+             </div>
+             <input type="hidden" name="article_id" value="{{ $article->id }}">
+             <input type="hidden" name="_token" value="{{ csrf_token() }}">
+             <button type="submit" class="btn btn-primary pull-right">Comment</button>
+             <br />
+         </form>
+     <div>
+     </div>
+ </div>
+         </div>
         </div>
         </div>
 @endsection

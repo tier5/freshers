@@ -20,7 +20,7 @@
         <div class="well">
             <h4>Popular Categories</h4>
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <ul class="list-unstyled">
                         @foreach ($categories as $category)
                             <li><a href="{{ route('showcategoryarticle',[$category->name]) }}">{{ $category->name }}</a></li>
