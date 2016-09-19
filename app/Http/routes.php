@@ -1,7 +1,9 @@
 <?php
 
+Route::get('/aaa',function(){
+    return view('article.view_who_reacted');
+});
 Route::get('fbauth/{auth?}',array('as'=>'facebookAuth' , 'uses'=>'ReplyController@getFacebookLogin'));
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -16,9 +18,9 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
 {
     //Auth Routes
 
-    Route::group(['middleware'=>'auth'],function() 
+    Route::group(['middleware'=>'auth'],function()
     {
-         //Route::post('/comment',   ['uses'=>'CommentController@store', 'as'=>'store_new_comment']);
+        //Route::post('/comment',   ['uses'=>'CommentController@store', 'as'=>'store_new_comment']);
 
         Route::get('logout', [
             'uses'=>'UserController@logout',
@@ -143,11 +145,28 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             'uses' => 'SubdomainController@check_availablity',
             'as' => 'subdomaincheck'
         ]);
-        Route::get('/Like/reply/{id}',      'LSVController@likereply');
-        Route::get('/Dislike/reply/{id}',   'LSVController@dislikereply');
-
-        Route::get('/Dislike/article/{id}', 'LSVController@dislikearticle');
-
+        Route::get('/lll', 'm1@test');
+        Route::post('/req_modal',['uses'=>'ModalController@like_article', 'as'=>'show_modal']);
+        Route::post('/req_dislike_article',['uses'=>'ModalController@dislike_article', 'as'=>'show_modal_dislike_article']);
+        Route::post('/req_view_article',['uses'=>'ModalController@view_article', 'as'=>'show_modal_view_article']);
+        Route::post('/req_like_comment',['uses'=>'ModalController@like_comment', 'as'=>'show_modal_like_comment']);
+        Route::post('/req_dislike_comment',['uses'=>'ModalController@dislike_comment', 'as'=>'show_modal_dislike_comment']);
+        Route::post('/req_like_reply',['uses'=>'ModalController@like_reply', 'as'=>'show_modal_like_reply']);
+        Route::post('/req_dislike_reply',['uses'=>'ModalController@dislike_reply', 'as'=>'show_modal_dislike_reply']);
+        Route::post('new_comment', ['uses'=>'CommentController@store', 'as'=>'new_comment']);
+        Route::post('new_reply', ['uses'=>'ReplyController@store', 'as'=>'new_reply']);
+        Route::resource('comment', 'CommentController', ['names'=> ['store' => 'comment.store']]);
+        Route::post('cmt', 'CommentController@edit');
+        Route::resource('reply', 'ReplyController', ['names'=> ['index' => 'comment.index']]);
+        //Route::post('rply', ['uses' => 'ReplyController@edit','as' => 'replyEditroute']);
+        Route::post('/test', ['uses' => 'ReplyController@edit','as' => 'edit_reply_route']);
+        Route::post('/cv', ['uses' => 'CommentController@edit','as' => 'edit_comment_route']);
+        Route::post('/Like/article',    ['uses'=>'LSVController@likearticle',    'as'=>'article_like_increase']);
+        Route::post('/Dislike/article', ['uses'=>'LSVController@dislikearticle', 'as'=>'article_like_decrease']);
+        Route::post('/Like/comment',    ['uses'=>'LSVController@likecomment',    'as'=>'comment_like_increase']);
+        Route::post('/Dislike/comment', ['uses'=>'LSVController@dislikecomment', 'as'=>'comment_like_decrease']);
+        Route::post('/Like/reply',      ['uses'=>'LSVController@likereply',    'as'=>'reply_like_increase']);
+        Route::post('/Dislike/reply',   ['uses'=>'LSVController@dislikereply', 'as'=>'reply_like_decrease']);
 
         //Admin Routes
 
@@ -239,6 +258,7 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
     ]);
     Route::get('/userarticle/{user_id?}', [
         'uses' => 'ArticleController@userarticle',
+        'as'=>'user_profile_show'
     ]);
 
     Route::get('register',[

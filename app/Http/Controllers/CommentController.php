@@ -1,5 +1,10 @@
 <?php
 namespace App\Http\Controllers;
+
+use App\Dislike;
+use App\Like;
+use App\Share;
+use App\View;
 use App\Reply;
 use App\Article;
 use App\User;
@@ -8,7 +13,7 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Session;
+use Session, \Response;
 class CommentController extends Controller
 {
     /**
@@ -39,6 +44,7 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
+
         //
         //return ('reached here');
         $user_id=Session::get('id');
