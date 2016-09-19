@@ -79,29 +79,30 @@ class ArticleController extends Controller
         if (is_null($article)) {
             abort(404);
         }
-
-        $view = View::where('article_id',$article->id); //fetchimg the view field for this article
-
-        $view_1 = $view->first();
-        if($view_1 == null) // incrementing the view
+        $present_user = Session::get('id');
+        if($present_user != null)
         {
-            $new_view = new View();
-            $new_view->user_id      = Session::get('id');
-            $new_view->article_id   = $article->id;
-            $new_view->count =1;
-            $new_view->save();
+            $view = View::where('article_id',$article->id)->where('user_id',$present_user)->first();
+            if($view == null) // incrementing the view
+            {
+                $new_view = new View();
+                $new_view->user_id      = Session::get('id');
+                $new_view->article_id   = $article->id;
+                $new_view->count =1;
+                $new_view->save();
+            }
+            else
+            {
+                $store = $view;
+                $store->count = $store->count+1;
+                $store->save();
+            }
+            $article->views = $article->views+1;
+            $article->save();
         }
-        else
-        {
-            $store = $view->where('user_id',Session::get('id'))->first();
-            $store->count = $store->count+1;
-            $store->save();
-        }
-        $article->views = $article->views+1;
-        $article->save();
-
             return view('article.show', ['article' => $article]);
     }
+
 
     
     public function edit($slug)
