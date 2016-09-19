@@ -86,8 +86,8 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
     ]);
 
     
-    /*Route::group(['middleware'=>'auth'],function() 
-    {*/
+    Route::group(['middleware'=>'auth'],function() 
+    {
          //Route::post('/comment',   ['uses'=>'CommentController@store', 'as'=>'store_new_comment']);
 
         Route::get('logout', [
@@ -187,7 +187,7 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
         ]);
 
 
-    /*});*/
+    });
 
     Route::get('resetpassword', [
         'uses' => 'PasswordController@resetpassword',
