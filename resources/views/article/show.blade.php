@@ -257,7 +257,7 @@
         <!-- Title -->
         <h1>{{ $article->title }}</h1>
         <!-- Author -->
-            @if(Session::get('id')==$article->user_id or auth()->user()->isadmin)
+            @if(Session::get('id')==$article->user_id)
             <div class="pull-right">
                 <a href="{{ route('article.edit', [$article->slug]) }}" style="float: left">
                     <button type="button" class="btn btn-xs" style="float: left">
