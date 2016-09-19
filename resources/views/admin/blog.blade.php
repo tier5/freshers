@@ -18,7 +18,7 @@
                 <div class="alert alert-success">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     {{ Session::get('success') }}
-                </div>s
+                </div>
             </div>
     @endif
     <!-- /.row -->

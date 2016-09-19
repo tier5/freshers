@@ -5,7 +5,14 @@
 @endsection
 
 @section('article-content')
-
+    @if (Session::has('success'))
+        <div class="row">
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ Session::get('success') }}
+            </div>
+        </div>
+    @endif
     <!-- Blog Entries Column -->
     <div class="col-md-8 col-sm-8 col-lg-8 col-xs-12">
         <h1 class="page-header">
@@ -43,6 +50,8 @@
                     </div>
                 </article>
             @endforeach
+        <div class="pagination">{{ $articles->links() }}</div>
+
             <!-- Pager -->
             {{-- <ul class="pager">
                 <li class="previous">

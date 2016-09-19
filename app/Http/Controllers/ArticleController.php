@@ -24,7 +24,7 @@ class ArticleController extends Controller
     {
 
 
-        $articles = Article::latest()->get();
+        $articles = Article::orderBy('id','desc')->paginate(4);
         
         return view('article.index', ['articles' => $articles]);
     }
@@ -155,9 +155,7 @@ class ArticleController extends Controller
 
         $article->delete();
 
-        session()->flash('success', 'Your post is deleted successfully!');
-
-        return redirect()->route('article.index');
+        return redirect()->route('article.index')->with('success', 'Your post is deleted successfully!');;
     }
 
     
