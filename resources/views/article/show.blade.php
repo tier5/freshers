@@ -1,3 +1,9 @@
+
+
+
+
+
+
 @extends('layouts.article')
 
 @section('title')
@@ -5,12 +11,20 @@
 @endsection
 
 @section('article-content')
-
+<?php require('../app/Libraries/emojione/emojione/lib/php/autoload.php'); ?>
+<hr>
 <style type="text/css">
     .social-actions span{
         font-size: 10px;
     }
 </style>
+<!--meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script-->
+    <div class="row">
     @if (Session::has('success'))
         <div class="row">
             <div class="alert alert-success">
@@ -27,8 +41,9 @@
             </div>
         </div>
     @endif
+    </div>
     <!-- Blog Post Content Column -->
-    <div class="col-md-8 col-sm-8 col-lg-8">
+    <div class="col-md-8 col-sm-8 col-lg-8 col-xs-12">
         <!-- Blog Post -->
         <!-- Title -->
         <h1>{{ $article->title }}</h1>
@@ -54,7 +69,7 @@
         <span class="glyphicon glyphicon-user"></span> {{ $article->user->first_name }} {{ $article->user->last_name }}</a>&nbsp; <span class="glyphicon glyphicon-time"></span> {{ $article->created_at }}</p>
         <p>
         <hr> @include('layouts.fbshare_')<br>
-        <p class="lead">{!! $article->body !!}</p>
+        <p class="lead">{!! Emojione\Emojione::toImage($article->body) !!}</p>
         <br />
         <p>
             @unless($article->tags->isEmpty())
@@ -68,9 +83,9 @@
 
 
             <!-- start -->
-            <div class="row col-md-12 social-actions" id="article_div_{{$article->id}}">
+            <div class="row col-md-12 col-lg-12 col-xs-12 col-sm-12 social-actions" id="article_div_{{$article->id}}">
 
-            <div class='col-md-3' id="likes_section_{{$article->id}}">
+            <div class='col-md-3 col-lg-3 col-xs-3 col-sm-3' id="likes_section_{{$article->id}}">
                 
                 
                       <form action="#" method="POST" id="article_like_form_{{$article->id}}">
@@ -90,12 +105,10 @@
             </div>
                         
                        
-               <div class='col-md-3' id="dislikes_section_{{$article->id}}">
+               <div class='col-md-3 col-lg-3 col-xs-3 col-sm-3' id="dislikes_section_{{$article->id}}">
                      <form action="#" method="POST" id="article_dislike_form_{{$article->id}}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <button type="button" id="article-dislike-{{$article->id}}" onclick="decrease_like_article('{{$article->id}}')" class="btn btn-xs" style="color: #337AB7">
-
-                        
                         @if($article->dislike->where('user_id',Session::get('id'))->where('article_id',$article->id)->first() !=null)
                             <i class="fa fa-thumbs-down"></i>
                         @else
@@ -108,7 +121,7 @@
                     </form> 
                </div>
                   
-                <div class='col-md-2'>
+                <div class='col-md-2 col-lg-2 col-xs-2 col-sm-2'>
                     <small>
                         <i type="button"  onclick="hover_view_a('{{$article->id}}')" class="fa fa-binoculars fa-border"></i> 
                         <span id="view_name_article_{{$article->id}}">VIEWS:</span>
@@ -118,7 +131,7 @@
                     </small>
                 </div>
 
-                <div class='col-md-3'>
+                <div class='col-md-3 col-lg-3 col-xs-3 col-sm-3'>
                         <span style="display:none; color:green;" id="user_choice_article_like_{{$article->id}}"></span>
                         <span style="display:none; color:#4F0826; " id="user_choice_article_dislike_{{$article->id}}"></span>
                         <h5 style="display:none; color:#4F0826;" id="login_please_article">PLEASE LOGIN..!!</h5>
@@ -128,7 +141,7 @@
                 <div class="modal-dialog">
     
                 <!-- Modal content-->
-                <div class="modal-content col-md-8 " style="height: 300px; overflow-y: auto;">
+                <div class="modal-content col-md-8 col-lg-8 col-xs-8 col-sm-8 " style="height: 300px; overflow-y: auto;">
                     <div class="modal-header">
                         <button type="button" onclick="hover_like_a_close('{{$article->id}}')" id="myModal_like_close_{{$article->id}}" class="close" data-dismiss="modal">&times;</button>
                             <h4 class="modal-title">People who liked..</h4>
@@ -149,7 +162,7 @@
                 <div class="modal-dialog">
     
                 <!-- Modal content-->
-                <div class="modal-content col-md-8 " style="height: 300px; overflow-y: auto;">
+                <div class="modal-content col-md-8 col-lg-8 col-xs-8 col-sm-8 " style="height: 300px; overflow-y: auto;">
                     <div class="modal-header">
                         <button type="button" onclick="hover_dislike_a_close('{{$article->id}}')" id="myModal_dislike_close_{{$article->id}}" class="close" data-dismiss="modal">&times;</button>
                             <h4 class="modal-title">People who disliked..</h4>
@@ -170,7 +183,7 @@
                 <div class="modal-dialog">
     
                 <!-- Modal content-->
-                <div class="modal-content col-md-8 " style="height: 300px; overflow-y: auto;">
+                <div class="modal-content col-md-8 col-lg-8 col-xs-8 col-sm-8" style="height: 300px; overflow-y: auto;">
                     <div class="modal-header">
                         <button type="button" onclick="hover_view_a_close('{{$article->id}}')" id="myModal_view_close_{{$article->id}}" class="close" data-dismiss="modal">&times;</button>
                             <h4 class="modal-title">People who viewed..</h4>
@@ -195,15 +208,10 @@
                     <img class="media-object" src="/uploads/profile_pic/{{$comment->user->profile_picture }}" style="width:65px; height:65px; float:left; border-radius:150%; margin-right:25px; ">
                 </a>
             <div class="media-body">
-                <h4 class="media-heading"><a href="{{  URL::to('userarticle/'.$comment->user->id) }}">{{ $comment->user->first_name }}{{' '}}{{ $comment->user->last_name }}</a> <small class="pull-right">{{ $comment->created_at }}</small>
+                <h4 class="media-heading">{{ $comment->user->first_name }}{{' '}}{{ $comment->user->last_name }} <small class="pull-right">{{ $comment->created_at }}</small>
                 
-                    
-                    
-                    <div class="col-md-12 social-actions">
-                        
-                         
-
-                        <div class="col-md-2">
+                    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 social-actions">
+                        <div class="col-md-2 col-lg-2 col-xs-2 col-sm-2">
                             <form action="#" method="POST">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button type="button" id="comment-like-{{$comment->id}}" onclick="increase_like_comment('{{$comment->id}}')" class="btn btn-xs" style="color: #337AB7">
@@ -219,7 +227,7 @@
                             </form>   
                         </div>                         
                     
-                        <div class="col-md-3">
+                        <div class="col-md-3 col-lg-3 col-xs-3 col-sm-3">
                             <form action="#" method="POST">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button type="button" id="comment-dislike-{{$comment->id}}" onclick="decrease_like_comment('{{$comment->id}}')" class="btn btn-xs" style="color: #337AB7">
@@ -235,7 +243,7 @@
                             </form>
                         </div>
                         
-                        <div class='col-md-3'>
+                        <div class='col-md-3 col-lg-3 col-xs-3 col-sm-3'>
                     
                             <span style="display:none; color:green;" id="user_choice_comment_like_{{$comment->id}}"></span>
                             <span style="display:none; color:#4F0826;" id="user_choice_comment_dislike_{{$comment->id}}"></span>
@@ -269,7 +277,7 @@
                     <div class="modal" id="myModal_like_c_{{$comment->id}}" role="dialog" >
                         <div class="modal-dialog">
                             <!-- Modal content-->
-                            <div class="modal-content col-md-8 " style="height: 300px; overflow-y: auto;">
+                            <div class="modal-content col-md-8 col-lg-8 col-xs-8 col-sm-8 " style="height: 300px; overflow-y: auto;">
                                 <div class="modal-header">
                                     <button type="button" onclick="hover_like_c_close('{{$comment->id}}')" id="myModal_like_comment_close_{{$article->id}}" class="close" data-dismiss="modal">&times;</button>
                                     <h4 class="modal-title">People who liked comment..</h4>
@@ -285,7 +293,7 @@
                     <div class="modal" id="myModal_dislike_c_{{$comment->id}}" role="dialog" >
                         <div class="modal-dialog">
                             <!-- Modal content-->
-                            <div class="modal-content col-md-8 " style="height: 300px; overflow-y: auto;">
+                            <div class="modal-content col-md-8 col-lg-8 col-xs-8 col-sm-8" style="height: 300px; overflow-y: auto;">
                                 <div class="modal-header">
                                     <button type="button" onclick="hover_dislike_c_close('{{$comment->id}}')" id="myModal_dislike_comment_close_{{$article->id}}" class="close" data-dismiss="modal">&times;</button>
                                     <h4 class="modal-title">People who disliked comment..</h4>
@@ -306,7 +314,7 @@
                 
 
                     <div id="comment-body-material-{{$comment->id}}" class="well comment-body-material" >
-                        {{ $comment->comment_body }}
+                        {!! Emojione\Emojione::toImage($comment->comment_body) !!}
                     </div>
 
                    <div id="comment-body-edit-id-{{$comment->id}}" class="well comment-body-edit" style="display:none">
@@ -335,12 +343,12 @@
                         <img class="media-object" src="/uploads/profile_pic/{{$reply->user->profile_picture }}" style="width:45px; height:45px; float:left; border-radius:150%; margin-right:25px; ">
                     </a>
                     <div class="media-body">
-                        <h5 class="media-heading"><a href="{{  URL::to('userarticle/'.$reply->user->id) }}">{{ $reply->user->first_name }}{{' '}}{{ $reply->user->last_name }}</a>
+                        <h5 class="media-heading">{{ $reply->user->first_name }}{{' '}}{{ $reply->user->last_name }} 
                             <small class="pull-right">{{ $reply->created_at }}</small>
                            
-                            <div class="col-md-12 social-actions">
+                            <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 social-actions">
 
-                            <div class="col-md-3 social-actions">
+                            <div class="col-md-3 col-lg-3 col-xs-3 col-sm-3 social-actions">
                                 <form action="#" method="POST">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button type="button" id="reply-like-{{$reply->id}}" onclick="increase_like_reply('{{$reply->id}}')" class="btn btn-xs" style="color: #337AB7">
@@ -356,12 +364,12 @@
                                 </form>  
                             </div>
 
-                            <div class="col-md-4 social-actions">
+                            <div class="col-md-4 col-lg-4 col-xs-4 col-sm-4 social-actions">
                                 <form action="#" method="POST">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button type="button" id="reply-dislike-{{$reply->id}}" onclick="decrease_like_reply('{{$reply->id}}')" class="btn btn-xs" style="color: #337AB7">
                                 @if($reply->dislike->where('user_id',Session::get('id'))->where('reply_id',$reply->id)->first() != null)
-                                    <i class="fa fa-thumbs-down"></i>
+                                    <i class="fa fa-thumbs-down" ></i>
                                 @else
                                     <i class="fa fa-thumbs-o-down"></i>
                                 @endif
@@ -372,7 +380,7 @@
                                 </form>
                             </div>
 
-                            <div class='col-md-3'>
+                            <div class='col-md-3 col-lg-3 col-xs-3 col-sm-3'>
                             <span style="display:none; color:green;" id="user_choice_reply_like_{{$reply->id}}"></span>
                             <span style="display:none; color:#4F0826;" id="user_choice_reply_dislike_{{$reply->id}}"></span>
                             </div>
@@ -393,13 +401,14 @@
                                     </form>
                                     @endif
 
-                                    <h5 id="login_please_reply_{{$reply->id}}" style="display:none; color:#4F0826;">PLEASE LOGIN..!!</h5>
+                                    <h5 id="login_please_reply_{{$reply->id}}" style="display:none; color:#4F0826;">login to continue..!!</h5>
                                 </div>
                             </div>
+
                             <div class="modal" id="myModal_like_r_{{$reply->id}}" role="dialog" >
                                 <div class="modal-dialog">
                                     <!-- Modal content-->
-                                    <div class="modal-content col-md-8 " style="height: 300px; overflow-y: auto;">
+                                    <div class="modal-content col-md-8 col-lg-8 col-xs-8 col-sm-8 " style="height: 300px; overflow-y: auto;">
                                         <div class="modal-header">
                                             <button type="button" onclick="hover_like_r_close('{{$reply->id}}')" id="myModal_like_reply_close_{{$reply->id}}" class="close" data-dismiss="modal">&times;</button>
                                             <h4 class="modal-title">People who liked reply..</h4>
@@ -415,7 +424,7 @@
                             <div class="modal" id="myModal_dislike_r_{{$reply->id}}" role="dialog" >
                                 <div class="modal-dialog">
                                     <!-- Modal content-->
-                                    <div class="modal-content col-md-8 " style="height: 300px; overflow-y: auto;">
+                                    <div class="modal-content col-md-8 col-lg-8 col-xs-8 col-sm-8 " style="height: 300px; overflow-y: auto;">
                                         <div class="modal-header">
                                             <button type="button" onclick="hover_dislike_r_close('{{$reply->id}}')" id="myModal_dislike_reply_close_{{$reply->id}}" class="close" data-dismiss="modal">&times;</button>
                                             <h4 class="modal-title">People who disliked reply..</h4>
@@ -431,7 +440,7 @@
                         <br>
                          
                          <div id="reply-body-material-{{ $reply->id }}" class="well reply-body-material">
-                                {{ $reply->reply_body }}
+                                {!! Emojione\Emojione::toImage($reply->reply_body) !!}
                         </div>
                         <div id="reply-body-edit-id-{{$reply->id}}" style="display:none" class="well reply-body-edit">
                             <h4>Edit Reply:</h4>
@@ -461,10 +470,14 @@
                         <br />
                         </form>
                 </div>
+                
+                <!-- End Nested Comment -->
+            
+            <!------------------------- -->
             <hr>
              </div>
-              </div>
-        </div>
+            </div>
+        </div> 
              <hr>
         @endforeach 
         <div class="well"  id="CommentBox_{{$article->id}}">
@@ -478,10 +491,12 @@
                 <button type="submit" class="btn btn-primary pull-right">Comment</button>
                 <br />
             </form>
-        </div>   
+        </div> 
+    </div>  
+
 @endsection
 @section('script')
-    <script type="text/javascript">
+<script type="text/javascript">
 
      function openEdit(id)
      {
@@ -753,7 +768,9 @@
             success: function (response) {
                 //alert(response);
                 $("#reply-body-edit-id-"+id).hide();
-                $('#reply-body-material-'+id).html(response);
+                emojione.ascii = true;
+                var output = emojione.toImage(response);
+                document.getElementById('reply-body-material-'+id).innerHTML = output;
                 $('#reply-body-material-'+id).show();
         }
         });
@@ -771,7 +788,9 @@
             success: function (response) {
             //alert(response);
             $("#reply-body-edit-id-"+id).hide();
-            $('#reply-body-material-'+id).html(response);
+            emojione.ascii = true;
+                var output = emojione.toImage(response);
+                document.getElementById('reply-body-material-'+id).innerHTML = output;
             $('#reply-body-material-'+id).show();
         }
         });
@@ -796,7 +815,12 @@
                 //alert(1);
                 console.log(response);
                 $('#comment-body-edit-id-'+id).hide();
-                $('#comment-body-material-'+id).html(response);
+                //$('#comment-body-material-'+id).html(response);
+
+                emojione.ascii = true;
+                var output = emojione.toImage(response);
+                document.getElementById('comment-body-material-'+id).innerHTML = output;
+                //emojione.ascii = false;
                 $('#comment-body-material-'+id).show();
         }
 
@@ -815,7 +839,10 @@
         success: function (response) {
             //alert(response);
             $("#comment-body-edit-id-"+id).hide();
-            $('#comment-body-material-'+id).html(response);
+            //$('#comment-body-material-'+id).html(response);
+            emojione.ascii = true;
+                var output = emojione.toImage(response);
+                document.getElementById('comment-body-material-'+id).innerHTML = output;
             $('#comment-body-material-'+id).show();
         }
      
@@ -1109,5 +1136,8 @@
     {
         $("#myModal_dislike_r_"+id).fadeOut(100);
     }
+
+
+ 
 </script>
 @endsection

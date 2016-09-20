@@ -10,7 +10,17 @@
   <script src="//cdn.jsdelivr.net/emojione/2.2.6/lib/js/emojione.min.js"></script>
 <link rel="stylesheet" href="//cdn.jsdelivr.net/emojione/2.2.6/assets/css/emojione.min.css"/>
 </head>
-<body>
+<body onload="callme()">
+  
+  ready to go..!!
+  
+  <script type="text/javascript">
+    function callme()
+          {
+            alert('see me');
+          }
+  </script>
+</div>
 
 <div class="container">
   <h2>Modal Example</h2>
@@ -24,6 +34,8 @@
         <h3>Output:</h3>
         <p id="outputText"></p>
         <script type="text/javascript">
+        emojione.ascii = true;
+          
           function convert() {
             var input = document.getElementById('inputText').value;
             var output = emojione.toImage(input);
@@ -33,6 +45,13 @@
       </div>
 
 </div>
+
+<script type="text/javascript">
+  function callme()
+  {
+    alert('here');
+  }
+</script>
 </body>
 </html>
 

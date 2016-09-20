@@ -23,6 +23,10 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        
+        <script src="//cdn.jsdelivr.net/emojione/2.2.6/lib/js/emojione.min.js"></script>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/emojione/2.2.6/assets/css/emojione.min.css"/>
+        <!-- last 2 links added for emoji support -->
         <style>
             body {
                 font-family: 'Lato';
