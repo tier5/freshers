@@ -26,7 +26,7 @@
                     </div>
                     <div class="panel-body">
                         <p><a href="{{  URL::to('userarticle/'.$article->user_id) }}"><span class="glyphicon glyphicon-user"></span> {{ $article->user->first_name }} {{ $article->user->last_name }}</a> <span class="glyphicon glyphicon-time"></span> {{ $article->created_at }}</p>
-                        <p>{!! str_limit($article->body, 300) !!}</p>
+                        <p>{!! str_limit(Emojione\Emojione::toImage($article->body), 300) !!}</p>
                     </div>
                     <div class="panel-footer">
                         <p>
