@@ -25,6 +25,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
         <!-- Custom CSS -->
         {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
+        <script src="//cdn.jsdelivr.net/emojione/2.2.6/lib/js/emojione.min.js"></script>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/emojione/2.2.6/assets/css/emojione.min.css"/>
+        <!-- last 2 links added for emoji support -->
         <style>
             body {
                 font-family: 'Lato';

@@ -18,9 +18,12 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
 {
     //Auth Routes
 
-    Route::group(['middleware'=>'auth'],function()
+
+
+    
+    Route::group(['middleware'=>'auth'],function() 
     {
-        //Route::post('/comment',   ['uses'=>'CommentController@store', 'as'=>'store_new_comment']);
+         //Route::post('/comment',   ['uses'=>'CommentController@store', 'as'=>'store_new_comment']);
 
         Route::get('logout', [
             'uses'=>'UserController@logout',

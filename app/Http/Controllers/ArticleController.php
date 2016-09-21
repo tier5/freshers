@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+//require('./../lib/php/autoload.php');
+require('../app/Libraries/emojione/emojione/lib/php/autoload.php');
 use App\View;
 use App\Article;
 use App\ArticleTag;
@@ -100,6 +101,12 @@ class ArticleController extends Controller
             $article->views = $article->views+1;
             $article->save();
         }
+
+            $array_comment;
+            $array_reply;
+            //return(realpath("../"));
+
+            //return (Emojione::toImage(':)'));
             return view('article.show', ['article' => $article]);
     }
 

@@ -1,0 +1,51 @@
+[33m62f171b[m Release V1.6
+[33m01c982a[m Release V1.5
+[33m36145e6[m Release Admin V1.4
+[33m5bf051c[m stable version
+[33mc1e4c61[m Fix some issue
+[33m369ffcd[m div issue solved for v.0.7.1
+[33md990784[m  akash modifications of comment reply merged with v.0.7.1
+[33m98a331f[m 1>Likes and dislikes fading out issue solved. 2>view of people who was involved with social actions (on clicking likes or dislikes digits and on the binocular icon for the view ) ->from there we can visit their profile as well. 3>user message of performing social actions 4> misplacing of divs sorted out
+[33m24a6eed[m Release V1.2
+[33m7f8c92e[m Release Admin V1.1
+[33m8d3cb5b[m Release admin V1.0
+[33madf68dd[m Release Admin V0.3.1
+[33mbb2a91d[m Release Admin V0.3
+[33ma1845b2[m Release V0.7.1
+[33mc08c22b[m Release V0.7'
+[33m31377b5[m comment_reply block integrated, minor bugs deleted,all articles for a single user displayed, likes , dislikes , views of a page counted
+[33mafa1880[m double appearence of subdomain in routes.php solved
+[33mad39da3[m comment reply segment added... with likes and dislikes,views facebook share.. (primary)
+[33m84e2782[m likes and comments working..
+[33m7951db9[m V0.2.1
+[33m23cad6c[m Release Admin V0.1
+[33m4f803b1[m Release V0.6.3
+[33mf853702[m Release V0.6.2
+[33me9224fe[m Release V0.6.1
+[33mc231a53[m same old ajax and jquerry feature for comment with bugs
+[33ma56c0d2[m Release V0.6
+[33m1092b15[m Release V0.5
+[33m559f97c[m Release V0.5
+[33m6285cdc[m Release V0.5
+[33m1cacb6b[m Release V0.5.1
+[33m196ccff[m Release V0.4.1
+[33m848300b[m like dislike comment reply section implemented with ajax and jquerry, visual bugs leftgit add -A
+[33m723f123[m Release V0.5
+[33me93852c[m Release V0.5
+[33mb7f5af3[m Release V0.5
+[33m3602215[m Release V0.5.1
+[33mf07335a[m Release V0.4.1
+[33m0c4e493[m solving conflict while rebasing ujjals code with akashes code
+[33m4f46b94[m added reply and commnent to the blog
+[33ma0ef271[m Release V0.4
+[33m579f3f0[m Release V0.3.4
+[33m5fa9117[m Release V0.3.3
+[33me9ea174[m Release V0.3.2
+[33maf8ef91[m Release v0.3.1
+[33m1e24239[m Release V0.3
+[33me3fa643[m Release V0.2.1
+[33m8eb558e[m Release V0.2
+[33m2fd3bc8[m Release V0.1
+[33m52bfe37[m Create Index Page, Models and Migrations
+[33m6963674[m BaseLine
+[33mda8cc93[m Initial commit
