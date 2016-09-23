@@ -205,7 +205,18 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
         'uses'=>'PasswordController@postreset',
         'as'=>'postreset'
     ]);
-
+    Route::get('create/meme/{id}', [
+        'uses' => 'MemeController@create',
+        'as' => 'create.meme'
+    ]);
+    Route::get('photo/upload', [
+        'uses' => 'MemeController@getupload',
+        'as' => 'photo.upload'
+    ]);
+    Route::post('photo/upload', [
+        'uses' => 'MemeController@postupload',
+        'as' => 'postupload'
+    ]);
 
 
     Route::get('about',[
