@@ -48,6 +48,7 @@ return [
             'root' => storage_path('app'),
         ],
 
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
@@ -60,6 +61,11 @@ return [
             'secret' => 'your-secret',
             'region' => 'your-region',
             'bucket' => 'your-bucket',
+        ],
+
+        'image' => [
+            'driver' => 'local',
+            'root'   => public_path().'/uploads/meme'
         ],
 
     ],
