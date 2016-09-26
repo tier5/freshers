@@ -59,13 +59,13 @@
                 <div class="col-md-6" id="preview"></div>
 
                 <div class="col-md-4 col-xs-12 col-lg-4 col-sm-4">
-                    <button class="btn btn-success" id="save">Preview</button>
+                    <button class="btn btn-success" id="previewbtn">Preview</button>
+                    @if(Auth::check())<button class="btn btn-success" id="save">Save</button>@endif
                     <button class="btn btn-danger" id="download">Download</button>
                 </div>
             </div>
         </div>
     </div>
-
     <script>
         // Example with saving
         $("#example-save").memeGenerator({
@@ -80,15 +80,34 @@
             ]
 
         });
+        $("#previewbtn").click(function (e) {
+            e.preventDefault();
+            var imageDataUrl = $("#example-save").memeGenerator("save");
+            $("#preview").html(
+                    $("<img>").attr("src", imageDataUrl)
+            );
+        })
 
         $("#save").click(function(e){
             e.preventDefault();
 
             var imageDataUrl = $("#example-save").memeGenerator("save");
 
-            $("#preview").html(
-                    $("<img>").attr("src", imageDataUrl)
-            );
+            $.ajax({
+                url: "{{ route('meme.save') }}",
+                type: "POST",
+                data: {image: imageDataUrl},
+                dataType: "json",
+                success: function(response){
+                    if(response.status == 'success') {
+                        alert('Meme Successfully Saved');
+                    }
+                    $("#preview").html(
+                            $("<img>").attr("src", response.filename)
+                    );
+                }
+            });
+
         });
 
         $("#download").click(function(e){

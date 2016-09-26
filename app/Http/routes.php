@@ -242,6 +242,24 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             ]);
         });
 
+        Route::get('photo/upload', [
+            'uses' => 'MemeController@getupload',
+            'as' => 'photo.upload'
+        ]);
+        Route::post('photo/upload', [
+            'uses' => 'MemeController@postupload',
+            'as' => 'postupload'
+        ]);
+        Route::get('view/meme', [
+            'uses' => 'MemeController@view',
+            'as' => 'view.meme'
+        ]);
+        Route::get('view/meme/your/{id}', [
+            'uses' => 'MemeController@single',
+            'as' => 'meme.single'
+        ]);
+
+
     });
 
     //General Routes
@@ -301,13 +319,9 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
         'uses' => 'MemeController@create',
         'as' => 'create.meme'
     ]);
-    Route::get('photo/upload', [
-        'uses' => 'MemeController@getupload',
-        'as' => 'photo.upload'
-    ]);
-    Route::post('photo/upload', [
-        'uses' => 'MemeController@postupload',
-        'as' => 'postupload'
+    Route::post('meme/save', [
+        'uses' => 'MemeController@save',
+        'as' => 'meme.save'
     ]);
     Route::get('about',[
         'uses'=>'PageController@about',

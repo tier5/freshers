@@ -79,15 +79,16 @@
                                         {{ Auth::user()->first_name }} <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="{{ route('profile') }}"><i class="fa fa-img"></i><img src="{{URL::to('uploads/profile_pic/'.Auth::user()->profile_picture)}}" class="img-circle" alt="Cinque Terre" width="42" height="42"> Profile</a></li>
-                                        <li><a href="{{route('editprofile')}}"><i class="fa fa-btn fa-update"></i>Update Profile</a> </li>
-                                        <li><a href="{{route('getsubdomain')}}"><i class="fa fa-link"></i>Subdomain</a></li>
+                                        <li><a href="{{ route('profile') }}"><i class="fa fa-img fa-fw"></i><img src="{{URL::to('uploads/profile_pic/'.Auth::user()->profile_picture)}}" class="img-circle" alt="Cinque Terre" width="42" height="42"> Profile</a></li>
+                                        <li><a href="{{route('editprofile')}}"><i class="fa fa-btn fa-wrench fa-fw"></i> Update Profile</a> </li>
+                                        <li><a href="{{route('view.meme')}}"><i class="fa fa-picture fa-fw"></i> Meme</a> </li>
+                                        <li><a href="{{route('getsubdomain')}}"><i class="fa fa-link fa-fw"></i> Subdomain</a></li>
                                         @if (Auth::user()->isadmin == 1)
                                             <li class="divider"></li>
                                             <li><a href="{{route('admin.index')}}"><i class="fa fa-dashboard"></i>Dashboard</a></li>
                                         @endif
                                         <li class="divider"></li>
-                                        <li><a href="{{ route('logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                        <li><a href="{{ route('logout') }}"><i class="fa fa-btn fa-sign-out fa-fw"></i> Logout</a></li>
                                     </ul>
                                 </li>
                             @endif

@@ -31,7 +31,7 @@ C301,229.646,301,301,301,301z" />
     <div class="container">
         <header class="codrops-header">
             <div class="centered">
-                <a href="{{ route('photo.upload') }}"> <i class="fa fa-upload fa-4x" aria-hidden="true">Upload new Photo</i></a>
+                <a href="{{ Auth::check()?route('photo.upload'):route('login') }}"> <i class="fa fa-upload fa-3x" aria-hidden="true">Upload new Photo</i></a>
             </div>
             <div><h2>OR</h2></div>
             <h1>Select a Photo</h1>
