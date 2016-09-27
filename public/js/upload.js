@@ -24,6 +24,8 @@
         imagePath.appendTo(message);
         message.appendTo(messageContainer);
         messageContainer.addClass('show');
+        window.location='http://laravelsite.dev';
+
     }
 
     function uploadCompleted(data) {

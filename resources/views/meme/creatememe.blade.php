@@ -8,7 +8,9 @@
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <script src="/js/spectrum.js"></script>
-    <script type="text/javascript" src="/js/jquery.memegenerator.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/5.0.7/sweetalert2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/5.0.7/sweetalert2.min.css">
+    <script type="text/javascript" src="/js/jquery.memegenerator.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/jquery.memegenerator.min.css">
     <link rel="stylesheet" type="text/css" href="/css/spectrum.css">
     <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
@@ -100,7 +102,13 @@
                 dataType: "json",
                 success: function(response){
                     if(response.status == 'success') {
-                        alert('Meme Successfully Saved');
+                        //alert('Meme Successfully Saved');
+                        swal({
+                            title: 'Success!',
+                            text: 'Your Meme Successfully Saved',
+                            type: 'success',
+                            confirmButtonText: 'Okey'
+                        })
                     }
                     $("#preview").html(
                             $("<img>").attr("src", response.filename)

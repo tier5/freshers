@@ -27,7 +27,7 @@
             @foreach($memes as $meme)
             <div class="col-md-4 col-xs-12 col-lg-4 col-sm-4 portfolio-item">
                 <a href="{{ route('meme.single',[$meme->id]) }}">
-                    <img class="img-responsive" atr="http://placehold.it/700x400" src="/uploads/meme/{{ $meme->name }}">
+                    <img class="img-responsive" atr="http://placehold.it/700x400" src="/uploads/meme/photo/{{ $meme->name }}">
                 </a>
                 <p>Created at: {{$meme->created_at}} </p>
             </div>

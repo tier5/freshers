@@ -29,7 +29,7 @@ class MemeController extends Controller
         ]);
         $file=$request->file('file');
         $filename=uniqid().$file->getClientOriginalName();
-        $destinationpath='uploads/meme';
+        $destinationpath='uploads/meme/';
         $file->move($destinationpath,$filename);
         $photo->name=$filename;
         $photo->user_id=Session::get('id');
@@ -48,7 +48,7 @@ class MemeController extends Controller
             $image = imagecreatefromstring($imageData);
             $filename = md5($imageData) . '.png';
 
-            if(imagepng($image, 'uploads/meme/' . $filename))
+            if(imagepng($image, 'uploads/meme/photo/' . $filename))
             {
                 $photo->name=$filename;
                 $photo->user_id=Session::get('id');
@@ -57,10 +57,10 @@ class MemeController extends Controller
                     'status' => 'success',
                 ]);
             } else {
-                throw new Exception('Could not save the file.');
+                return response()->json(['status' => 'Could not save the file.']);
             }
         } else {
-            throw new Exception('Invalid data URL.');
+            return response()->json(['status' => 'Invalid data URL.']);
         }
     }
     public function view()
