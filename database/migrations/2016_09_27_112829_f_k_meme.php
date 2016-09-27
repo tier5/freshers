@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class SaveCreatedMeme extends Migration
+class FKMeme extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,9 @@ class SaveCreatedMeme extends Migration
      */
     public function up()
     {
-        Schema::create('meme', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->integer('user_id')->unsigned()->index();
-            $table->timestamps();
+        //
+        Schema::table('meme',function (Blueprint $table) {
+        $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -27,6 +25,7 @@ class SaveCreatedMeme extends Migration
      */
     public function down()
     {
-        Schema::drop('memes');
+        //
+        
     }
 }

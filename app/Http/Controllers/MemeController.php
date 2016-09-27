@@ -73,4 +73,9 @@ class MemeController extends Controller
         $meme=Meme::where('id','=',$id)->first();
         return view('meme.view',['meme' => $meme]);
     }
+    public function allmeme()
+    {
+        $memes=Meme::latest()->get();
+        return view('meme.meme', [ 'memes' => $memes]);
+    }
 }

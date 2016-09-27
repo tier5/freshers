@@ -228,6 +228,10 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
         'uses' => 'MemeController@save',
         'as' => 'meme.save'
     ]);
+    Route::get('meme/view/all', [
+        'uses' => 'MemeController@allmeme',
+        'as' => 'meme'
+    ]);
 
 
 
