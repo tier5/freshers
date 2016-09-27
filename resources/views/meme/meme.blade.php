@@ -1,16 +1,18 @@
 @extends('layouts.app')
 
 @section('title')
-    Laravelsite | Your Meme
+    Laravelsite | Memes
+@endsection
+
+@section('style')
+
 @endsection
 
 @section('content')
-    <!-- Page Content -->
-    <div class="container">
-
-        <!-- Projects Row -->
-        <div class="row centered">
-            <div class="col-md-8 col-xs-12 col-lg-8 col-sm-8">
+    <div class="row">
+        <div class="col-md-8 col-sm-8 col-lg-8 col-xs-12">
+        @foreach($memes as $meme)
+            <div class="row">
                 <div class="row">
                     <div class="pull-left">
                         <img class="media-object" src="/uploads/profile_pic/{{$meme->user->profile_picture }}" style="width:65px; height:65px; float:left; border-radius:10%; margin-right:25px; ">
@@ -25,10 +27,16 @@
                             </small></h3></p>
                     </div>
                 </div>
-                <img class="img-responsive" height=1000px width=1000px atr="http://placehold.it/700x400" src="/uploads/meme/photo/{{ $meme->name }}">
-            </div>
 
+                <div class="img-responsive">
+                    <a href="{{ route('meme.single',[$meme->id]) }}">
+                        <img src="/uploads/meme/photo/{{ $meme->name }}" />
+                    </a>
+                </div>
+                <hr />
+                </div>
+            @endforeach
         </div>
-        <!-- /.container -->
     </div>
+
 @endsection

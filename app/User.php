@@ -51,4 +51,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Subdomain');
     }*/
+    public function meme()
+    {
+        return  $this->hasMany('App\Meme');
+    }
 }
