@@ -258,6 +258,14 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             'uses' => 'MemeController@single',
             'as' => 'meme.single'
         ]);
+        Route::post('view/meme/like', [
+            'uses' => 'MemeController@like',
+            'as' => 'meme.like'
+        ]);
+        Route::post('view/meme/dislike', [
+            'uses' => 'MemeController@dislike',
+            'as' => 'meme.dislike'
+        ]);
 
 
     });
