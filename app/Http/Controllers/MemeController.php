@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\MemeLike;
 use App\MemePhoto;
 use App\Meme;
 use App\User;
@@ -77,5 +78,22 @@ class MemeController extends Controller
     {
         $memes=Meme::latest()->get();
         return view('meme.meme', [ 'memes' => $memes]);
+    }
+    public function like(Request $request)
+    {
+        $like=new MemeLike();
+        $like->like=1;
+        $like->meme_id=$request->meme_id;
+        $like->user_id=$request->user_id;
+        $like->save();
+        $count=count(MemeLike::all());
+        return response()->json(['status' => 'like','count' => $count]);
+    }
+    public function dislike()
+    {
+        $like=MemeLike::where('user_id','=',Session::get('id'))->first();
+        $like->delete();
+        $count=count(MemeLike::all());
+        return response()->json(['status' => 'dislike','count' => $count]);
     }
 }
