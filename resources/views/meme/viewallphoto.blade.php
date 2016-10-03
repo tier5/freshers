@@ -18,6 +18,7 @@
 
 @section('content')
 
+
 <div id="morph-shape" class="morph-shape" data-morph-next="M301,301c0,0-83.8-21-151-21C71.8,280-1,301-1,301s21-65.7,21-151C20,79.936-1-1-1-1s73,11,151,11c85,0,151-11,151-11
 	s-21,66.43-21,151C280,229.646,301,301,301,301z">
     <svg width="100%" height="100%" viewBox="0 0 300 300" preserveAspectRatio="none">
@@ -28,6 +29,24 @@ C301,229.646,301,301,301,301z" />
 <hr />
 <hr />
 <div class="main">
+    <div class="row">
+        @if (Session::has('success'))
+            <div class="row">
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{ Session::get('success') }}
+                </div>
+            </div>
+        @endif
+        @if (Session::has('warning'))
+            <div class="row">
+                <div class="alert alert-warning">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{ Session::get('warning') }}
+                </div>
+            </div>
+        @endif
+    </div>
     <div class="container">
         <header class="codrops-header">
             <div class="centered">

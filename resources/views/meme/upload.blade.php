@@ -13,6 +13,24 @@
 @endsection
 
 @section('content')
+    <div class="row">
+        @if (Session::has('success'))
+            <div class="row">
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{ Session::get('success') }}
+                </div>
+            </div>
+        @endif
+        @if (Session::has('warning'))
+            <div class="row">
+                <div class="alert alert-warning">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{ Session::get('warning') }}
+                </div>
+            </div>
+        @endif
+    </div>
       <div class="container">
         <div class="panel panel-default">
             <div class="panel-heading"><strong>Upload Files</strong> <small>Only Image is allowed</small></div>
