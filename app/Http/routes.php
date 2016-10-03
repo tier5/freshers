@@ -207,10 +207,6 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             'uses' => 'MemeController@view',
             'as' => 'view.meme'
         ]);
-        Route::get('view/meme/your/{id}', [
-            'uses' => 'MemeController@single',
-            'as' => 'meme.single'
-        ]);
         Route::post('view/meme/like', [
             'uses' => 'MemeController@like',
             'as' => 'meme.like'
@@ -250,7 +246,10 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
         'uses' => 'MemeController@allmeme',
         'as' => 'meme'
     ]);
-
+    Route::get('view/meme/your/{id}', [
+        'uses' => 'MemeController@single',
+        'as' => 'meme.single'
+    ]);
 
 
 
