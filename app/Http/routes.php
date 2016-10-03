@@ -82,8 +82,35 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             'uses' => 'ArticleController@destroy',
             'as' => 'article.destroy'
         ]);
-
         Route::resource('comment', 'CommentController', ['names'=> ['index' => 'comment.index']]);
+        Route::get('/lll', 'm1@test');
+
+        Route::post('/req_modal',['uses'=>'ModalController@like_article', 'as'=>'show_modal']);
+
+        Route::post('/req_modal_meme',['uses'=>'ModalController@like_meme', 'as'=>'show_modal_like_meme']);        
+
+        Route::post('/req_dislike_article',['uses'=>'ModalController@dislike_article', 'as'=>'show_modal_dislike_article']);
+
+        Route::post('/req_dislike_meme',['uses'=>'ModalController@dislike_meme', 'as'=>'show_modal_dislike_meme']);//new
+
+        Route::post('/req_view_article',['uses'=>'ModalController@view_article', 'as'=>'show_modal_view_article']);
+
+        Route::post('/req_view_view',['uses'=>'ModalController@view_meme', 'as'=>'show_modal_view_meme']);
+
+        Route::post('/req_like_comment',['uses'=>'ModalController@like_comment', 'as'=>'show_modal_like_comment']);
+
+        Route::post('/req_dislike_comment',['uses'=>'ModalController@dislike_comment', 'as'=>'show_modal_dislike_comment']);
+
+        Route::post('/req_like_reply',['uses'=>'ModalController@like_reply', 'as'=>'show_modal_like_reply']);
+
+        Route::post('/req_dislike_reply',['uses'=>'ModalController@dislike_reply', 'as'=>'show_modal_dislike_reply']);
+
+        Route::post('new_comment', ['uses'=>'CommentController@store', 'as'=>'new_comment']);
+
+        Route::post('new_reply', ['uses'=>'ReplyController@store', 'as'=>'new_reply']);
+
+        Route::resource('comment', 'CommentController', ['names'=> ['store' => 'comment.store']]);
+>>>>>>> dev
 
         Route::post('cmt', 'CommentController@edit');
 
@@ -130,6 +157,10 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             'uses'=>'LSVController@dislikereply',
             'as'=>'reply_like_decrease'
         ]);
+
+        Route::post('/Like/meme',    ['uses'=>'MemeController@likememe',    'as'=>'meme_like_increase']);
+
+        Route::post('/Dislike/meme', ['uses'=>'MemeController@dislikememe', 'as'=>'meme_like_decrease']);
 
         Route::get('subdomain', [
             'uses' => 'SubdomainController@getSubdomain',
@@ -254,10 +285,6 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             'uses' => 'MemeController@view',
             'as' => 'view.meme'
         ]);
-        Route::get('view/meme/your/{id}', [
-            'uses' => 'MemeController@single',
-            'as' => 'meme.single'
-        ]);
         Route::post('view/meme/like', [
             'uses' => 'MemeController@like',
             'as' => 'meme.like'
@@ -334,6 +361,10 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
     Route::get('meme/view/all', [
         'uses' => 'MemeController@allmeme',
         'as' => 'meme'
+    ]);
+    Route::get('view/meme/your/{id}', [
+        'uses' => 'MemeController@single',
+        'as' => 'meme.single'
     ]);
     Route::get('about',[
         'uses'=>'PageController@about',

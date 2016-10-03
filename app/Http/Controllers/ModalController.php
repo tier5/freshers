@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Meme;
 use App\Dislike;
 use App\Like;
 use App\Share;
@@ -57,6 +58,45 @@ class ModalController extends Controller
 			    	));
         }
     }
+
+    public function like_meme(Request $request)
+    {
+        $list_ppl =array();
+        $msg = 'people who liked..!!';
+        $people_liked_meme = Meme::where('id',$request->id)->first()->like;
+        
+        if($people_liked_meme->first() == null)
+        {
+              return Response::json(array(
+                        'status' => false,
+                        'message' => "no one liked..!!"        
+                    ));
+        }
+        else
+        {
+            $x=0;
+            foreach($people_liked_meme as $each_people)
+            {
+
+                if($each_people->user != null)
+                {
+                    $x++;
+                    $profile_pic_name = $each_people->user->profile_picture;  
+                    $person_f_name= $each_people->user->first_name; 
+                    $person_l_name= $each_people->user->last_name;
+                    $person_name = $person_f_name.$person_l_name;
+                    $list_ppl = array($x => array('profile_pic_name'=>$profile_pic_name,
+                                          'person_name' =>$person_name));
+                }
+                
+            }
+            return Response::json(array(
+                        'status' => true,
+                        'response' => $people_liked_meme        
+                    ));
+        }
+    }
+
      public function dislike_article(Request $request)
     {
     	$list_ppl =array();
@@ -93,6 +133,44 @@ class ModalController extends Controller
 			            'response' =>   $people_disliked_article,
 			                
 			    	));
+        }
+    }
+     public function dislike_meme(Request $request)
+    {
+        $list_ppl =array();
+        $msg = 'people who disliked..!!';
+        $people_disliked_meme = Meme::where('id',$request->id)->first()->dislike;
+        
+        if($people_disliked_meme->first() == null)
+        {
+              return Response::json(array(
+                        'status' => false,
+                        'message' => "no one disliked..!!"    
+                    ));
+        }
+        else
+        {
+            $x=0;
+            foreach($people_disliked_meme as $each_people)
+            {
+
+                if($each_people->user != null)
+                {
+                    $x++;
+                    $profile_pic_name = $each_people->user->profile_picture;  
+                    $person_f_name= $each_people->user->first_name; 
+                    $person_l_name= $each_people->user->last_name;
+                    $person_name = $person_f_name.$person_l_name;
+                    $list_ppl = array($x => array('profile_pic_name'=>$profile_pic_name,
+                                          'person_name' =>$person_name));
+                }
+                
+            }
+            return Response::json(array(
+                        'status' => true,
+                        'response' =>   $people_disliked_meme,
+                            
+                    ));
         }
     }
      public function view_article(Request $request)
@@ -133,7 +211,44 @@ class ModalController extends Controller
 			    	));
         }
     }
+     public function view_meme(Request $request)
+    {
+        $list_ppl =array();
+        $msg = 'people who viewed..!!';
+        $people_viewed_meme = Meme::where('id',$request->id)->first()->view;
+        
+        if($people_viewed_meme->first() == null)
+        {
+              return Response::json(array(
+                        'status' => false,
+                        'message' => "no one viewed..!!"        
+                    ));
+        }
+        else
+        {
+            $x=0;
+            foreach($people_viewed_meme as $each_people)
+            {
 
+                if($each_people->user != null)
+                {
+                    $x++;
+                    $profile_pic_name = $each_people->user->profile_picture;  
+                    $person_f_name= $each_people->user->first_name; 
+                    $person_l_name= $each_people->user->last_name;
+                    $person_name = $person_f_name.$person_l_name;
+                    $list_ppl = array($x => array('profile_pic_name'=>$profile_pic_name,
+                                          'person_name' =>$person_name));
+                }
+                
+            }
+            //$y = View::where('article_id',$request->id)->where('user_id',$request->user_id)->first()->count;
+            return Response::json(array(
+                        'status' => true,
+                        'response' => $people_viewed_meme
+                    ));
+        }
+    }
     public function like_comment(Request $request)
     {
     	$list_ppl =array();

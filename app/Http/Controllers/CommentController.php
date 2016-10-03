@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Meme;
 use App\Dislike;
 use App\Like;
 use App\Share;
@@ -46,16 +47,32 @@ class CommentController extends Controller
     {
 
         //
-        //return ('reached here');
+        //return($request->meme_id);
+        
         $user_id=Session::get('id');
-       $this->validate($request, [
+        $this->validate($request, [
                 'comment_body'=>'required|max:2000|min:1'
         ]);
         
 
         $comment = new Comment();
         $comment->comment_body = $request->comment_body;
-        $comment->article_id  = $request->article_id; //hidden variable
+        if($request->article_id != '')
+        {
+            $comment->article_id  = $request->article_id; //hidden variable
+        }
+        else
+        {
+            $comment->article_id = null;
+        }
+        if($request->meme_id != '')
+        {
+            $comment->meme_id  = $request->meme_id;
+        }
+        else
+        {
+            $comment->meme_id = null;
+        }
         $comment->user_id = $user_id;
         $comment->likes = 0;
         $comment->dislikes=0;

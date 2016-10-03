@@ -49,6 +49,24 @@
 @endsection
 
 @section('content')
+    <div class="row">
+        @if (Session::has('success'))
+            <div class="row">
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{ Session::get('success') }}
+                </div>
+            </div>
+        @endif
+        @if (Session::has('warning'))
+            <div class="row">
+                <div class="alert alert-warning">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{ Session::get('warning') }}
+                </div>
+            </div>
+        @endif
+    </div>
     <div class="example save">
         <h2>Create Your own Meme</h2>
 

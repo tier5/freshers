@@ -188,9 +188,8 @@ class UserController extends Controller
         if(Auth::attempt($credentials))
         {
             $user=User::where('email','=',$request->email)->first();
-            Session::flash('success','You are Successfully Logged in');
             Session::put('id',$user->id);
-            return redirect()->route('article.index');
+            return redirect()->route('app.index')->with('success','You are Successfully loged in');
         }
         else
             return redirect()->route('login')->with('Err','Enter a valid email or password')->withInput();

@@ -58,10 +58,10 @@
                             <li><a class="navbar-brand" href="{{ route('app.index') }}">Home</a></li>
                         </ul>
                         <ul class="nav navbar-nav">
-                            <li><a href="{{ url('/article') }}">Blogs</a></li>
+                            <li><a href="{{ route('meme') }}">Memes</a></li>
                         </ul>
                         <ul class="nav navbar-nav">
-                            <li><a href="{{ route('meme') }}">Memes</a></li>
+                            <li><a href="{{ url('/article') }}">Blogs</a></li>
                         </ul>
                         <ul class="nav navbar-nav">
                             <li><a href="{{route('about')}}">About</a></li>
@@ -98,6 +98,7 @@
                         </ul>
                     </div>
                 </div>
+
             <!-- /.container -->
             </nav>
             <!-- Page Content -->

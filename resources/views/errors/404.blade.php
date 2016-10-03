@@ -25,8 +25,8 @@
                     So please go to our <a href="{{ route('app.index') }}">homepage</a></storeng> </p>
         </div>
         <!-- footer -->
-        <div id="footer">
-            Designed by Tier5 <a href="http://tier5.us" target="_blank" rel="nofollow">Tier5</a>
+        <div id="footer" style="color: #00A6C7">
+            <strong>Designed by <a href="http://tier5.us" target="_blank" rel="nofollow" style="color: red">Tier5</a></strong>
         </div>
     </div>
 </body>

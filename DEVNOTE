@@ -66,3 +66,5 @@ V2.4
     5.Add View meme
 V2.5
     1.Added user controller to meme
+V2.6
+    1.Add 404 and 503 page
