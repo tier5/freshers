@@ -14,6 +14,22 @@ class Meme extends Model
      }
      public function like()
      {
-         return $this->hasMany('App\MemeLike');
+         return $this->hasMany('App\Like');
+     }
+     public function dislike()
+     {
+         return $this->hasMany('App\Dislike');
+     }
+     public function view()
+     {
+         return $this->hasMany('App\View');
+     }
+     public function share()
+     {
+         return $this->hasMany('App\Share');
+     }
+     public function comment()
+     {
+         return $this->hasMany('App\Comment');
      }
 }

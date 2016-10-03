@@ -10,7 +10,8 @@
         "unisharp/laravel-ckeditor": "^4.5",
         "hashids/hashids": "^1.0",
         "laravel/socialite":"^2.0",
-        "hybridauth/hybridauth": "dev-master"
+        "hybridauth/hybridauth": "dev-master",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -24,4 +24,8 @@ class Dislike extends Model
     {
     	return $this->belongsTo(User::class);
     }
+    public function meme()
+    {
+        return $this->hasMany('App\Meme');
+    }
 }

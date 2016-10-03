@@ -2,13 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\MemeLike;
-use App\MemePhoto;
-use App\Meme;
-use App\User;
-use Illuminate\Http\Request;
 
+use App\Meme;
+use App\MemePhoto;
+use App\Dislike;
+use App\Like;
+use App\Share;
+use App\View;
+use App\Reply;
+use App\Article;
+use App\User;
+use App\Comment;
 use App\Http\Requests;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use \Response;
 use Illuminate\Support\Facades\Session;
 
 class MemeController extends Controller
@@ -72,6 +81,35 @@ class MemeController extends Controller
     public function single($id)
     {
         $meme=Meme::where('id','=',$id)->first();
+        //return($meme->like->first());
+
+
+
+
+        if (is_null($meme)) {
+            abort(404);
+        }
+        $present_user = Session::get('id');
+        if($present_user != null)
+        {
+            $view = View::where('meme_id',$meme->id)->where('user_id',$present_user)->first();
+            if($view == null) // incrementing the view
+            {
+                $new_view = new View();
+                $new_view->user_id      = Session::get('id');
+                $new_view->meme_id   = $meme->id;
+                $new_view->count =1;
+                $new_view->save();
+            }
+            else
+            {
+                $store = $view;
+                $store->count++;
+                $store->save();
+            }
+            $meme->views++;
+            $meme->save();
+        }
         return view('meme.view',['meme' => $meme]);
     }
     public function allmeme()
@@ -95,5 +133,90 @@ class MemeController extends Controller
         $like->delete();
         $count=count(MemeLike::all());
         return response()->json(['status' => 'dislike','count' => $count]);
+    }
+
+    public function likememe(Request $request)
+    {
+        $meme = $request->id ;
+        $now_user_id=   Session::get('id');
+        $like_status =  Like::where('user_id',$now_user_id)->where('meme_id',$meme)->first();
+        $dislike_status = Dislike::where('user_id',$now_user_id)->where('meme_id',$meme)->first();
+        $like_num=   meme::where('id',$meme)->first()->likes;
+        $dislike_num=meme::where('id',$meme)->first()->dislikes;
+        if($dislike_status != null)
+        {
+            $dislike_status->delete();
+            $r = meme::where('id' , $meme)->first();
+            $r->dislikes = $r->dislikes-1;
+            $dislike_num = $r->dislikes;
+            $r->save();
+        }
+        if($like_status == null)
+        {
+            $like = new Like();
+            $like->reply_id     =null; 
+            $like->comment_id   =null;
+            $like->meme_id   =$meme;
+            $like->user_id      =$now_user_id;
+            $like->save();
+            $meme = meme::where('id' , $meme)->first();
+            $meme->likes = $meme->likes+1;
+            $like_num = $meme->likes;
+            $meme->save();
+            return Response()->json(['like'=>$like_num , 'dislike'=>$dislike_num]);
+        }
+        else
+        {
+            
+            $like_status->delete();
+            $meme = meme::where('id' , $meme)->first();
+            $meme->likes = $meme->likes-1;
+            $like_num = $meme->likes;
+            $meme->save();
+            return Response()->json(['like'=>$like_num , 'dislike'=>$dislike_num]);
+        }
+        return ('eror in likememe at MemeController');    
+    }
+
+    public function dislikememe(Request $request)
+    {
+        $meme=$request->id;
+        $now_user_id=   Session::get('id');
+        $dislike_status =   Dislike::where('user_id',$now_user_id)->where('meme_id',$meme)->first();
+        $like_status    = Like::where('user_id',$now_user_id)->where('meme_id',$meme)->first();
+        $like_num=   meme::where('id',$meme)->first()->likes;
+        $dislike_num=meme::where('id',$meme)->first()->dislikes;
+        if($like_status != null)
+        {
+            $like_status->delete();
+            $r = meme::where('id' , $meme)->first();
+            $r->likes = $r->likes-1;
+            $like_num = $r->likes;
+            $r->save();
+        } 
+        if($dislike_status == null)
+        {
+            $dislike = new Dislike();
+            $dislike->reply_id      =null; 
+            $dislike->comment_id    =null;
+            $dislike->meme_id    =$meme;
+            $dislike->user_id       =$now_user_id;
+            $dislike->save();
+            $meme = meme::where('id' , $meme)->first();
+            $meme->dislikes = $meme->dislikes+1;
+            $dislike_num =$meme->dislikes;
+            $meme->save();
+            return Response()->json(['like'=>$like_num , 'dislike'=>$dislike_num]);
+        }
+        else
+        {
+            $dislike_status->delete();
+            $meme = meme::where('id' , $meme)->first();
+            $meme->dislikes = $meme->dislikes-1;
+            $dislike_num =$meme->dislikes;
+            $meme->save();
+            return Response()->json(['like'=>$like_num , 'dislike'=>$dislike_num]);
+        }   
+        return ('eror in dislikememe at MemeController');
     }
 }

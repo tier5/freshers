@@ -21,7 +21,11 @@ class Comment extends Model
     {
     	return $this->belongsTo(Article::class);
     }
-     public function like()
+    public function meme()
+    {
+        return $this->belongsTo(Meme::class);
+    }
+    public function like()
     {
         return $this->hasMany(Like::class);
     }

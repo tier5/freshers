@@ -9,6 +9,7 @@
 @endsection
 
 @section('content')
+
     <div class="row">
         <div class="col-md-8 col-sm-8 col-lg-8 col-xs-12">
         @foreach($memes as $meme)
@@ -30,7 +31,7 @@
 
                 <div class="img-responsive">
                     <a href="{{ route('meme.single',[$meme->id]) }}">
-                        <img src="/uploads/meme/photo/{{ $meme->name }}" />
+                        <img src="/uploads/meme/photo/{{ $meme->name }}"/>
                     </a>
                 </div>
                 <hr />
