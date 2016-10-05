@@ -12,8 +12,10 @@ class NullableFields extends Migration
      */
     public function up()
     {
+
             
         DB::statement('ALTER TABLE `comments` CHANGE `article_id` `article_id` INT(10) UNSIGNED NULL');
+
     }
 
     /**

@@ -250,8 +250,19 @@ $router->group(array('domain' => 'makingshitfunny.dev'), function()
         'uses' => 'MemeController@single',
         'as' => 'meme.single'
     ]);
+    Route::get('view/photo', [
+        'uses' => 'MemeController@photo',
+        'as' => 'meme.photo'
+    ]);
 
+    //test
 
+    Route::post('view/meme', [
+        'uses' => 'MemeController@viewmeme',
+        'as' => 'meme.view1'
+    ]);
+
+    //
 
     Route::get('about',[
         'uses'=>'PageController@about',

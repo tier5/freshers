@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\MemePhoto;
+use App\Meme;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -15,7 +15,7 @@ class AppController extends Controller
      */
     public function getIndex()
     {
-        $photos=MemePhoto::latest()->get();
+        $photos=Meme::latest()->get();
         return view('meme.viewallphoto', ['photos' => $photos]);
     }
 }
