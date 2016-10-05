@@ -16,12 +16,25 @@ use App\Comment;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use \Response;
 use Illuminate\Support\Facades\Session;
 
 class MemeController extends Controller
 {
+    public function photo()
+    {
+        $photos=MemePhoto::latest()->get();
+        return view('meme.photo', [ 'photos' => $photos]);
+    }
+    public function viewmeme(Request $request)
+    {
+        $url=$request->image;
+        $image=substr($url,20);
+        $meme=Meme::where('name','=',$image)->first();
+        return response()->json(['data' => $meme,'status' => 'success']);
+    }
     public function create($id)
     {
         $photo=MemePhoto::where('id','=',$id)->first()->name;

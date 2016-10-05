@@ -240,12 +240,31 @@
 	};
 
 	ElastiStack.prototype._onDragEnd = function( instance, event, pointer ) {
-		if( this._outOfBounds( instance ) ) return;
-		if( this._outOfSight(instance) ) {
-			this._moveAway( instance );
+		var x = instance.position.x;
+		var y=instance.position.y;
+		if (x > 0) {
+            var imageURL=instance.element.childNodes[0].childNodes[0].attributes[2].nodeValue;
+            $.ajax({
+                url: "view/meme",
+                type: "post",
+                data: {image: imageURL},
+                dataType: "json",
+                success: function(response){
+                    if (response.status== 'success') {
+                       window.location='view/meme/your/'+response.data.id;
+                    }
+                    }
+            });
 		}
 		else {
-			this._moveBack( instance );
+			if (this._outOfBounds(instance)) return;
+			if (this._outOfSight(instance)) {
+				this._moveAway(instance);
+			}
+			else {
+				this._moveBack(instance);
+
+			}
 		}
 	};
 
