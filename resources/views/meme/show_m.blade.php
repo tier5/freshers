@@ -3,6 +3,9 @@
 
 <?php require('../app/Libraries/emojione/emojione/lib/php/autoload.php'); ?>
 
+<script src="//connect.facebook.net/en_US/sdk/debug.js"></script>
+<script type="text/javascript" src="/js/fb-sharing.js"></script>
+
 <style type="text/css">
     .social-actions span{
         font-size: 10px;
@@ -24,7 +27,7 @@
 
                         <button type="button" id="meme-like-{{$meme->id}}" onclick="increase_like_meme('{{$meme->id}}')" class="btn btn-xs" style="color: #337AB7">
                         @if($meme->like->where('user_id',Session::get('id'))->where('meme_id',$meme->id)->first()!=null)
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                        <i class="fa fa-thumbs-up fa-2x"></i>
                         @else
                         <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
                         @endif
@@ -61,6 +64,31 @@
                         <input type="hidden" id="a_V_{{$meme->id}}" value="{{ $meme->dislikes }}" >
                     </small>
                 </div>
+                <div class="pull-right">
+                    <table>
+                        <tr>
+                        <td>
+                            <span>
+                                <h6>
+                                    share with:
+                                </h6>
+                            </span>
+                        </td>
+                        <td>       
+                            <i class="fa fa-facebook fa-2x" onclick="fb_share('https://makingshitfunny.com/public/uploads/meme/photo/{{$meme->name}}')" aria-hidden="true"></i>
+                                        &nbsp;
+                        </td>
+                        <td>
+                            <i class="fa fa-twitter-square  fa-2x" aria-hidden="true"></i>
+                                        &nbsp;
+                        </td>
+                        <td>
+                            <i class="fa fa-google-plus fa-2x" aria-hidden="true"></i>
+                                        &nbsp;
+                        </td>            
+                        </tr>
+                    </table>
+                </div>
 
                 <div class='col-md-3 col-lg-3 col-xs-3 col-sm-3'>
                         <span style="display:none; color:green;" id="user_choice_meme_like_{{$meme->id}}"></span>
@@ -68,6 +96,7 @@
                         <h5 style="display:none; color:#4F0826;" id="login_please_meme">PLEASE LOGIN..!!</h5>
                 </div>
              </div>
+
              <div class="modal" id="myModal_like_{{$meme->id}}" role="dialog" >
                 <div class="modal-dialog">
     
@@ -462,7 +491,7 @@
                 $('#meme_div_dislike_'+id).html(response.dislike);
                 if($('#a_L_'+id).val() < response.like)
                 {
-                    $('#meme-like-' + id).html('<i class="fa fa-thumbs-up"></i>');
+                    $('#meme-like-' + id).html('<i class="fa fa-thumbs-up fa-2x"></i>');
                     $('#user_choice_meme_like_'+id).text('You liked this meme!');
                     $('#user_choice_meme_like_'+id).fadeIn(900);
                     $('#user_choice_meme_like_'+id).fadeOut(3000);
@@ -502,7 +531,7 @@
             $('#meme_div_dislike_'+id).html(response.dislike);
             if($('#a_DL_'+id).val() < response.dislike)
             {
-               $('#meme-dislike-' + id).html('<i class="fa fa-thumbs-down"></i>');
+               $('#meme-dislike-' + id).html('<i class="fa fa-thumbs-down fa-2x"></i>');
                $('#user_choice_meme_dislike_'+id).text('You disliked this meme!');
                $('#user_choice_meme_dislike_'+id).fadeIn(900);
                $('#user_choice_meme_dislike_'+id).fadeOut(3000);
