@@ -32,7 +32,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Select a Photo
-                    <small>For Create Your Meme</small>
+                    <small>For Creating Your Meme</small>
                 </h1>
             </div>
             <div class="pull-right">
