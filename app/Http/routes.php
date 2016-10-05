@@ -110,7 +110,6 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
         Route::post('new_reply', ['uses'=>'ReplyController@store', 'as'=>'new_reply']);
 
         Route::resource('comment', 'CommentController', ['names'=> ['store' => 'comment.store']]);
->>>>>>> dev
 
         Route::post('cmt', 'CommentController@edit');
 
