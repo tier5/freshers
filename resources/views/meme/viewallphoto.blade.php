@@ -48,17 +48,20 @@ C301,229.646,301,301,301,301z" />
         @endif
     </div>
     <div class="container">
-        <header class="codrops-header">
-            <div class="centered">
-                <a href="{{ Auth::check()?route('photo.upload'):route('login') }}"> <i class="fa fa-upload fa-3x" aria-hidden="true">Upload new Photo</i></a>
+        <div class="row" >
+            <div class="pull-right">
+                <a href="{{ Auth::check()?route('photo.upload'):route('login') }}"> <i class="fa fa-upload fa-1x" aria-hidden="true">Upload new Photo for Creating new meme</i></a>
             </div>
-            <div><h2>OR</h2></div>
-            <h1>Select a Photo</h1>
-        </header>
+            <div class="pull-left">
+                <a href="{{ route('meme.photo') }}"> <i class="fa fa-paint-brush fa-1x" aria-hidden="true">Create Meme</i></a>
+            </div>
+        </div>
+
         <div class="stack">
+            <h1>All Memes  <small>( Drag left for Next Meme and Drag right for View the Meme )</small></h1>
             <ul id="elasticstack" class="stack__images">
                 @foreach($photos as $photo)
-                    <li><a href="{{ route('create.meme', [$photo->id]) }}"><img src="/uploads/meme/{{ $photo->name }}" height=300 width=300 /></a></li>
+                    <li><a href="{{ route('meme.single', [$photo->id]) }}"><img src="/uploads/meme/photo/{{ $photo->name }}" height=300 width=300 /></a></li>
                 @endforeach
             </ul>
         </div>
@@ -77,7 +80,7 @@ C301,229.646,301,301,301,301z" />
                     onUpdateStack : function( idx ) {
                         classie.remove( titles[idx === 0 ? totalTitles - 1 : idx - 1], 'current' );
                         classie.add( titles[idx], 'current' );
-                    }
+                    },
                 } ),
                 shapeEl = document.getElementById( 'morph-shape' ),
                 s = Snap( shapeEl.querySelector( 'svg' ) ),
@@ -86,6 +89,7 @@ C301,229.646,301,301,301,301z" />
                     reset : pathEl.attr( 'd' ),
                     next  : shapeEl.getAttribute( 'data-morph-next' )
                 };
+
 
         document.getElementById( 'stack-next' ).addEventListener( 'mousedown', nextItem );
 
