@@ -215,6 +215,10 @@ $router->group(array('domain' => 'laravelsite.dev'), function()
             'uses' => 'MemeController@dislike',
             'as' => 'meme.dislike'
         ]);
+        Route::post('create/meme/with/blog', [
+            'uses' => 'MemeController@memeblog',
+            'as' => 'create.mame.blog'
+        ]);
 
     });
 
