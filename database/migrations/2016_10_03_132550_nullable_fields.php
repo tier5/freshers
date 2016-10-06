@@ -12,11 +12,10 @@ class NullableFields extends Migration
      */
     public function up()
     {
-        //
-        Schema::table('comments' , function (Blueprint $table) {
-            $table->integer('article_id')->unsigned()->index()->nullable()->change();
-        });
-       //DB::statement('ALTER TABLE `comments` ALTER COLUMN `article_id` INTEGER UNSIGNED INDEX NULL;');
+
+            
+        DB::statement('ALTER TABLE `comments` CHANGE `article_id` `article_id` INT(10) UNSIGNED NULL');
+
     }
 
     /**
@@ -26,8 +25,7 @@ class NullableFields extends Migration
      */
     public function down()
     {
-        //
-        //DB::statement('ALTER TABLE `comments` MODIFY `article_id` INTEGER UNSIGNED INDEX NOT NULL;');
-
+        
+        
     }
 }

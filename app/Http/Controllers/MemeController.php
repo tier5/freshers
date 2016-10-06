@@ -61,6 +61,7 @@ class MemeController extends Controller
     }
     public function save(Request $request)
     {
+        $usr = Session::get('id');
         $data=$request->image;
         if(preg_match('/data:image\/(gif|jpeg|png);base64,(.*)/i', $data, $matches))
         {
@@ -74,10 +75,14 @@ class MemeController extends Controller
             if(imagepng($image, 'uploads/meme/photo/' . $filename))
             {
                 $photo->name=$filename;
-                $photo->user_id=Session::get('id');
+                if($usr == '')
+                    $photo->user_id = null;
+                else
+                    $photo->user_id=$usr;
                 $photo->save();
                 return response()->json([
                     'status' => 'success',
+                    'path'   => 'https://makingshitfunny.com/public/uploads/meme/photo/'.$filename,
                 ]);
             } else {
                 return response()->json(['status' => 'Could not save the file.']);

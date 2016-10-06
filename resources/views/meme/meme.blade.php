@@ -10,6 +10,9 @@
 
 @section('content')
 
+<script src="//connect.facebook.net/en_US/sdk/debug.js"></script>
+<script type="text/javascript" src="/js/fb-sharing.js"></script>
+
     <div class="row">
         @if (Session::has('success'))
             <div class="row">

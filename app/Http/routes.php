@@ -14,7 +14,7 @@ Route::get('fbauth/{auth?}',array('as'=>'facebookAuth' , 'uses'=>'ReplyControlle
 | and give it the controller to call when that URI is requested.
 |
 */
-$router->group(array('domain' => 'laravelsite.dev'), function()
+$router->group(array('domain' => 'makingshitfunny.dev'), function()
 {
     //Auth Routes
 
