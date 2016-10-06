@@ -222,12 +222,14 @@
                             @endif
 
                             <!-- </a>  -->
+                            @if($meme->user_id !== null)
                             @if(Session::get('id')==$comment->user_id or Session::get('id')==$meme->user_id)
                                 <form action="{{ route('comment.destroy', [$comment->id]) }}" method="POST" style="float: left">
                                     <input type="hidden" name="_method" value="DELETE">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <button type="submit" class="btn btn-xs" style="color: #337AB7"><i class="fa fa-times fa-1x"></i></button>  
                                 </form>
+                            @endif
                             @endif
 
                             
@@ -353,12 +355,14 @@
                             
                                     @endif
 
+                                    @if($meme->user_id !== null)
                                     @if(Session::get('id')==$comment->user_id or Session::get('id')==$meme->user_id or Session::get('id')==$reply->user_id)
                                     <form action="{{ route('reply.destroy', [$reply->id]) }}" method="POST" style="float: left">
                                     <input type="hidden" name="_method" value="DELETE">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <button type="submit" class="btn btn-xs" style="color: #337AB7"><i class="fa fa-times fa-1x"></i></button>
                                     </form>
+                                    @endif
                                     @endif
 
                                     <h5 id="login_please_reply_{{$reply->id}}" style="display:none; color:#4F0826;">login to continue..!!</h5>
