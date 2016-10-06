@@ -14,7 +14,7 @@ Route::get('fbauth/{auth?}',array('as'=>'facebookAuth' , 'uses'=>'ReplyControlle
 | and give it the controller to call when that URI is requested.
 |
 */
-$router->group(array('domain' => 'makingshitfunny.dev'), function()
+$router->group(array('domain' => 'laravelsite.dev'), function()
 {
     //Auth Routes
 
@@ -291,6 +291,10 @@ $router->group(array('domain' => 'makingshitfunny.dev'), function()
         Route::post('view/meme/dislike', [
             'uses' => 'MemeController@dislike',
             'as' => 'meme.dislike'
+        ]);
+        Route::post('create/meme/with/blog', [
+            'uses' => 'MemeController@memeblog',
+            'as' => 'create.mame.blog'
         ]);
 
 

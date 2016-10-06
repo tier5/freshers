@@ -18,7 +18,7 @@ class CreateCommentsTable extends Migration
             $table->timestamps();
             $table->text('comment_body');
             $table->integer('user_id')->unsigned()->index();
-            $table->integer('article_id')->unsigned()->index();
+            $table->integer('article_id')->unsigned()->index()->nullable();
             $table->integer('likes')->unsigned()->index();
             $table->integer('shares')->unsigned()->index();
             $table->boolean('approved');

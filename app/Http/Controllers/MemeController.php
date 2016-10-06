@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Category;
 use App\Meme;
 use App\MemePhoto;
 use App\Dislike;
@@ -11,6 +12,8 @@ use App\Share;
 use App\View;
 use App\Reply;
 use App\Article;
+use App\MemeArticle;
+use App\Tag;
 use App\User;
 use App\Comment;
 use App\Http\Requests;
@@ -37,8 +40,9 @@ class MemeController extends Controller
     }
     public function create($id)
     {
+        $categories=Category::all();
         $photo=MemePhoto::where('id','=',$id)->first()->name;
-        return view('meme.creatememe', ['photo' => $photo]);
+        return view('meme.creatememe', ['photo' => $photo,'categories' => $categories]);
     }
     Public function getupload()
     {
@@ -61,7 +65,6 @@ class MemeController extends Controller
     }
     public function save(Request $request)
     {
-        $usr = Session::get('id');
         $data=$request->image;
         if(preg_match('/data:image\/(gif|jpeg|png);base64,(.*)/i', $data, $matches))
         {
@@ -75,10 +78,11 @@ class MemeController extends Controller
             if(imagepng($image, 'uploads/meme/photo/' . $filename))
             {
                 $photo->name=$filename;
-                if($usr == '')
-                    $photo->user_id = null;
-                else
-                    $photo->user_id=$usr;
+                if(Session::get('id') == null) {
+                    $photo->user_id=0;
+                } else {
+                    $photo->user_id = Session::get('id');
+                }
                 $photo->save();
                 return response()->json([
                     'status' => 'success',
@@ -91,6 +95,62 @@ class MemeController extends Controller
             return response()->json(['status' => 'Invalid data URL.']);
         }
     }
+
+    public function memeblog(Request $request)
+    {
+        $data=$request->imageDataUrl;
+        if(preg_match('/data:image\/(gif|jpeg|png);base64,(.*)/i', $data, $matches))
+        {
+            $photo=new Meme();
+            $imageType = $matches[1];
+            $imageData = base64_decode($matches[2]);
+
+            $image = imagecreatefromstring($imageData);
+            $filename = md5($imageData) . '.png';
+
+            if(imagepng($image, 'uploads/meme/photo/' . $filename))
+            {
+                    $photo->name = $filename;
+                    $photo->user_id = Session::get('id');
+                    $photo->save();
+
+                    $tags = $this->listTags(explode(', ', $request->tags));
+                    $user_id = Session::get('id');
+
+                    $this->validate($request, [
+                        'title' => 'required|unique:articles',
+                        'category' => 'required',
+                        'body' => 'required'
+                    ]);
+
+                    $article = new Article();
+                    $article->title = $request->title;
+                    $article->slug = str_slug($request->title);
+                    $article->body = $request->body;
+                    $article->category_id = $request->category;
+                    $article->user_id = Session::get('id');
+                    $article->views = 0;
+                    $article->shares = 0;
+                    $article->likes = 0;
+                    $article->dislikes = 0;
+                    $article->save();
+                    $article->tags()->attach($tags);
+                $connection=new MemeArticle();
+                $connection->article_id=$article->id;
+                $connection->meme_id=$photo->id;
+                $connection->save();
+                return response()->json([
+                    'status' => 'success',
+                ]);
+
+            } else {
+                return response()->json(['status' => 'Could not save the file.']);
+            }
+        } else {
+            return response()->json(['status' => 'Invalid data URL.']);
+        }
+    }
+
     public function view()
     {
         $meme=Meme::where('user_id','=',Session::get('id'))->get();
@@ -235,6 +295,31 @@ class MemeController extends Controller
             $meme->save();
             return Response()->json(['like'=>$like_num , 'dislike'=>$dislike_num]);
         }   
-        return ('eror in dislikememe at MemeController');
+        return response()->json(['status' => 'eror in dislikememe at MemeController']);
+    }
+    private function listTags($input_tags) {
+        $stored_tags = Tag::all();
+        $new_tags = $input_tags;
+        $tags = [];
+        foreach ($stored_tags as $stored_tag) {
+            foreach ($input_tags as $key =>$input_tag) {
+                if (Str::equals(Str::lower($input_tag), Str::lower($stored_tag->name))) {
+                    $tags[$key] = $stored_tag->id;
+                    unset($new_tags[$key]);
+                }
+            }
+        }
+        if(empty($tags)) {
+            $key = 0;
+        } else {
+            $key = max(array_keys($tags));
+        }
+        foreach ($new_tags as $new_tag) {
+            $tag = new Tag();
+            $tag->name = $new_tag;
+            $tag->save();
+            $tags[++$key] = $tag->id;
+        }
+        return $tags;
     }
 }
