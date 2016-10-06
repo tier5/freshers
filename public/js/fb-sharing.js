@@ -14,7 +14,7 @@ function  fb_share(path)
                 {
                     method: 'feed',
                     picture: path,
-                    href: 'https://makingshitfunny.com',
+                    href: 'dev.makingshitfunny.com',
                     link: 'makingshitfunny.com',
                 },
                 function(response) 

@@ -75,7 +75,7 @@
                             </span>
                         </td>
                         <td>       
-                            <i class="fa fa-facebook fa-2x" onclick="fb_share('https://makingshitfunny.com/public/uploads/meme/photo/{{$meme->name}}')" aria-hidden="true"></i>
+                            <i class="fa fa-facebook fa-2x" onclick="fb_share('dev.makingshitfunny.com/uploads/meme/photo/{{$meme->name}}')" aria-hidden="true"></i>
                                         &nbsp;
                         </td>
                         <td>
