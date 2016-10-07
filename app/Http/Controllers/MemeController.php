@@ -86,7 +86,7 @@ class MemeController extends Controller
                 $photo->save();
                 return response()->json([
                     'status' => 'success',
-                    'path'   => 'https://makingshitfunny.com/public/uploads/meme/photo/'.$filename,
+                    'path'   => 'dev.makingshitfunny.com/uploads/meme/photo/'.$filename,
                 ]);
             } else {
                 return response()->json(['status' => 'Could not save the file.']);
