@@ -21,6 +21,16 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.2/css/selectize.bootstrap3.min.css" />
 
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.jssocials/1.3.1/jssocials.min.js"></script>
+
+<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.3.1/jssocials.css" />
+
+<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.3.1/jssocials-theme-flat.css" />
+<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.3.1/jssocials-theme-classic.css" />
+<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.3.1/jssocials-theme-minima.css" />
+<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.3.1/jssocials-theme-plain.css" />
+
     <style>
         h2 {
             display: block;
@@ -131,7 +141,7 @@
 
 
 
-        <div class="container">
+        <div class="container" id="action">
             <div class="row">
                 <div class="col-md-6" id="preview"></div>
 
@@ -147,7 +157,7 @@
                                 &nbsp;
                             </td>
                             <td>
-                                <i class="fa fa-twitter-square  fa-3x" aria-hidden="true"></i>
+                                <a href="https://twitter.com/share" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
                                 &nbsp;
                             </td>
                             <td>
@@ -160,6 +170,7 @@
                 </div>
             </div>
         </div>
+        <div class="social-shares"></div>
     </div>
 
     <script>
@@ -259,6 +270,15 @@
         //
         $("#blog").click(function () {
             $("#show").toggle();
+            $("#action").toggle();
+        });
+
+    </script>
+    <script src="jquery.js"></script>
+    <script src="jssocials.min.js"></script>
+    <script>
+        $("#preview").jsSocials({
+            shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"]
         });
     </script>
 @endsection
@@ -286,4 +306,6 @@
     <script>
         $('#article-body').ckeditor();
     </script>
+
+
 @stop
