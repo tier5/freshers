@@ -16,7 +16,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-$router->group(array('domain' => 'makingshitfunny.dev'), function()
+$router->group(array('domain' => 'laravelsite.dev'), function()
 {
     Route::get('/', [
         'uses' => 'AppController@getIndex',

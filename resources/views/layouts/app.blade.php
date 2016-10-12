@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <meta name="csrf_token" content="{{csrf_token()}}" />
 
-    <title>Laravelsite | @yield('title')</title>
+    <title>@yield('title')</title>
 
     <!-- Styles -->
     <!-- Fonts -->
@@ -49,43 +49,8 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<!--script language=JavaScript>
-    var message="Function Disabled!";
-    function clickIE4(){
-        if (event.button==2){
-            swal({
-                title: 'Error',
-                text: message,
-                type: 'error',
-                confirmButtonText: 'ok'
-            });
-            //swal(message);
-            return false;
-        } }
-    function clickNS4(e){
-        if (document.layers||document.getElementById&&!document.all){
-            if (e.which==2||e.which==3){
-                swal({
-                    title: 'Error',
-                    text: message,
-                    type: 'error',
-                    confirmButtonText: 'ok'
-                });
-                //alert(message);
-                return false;
-            } } }
-            if (document.layers){
-                document.captureEvents(Event.MOUSEDOWN);
-                document.onmousedown=clickNS4;
-            }
-            else if (document.all&&!document.getElementById){
-                document.onmousedown=clickIE4;
-    }
-    document.oncontextmenu=new Function("alert(message);return false") </script>
-<body ondragstart="return false" onselectstart="return false"-->
 <body ondragstart="return false" onselectstart="return false" onkeypress="return disableCtrlKeyCombination(event);" onkeydown = "return disableCtrlKeyCombination(event);" >
-<script language=JavaScript>
-    <!--
+<!--script language=JavaScript>
     //Disable right mouse click Script
     var message="Function Disabled!";
     ///////////////////////////////////
@@ -149,8 +114,16 @@
         }
         return true;
     }
-    // -->
-</script>
+    $(document).keydown(function(event){
+        if(event.keyCode==123){
+            return false;
+        }
+        else if(event.ctrlKey && event.shiftKey && event.keyCode==73){
+            return false;  //Prevent from ctrl+shift+i
+        }
+    });
+</script-->
+
 <div class="container-fluid">
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
